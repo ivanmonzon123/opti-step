@@ -1,0 +1,8 @@
+.app-head-container {
+    height: 60px;
+    box-sizing: border-box;
+}
+
+.app-body-container {
+    min-height: calc(100vh - 60px);
+}

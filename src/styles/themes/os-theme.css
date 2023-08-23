@@ -1,0 +1,10 @@
+@import "default/os-preset.css";
+@import "default/os-pink.css";
+@import "default/os-good.css";
+@import "default/os-wrong.css";
+@import "default/os-orange.css";
+/*.os-theme {*/
+/*    --os-orange: #FB4D3D; orange-60*/
+/*    --os-body: #E7E7E7; preset-90*/
+/*    --os-card: #F5F5F5; preset-96*/
+/*}*/

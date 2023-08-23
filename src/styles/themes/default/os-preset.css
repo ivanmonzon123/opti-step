@@ -1,0 +1,18 @@
+.os-theme {
+  --os-preset-h: 0;
+  --os-preset-s: 0%;
+  --os-preset-l: 100%;
+  --os-preset-hsl: hsl(var(--os-preset-h), var(--os-preset-s), var(--os-preset-l));
+
+  --os-preset-00: hsl(var(--os-preset-h), var(--os-preset-s), calc(var(--os-preset-l) - 100%));
+  --os-preset-10: hsl(var(--os-preset-h), var(--os-preset-s), calc(var(--os-preset-l) - 90%));
+  --os-preset-20: hsl(var(--os-preset-h), var(--os-preset-s), calc(var(--os-preset-l) - 80%));
+  --os-preset-30: hsl(var(--os-preset-h), var(--os-preset-s), calc(var(--os-preset-l) - 70%));
+  --os-preset-40: hsl(var(--os-preset-h), var(--os-preset-s), calc(var(--os-preset-l) - 60%));
+  --os-preset-50: hsl(var(--os-preset-h), var(--os-preset-s), calc(var(--os-preset-l) - 50%));
+  --os-preset-60: hsl(var(--os-preset-h), var(--os-preset-s), calc(var(--os-preset-l) - 40%));
+  --os-preset-70: hsl(var(--os-preset-h), var(--os-preset-s), calc(var(--os-preset-l) - 30%));
+  --os-preset-80: hsl(var(--os-preset-h), var(--os-preset-s), calc(var(--os-preset-l) - 20%));
+  --os-preset-90: hsl(var(--os-preset-h), var(--os-preset-s), calc(var(--os-preset-l) - 10%));
+  --os-preset: hsl(var(--os-preset-h), var(--os-preset-s), var(--os-preset-l));
+}

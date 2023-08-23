@@ -1,0 +1,15 @@
+.os-theme {
+    --os-orange-h: 5;
+    --os-orange-s: 95%;
+    --os-orange-l: 50%;
+    --os-orange-hsl: hsl(var(--os-orange-h), var(--os-orange-s), var(--os-orange-l));
+    --os-orange-10: hsl(var(--os-orange-h), var(--os-orange-s), calc(var(--os-orange-l) - 40%));
+    --os-orange-20: hsl(var(--os-orange-h), var(--os-orange-s), calc(var(--os-orange-l) - 30%));
+    --os-orange-30: hsl(var(--os-orange-h), var(--os-orange-s), calc(var(--os-orange-l) - 20%));
+    --os-orange-40: hsl(var(--os-orange-h), var(--os-orange-s), calc(var(--os-orange-l) - 10%));
+    --os-orange: hsl(var(--os-orange-h), var(--os-orange-s), var(--os-orange-l));
+    --os-orange-60: hsl(var(--os-orange-h), var(--os-orange-s), calc(var(--os-orange-l) + 10%));
+    --os-orange-70: hsl(var(--os-orange-h), var(--os-orange-s), calc(var(--os-orange-l) + 20%));
+    --os-orange-80: hsl(var(--os-orange-h), var(--os-orange-s), calc(var(--os-orange-l) + 30%));
+    --os-orange-90: hsl(var(--os-orange-h), var(--os-orange-s), calc(var(--os-orange-l) + 40%));
+}

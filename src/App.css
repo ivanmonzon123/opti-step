@@ -1,0 +1,9 @@
+.app-head-container {
+    height: 55px;
+    box-sizing: border-box;
+}
+
+.app-body-container {
+    height: calc(100vh - 55px);
+    background-color: var(--os-preset-90);
+}

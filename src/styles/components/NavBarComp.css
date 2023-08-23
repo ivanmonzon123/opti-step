@@ -1,0 +1,29 @@
+.navbar-logo {
+    width: 55px;
+    height: 55px;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.navbar-container {
+    height: 100%;
+}
+
+.navbar-container .navbar {
+    width: 100%;
+    min-height: 100%;
+    padding: 0;
+    background-color: var(--os-preset-20);
+}
+
+.navbar-container a {
+    text-decoration: none;
+    color: var(--os-preset);
+}
+
+.navbar-options {
+    width: calc(100% - 65px);
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}

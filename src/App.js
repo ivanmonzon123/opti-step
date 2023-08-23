@@ -2,6 +2,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import NavBarComp from "./components/NavBarComp";
 import HomePage from "./pages/HomePage"
 import './App.css';
+
 function App() {
   return (
       <BrowserRouter>
@@ -11,7 +12,8 @@ function App() {
 
         <article className="app-body-container">
           <Routes>
-            <Route path="/" element={<HomePage/>}/>
+            <Route path="/"
+                   element={<HomePage/>}/>
           </Routes>
         </article>
       </BrowserRouter>

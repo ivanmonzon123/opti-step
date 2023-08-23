@@ -1,0 +1,74 @@
+/*
+os-txt-sizes: {
+  xs: 10px,
+  sm: 14px,
+  md: 18px,
+  lg: 24px,
+  xl: 32px,
+  xxl: 64px,
+  xxxl: 72px
+}
+*/
+
+.os-txt {
+    font-family: sans-serif, Calibri;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+}
+
+.os-txt-xs {
+    line-height: 21px;
+    font-size: 10px;
+}
+
+.os-txt-sm {
+    line-height: 27px;
+    font-size: 14px;
+}
+
+.os-txt-md {
+    line-height: 36px;
+    font-size: 18px;
+}
+
+.os-txt-lg {
+    line-height: 48px;
+    font-size: 24px;
+}
+
+.os-txt-xl {
+    line-height: 96px;
+    font-size: 32px;
+}
+
+.os-txt-xxl {
+    line-height: 108px;
+    font-size: 64px;
+}
+
+.os-txt-bold-sm {
+    font-weight: 500;
+}
+
+.os-txt-bold-md {
+    font-weight: 600;
+}
+
+.os-txt-bold {
+    font-weight: 700;
+}
+
+.os-txt-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.os-txt-two-line-ellipsis {
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
+

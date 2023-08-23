@@ -1,14 +1,28 @@
 .nav-bar-logo {
-    width: 50px;
+    width: 55px;
+    height: 55px;
+    padding: 5px;
+    box-sizing: border-box;
 }
 
 .nav-bar-container {
-    margin: 0;
-    padding: 0 5px;
-    width: 100%;
+    height: 100%;
 }
 
-.nav-bar-content {
-   margin: 0;
+.nav-bar-container .navbar {
+    width: 100%;
+    min-height: 100%;
     padding: 0;
+}
+
+.nav-bar-container a {
+    text-decoration: none;
+    color: var(--os-preset);
+}
+
+.nav-bar-options {
+    width: calc(100% - 65px);
+    display: flex;
+    justify-content: center;
+    gap: 10px;
 }

@@ -1,0 +1,16 @@
+.os-theme {
+  --os-wrong-h: 6;
+  --os-wrong-s: 78%;
+  --os-wrong-l: 50%;
+  --os-wrong-hsl: hsl(var(--os-wrong-h), var(--os-wrong-s), var(--os-wrong-l));
+
+  --os-wrong-10: hsl(var(--os-wrong-h), var(--os-wrong-s), calc(var(--os-wrong-l) - 40%));
+  --os-wrong-20: hsl(var(--os-wrong-h), var(--os-wrong-s), calc(var(--os-wrong-l) - 30%));
+  --os-wrong-30: hsl(var(--os-wrong-h), var(--os-wrong-s), calc(var(--os-wrong-l) - 20%));
+  --os-wrong-40: hsl(var(--os-wrong-h), var(--os-wrong-s), calc(var(--os-wrong-l) - 10%));
+  --os-wrong: hsl(var(--os-wrong-h), var(--os-wrong-s), var(--os-wrong-l));
+  --os-wrong-60: hsl(var(--os-wrong-h), var(--os-wrong-s), calc(var(--os-wrong-l) + 10%));
+  --os-wrong-70: hsl(var(--os-wrong-h), var(--os-wrong-s), calc(var(--os-wrong-l) + 20%));
+  --os-wrong-80: hsl(var(--os-wrong-h), var(--os-wrong-s), calc(var(--os-wrong-l) + 30%));
+  --os-wrong-90: hsl(var(--os-wrong-h), var(--os-wrong-s), calc(var(--os-wrong-l) + 40%));
+}

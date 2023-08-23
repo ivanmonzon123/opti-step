@@ -1,0 +1,59 @@
+.os-btn {
+    appearance: none;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    text-align: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    outline: none;
+}
+
+.os-btn-primary {
+    border-radius: 8px;
+    color: var(--os-preset);
+    min-height: 45px;
+    text-align: center;
+    padding: 0 25px;
+    box-sizing: border-box;
+}
+
+.os-btn-primary label{
+    cursor: pointer;
+}
+
+.os-btn-primary:enabled {
+    background-color: var(--os-orange-60)
+}
+
+.os-btn-primary:hover {
+    background-color: var(--os-orange-70)
+}
+
+.os-btn-primary:active {
+    background-color: var(--os-orange-60)
+}
+
+
+.os-btn-primary:disabled {
+    background-color: var(--os-orange-80);
+}
+
+.os-btn-primary:disabled .os-txt{
+    cursor: not-allowed;
+}
+
+
+.os-btn-primary:focus {
+    border: 1px solid var(--os-pink-60);
+    box-shadow: 0 0 0 3px hsla(
+            var(--os-pink-h),
+            var(--os-pink-s),
+            var(--os-pink-l),
+            10%
+    );
+    transition: box-shadow .1s ease-in-out;
+}

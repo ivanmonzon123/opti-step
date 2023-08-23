@@ -4,6 +4,6 @@
 }
 
 .app-body-container {
-    min-height: calc(100vh - 55px);
-    background-color: rebeccapurple;
+    height: calc(100vh - 55px);
+    background-color: var(--os-preset-90);
 }

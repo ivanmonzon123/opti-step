@@ -1,28 +1,29 @@
-.nav-bar-logo {
+.navbar-logo {
     width: 55px;
     height: 55px;
     padding: 5px;
     box-sizing: border-box;
 }
 
-.nav-bar-container {
+.navbar-container {
     height: 100%;
 }
 
-.nav-bar-container .navbar {
+.navbar-container .navbar {
     width: 100%;
     min-height: 100%;
     padding: 0;
+    background-color: var(--os-preset-20);
 }
 
-.nav-bar-container a {
+.navbar-container a {
     text-decoration: none;
     color: var(--os-preset);
 }
 
-.nav-bar-options {
+.navbar-options {
     width: calc(100% - 65px);
     display: flex;
     justify-content: center;
-    gap: 10px;
+    gap: 40px;
 }

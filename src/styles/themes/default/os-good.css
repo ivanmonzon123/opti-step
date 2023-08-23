@@ -1,0 +1,15 @@
+.os-theme {
+  --os-good-h: 119;
+  --os-good-s: 100%;
+  --os-good-l: 50%;
+  --os-good-hsl: hsl(var(--os-good-h), var(--os-good-s), var(--os-good-l));
+  --os-good-10: hsl(var(--os-good-h), var(--os-good-s), calc(var(--os-good-l) - 40%));
+  --os-good-20: hsl(var(--os-good-h), var(--os-good-s), calc(var(--os-good-l) - 30%));
+  --os-good-30: hsl(var(--os-good-h), var(--os-good-s), calc(var(--os-good-l) - 20%));
+  --os-good-40: hsl(var(--os-good-h), var(--os-good-s), calc(var(--os-good-l) - 10%));
+  --os-good: hsl(var(--os-good-h), var(--os-good-s), var(--os-good-l));
+  --os-good-60: hsl(var(--os-good-h), var(--os-good-s), calc(var(--os-good-l) + 10%));
+  --os-good-70: hsl(var(--os-good-h), var(--os-good-s), calc(var(--os-good-l) + 20%));
+  --os-good-80: hsl(var(--os-good-h), var(--os-good-s), calc(var(--os-good-l) + 30%));
+  --os-good-90: hsl(var(--os-good-h), var(--os-good-s), calc(var(--os-good-l) + 40%));
+}

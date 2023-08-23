@@ -13,6 +13,7 @@
 /*}*/
 @import "./styles/themes/os-theme.css";
 @import "./styles/text/os-text.css";
+@import "./styles/common/os-common.css";
 
 body {
   margin: 0;

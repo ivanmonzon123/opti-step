@@ -1,0 +1,11 @@
+.os-sm-shadow {
+  box-shadow: 0 4px 4px hsla(var(--os-preset-h), var(--os-preset-s), calc(var(--os-preset-l) - 100%), 0.10);
+}
+
+.os-md-shadow {
+  box-shadow: 0 4px 4px hsla(var(--os-preset-h), var(--os-preset-s), calc(var(--os-preset-l) - 100%), 0.25);
+}
+
+.os-lg-shadow {
+  box-shadow: 0 16px 20px hsla(var(--os-preset-h), var(--os-preset-s), calc(var(--os-preset-l) - 100%), 0.20);
+}

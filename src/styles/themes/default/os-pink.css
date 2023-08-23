@@ -1,0 +1,16 @@
+.os-theme {
+  --os-pink-h: 330;
+  --os-pink-s: 88%;
+  --os-pink-l: 50%;
+  --os-pink-hsl: hsl(var(--os-pink-h), var(--os-pink-s), var(--os-pink-l));
+
+  --os-pink-10: hsl(var(--os-pink-h), var(--os-pink-s), calc(var(--os-pink-l) - 40%));
+  --os-pink-20: hsl(var(--os-pink-h), var(--os-pink-s), calc(var(--os-pink-l) - 30%));
+  --os-pink-30: hsl(var(--os-pink-h), var(--os-pink-s), calc(var(--os-pink-l) - 20%));
+  --os-pink-40: hsl(var(--os-pink-h), var(--os-pink-s), calc(var(--os-pink-l) - 10%));
+  --os-pink: hsl(var(--os-pink-h), var(--os-pink-s), var(--os-pink-l));
+  --os-pink-60: hsl(var(--os-pink-h), var(--os-pink-s), calc(var(--os-pink-l) + 10%));
+  --os-pink-70: hsl(var(--os-pink-h), var(--os-pink-s), calc(var(--os-pink-l) + 20%));
+  --os-pink-80: hsl(var(--os-pink-h), var(--os-pink-s), calc(var(--os-pink-l) + 30%));
+  --os-pink-90: hsl(var(--os-pink-h), var(--os-pink-s), calc(var(--os-pink-l) + 40%));
+}

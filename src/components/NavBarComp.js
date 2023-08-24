@@ -16,9 +16,9 @@ export default function NavBarComp() {
 
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="navbar-options">
-                <Link to="/" className="os-txt os-txt-md">Inicio</Link>
+                <Link to="/" className="os-txt os-txt-md px-1">Inicio</Link>
 
-                <Link to="/about" className="os-txt os-txt-md">Acerca de</Link>
+                <Link to="/about" className="os-txt os-txt-md px-1">Acerca de</Link>
               </Nav>
             </Navbar.Collapse>
         </Navbar>

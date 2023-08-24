@@ -2,6 +2,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import NavBarComp from "./components/NavBarComp";
 import HomePage from "./pages/HomePage"
 import './App.css';
+import FormPage from "./pages/FormPage";
 
 function App() {
   return (
@@ -12,8 +13,8 @@ function App() {
 
         <article className="app-body-container">
           <Routes>
-            <Route path="/"
-                   element={<HomePage/>}/>
+            <Route path="/" element={<HomePage/>}/>
+            <Route path="/forms" element={<FormPage/>}/>
           </Routes>
         </article>
       </BrowserRouter>

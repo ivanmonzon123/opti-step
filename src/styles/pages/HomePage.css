@@ -62,7 +62,7 @@
     }
 }
 
-@media (max-width: 390px) {
+@media (max-width: 397px) {
     .home-container {
         background-image: url("../../images/mobile-home-page-background.jpg");
     }

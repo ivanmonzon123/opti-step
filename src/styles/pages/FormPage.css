@@ -1,0 +1,71 @@
+.forms-container {
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.forms-order-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 55%;
+}
+
+.forms-order-details-card {
+    width: 100%;
+}
+
+.forms-order-details-card-parameters {
+    width: 100%;
+    padding: 0 10%;
+    display: flex;
+    gap: 10%;
+}
+
+.forms-order-details-buttons {
+    display: flex;
+    gap: 20px;
+}
+
+@media (max-width: 1200px) {
+    .forms-order-details-card-parameters {
+        padding: 0;
+    }
+}
+
+@media (max-width: 992px) {
+    .forms-order-details-card-parameters {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .forms-order-details-card-parameters .input-group {
+        max-width: 300px;
+    }
+
+    .forms-order-details-table span{
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .forms-order-details {
+        width: 80%;
+    }
+
+    /*.forms-order-details-table th{*/
+    /*    min-width: 20px;*/
+    /*}*/
+}
+
+@media (max-width: 397px) {
+    .forms-order-details {
+        width: 100%;
+        padding: 0 10px;
+    }
+}
+

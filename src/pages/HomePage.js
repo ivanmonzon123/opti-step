@@ -1,7 +1,14 @@
 import "../styles/pages/HomePage.css"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faArrowRight} from "@fortawesome/free-solid-svg-icons"
+import {useNavigate} from "react-router-dom";
+
 export default function HomePage() {
+  const navigate = useNavigate();
+
+  const handleStartBtn = () => {
+    navigate('/forms');
+  };
   return (
       <article className="home-container">
         <section className="home-content">
@@ -16,7 +23,7 @@ export default function HomePage() {
 
             <section className="d-flex justify-content-center">
               <button className="os-btn os-btn-primary home-start-button">
-                <label className="os-txt os-txt-lg">Comenzar a optimizar</label>
+                <label className="os-txt os-txt-lg" onClick={handleStartBtn}>Comenzar a optimizar</label>
               </button>
             </section>
           </section>

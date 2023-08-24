@@ -5,5 +5,9 @@
 
 .app-body-container {
     height: calc(100vh - 55px);
+    width: 100%;
     background-color: var(--os-preset-90);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

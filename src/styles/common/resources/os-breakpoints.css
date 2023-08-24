@@ -1,0 +1,9 @@
+.os-breakpoints {
+    --os-xxsm: 290px;
+    --os-xsm: 397px;
+    --os-sm: 576px;
+    --os-md: 768px;
+    --os-lg: 992px;
+    --os-xl: 1200px;
+    --os-xxl: 1400px;
+}

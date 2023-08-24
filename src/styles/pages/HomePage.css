@@ -30,7 +30,7 @@
     color: var(--os-preset);
 }
 
-.home-start-tittle-main {
+.home-start-main-tittle {
     line-height: 50px;
 }
 
@@ -40,6 +40,69 @@
 }
 
 .home-footer {
-color: var(--os-preset);
+    color: var(--os-preset);
     max-width: 500px;
 }
+
+@media (max-width: 576px) {
+    .home-content {
+        padding: 30px 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .home-container {
+        background-position: center;
+    }
+}
+
+@media (max-width: 400px) {
+    .home-container {
+        background-position: center;
+    }
+}
+
+@media (max-width: 390px) {
+    .home-container {
+        background-image: url("../../images/mobile-home-page-background.jpg");
+    }
+
+    .home-content {
+        background-color: unset;
+        padding: 40px 20px 20px 20px;
+    }
+
+    .home-start-main-tittle {
+        line-height: 27px;
+        font-size: 28px;
+    }
+
+    .home-start-tittle {
+        gap: 10px
+    }
+
+    .home-footer {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .home-footer label {
+        width: 50%;
+    }
+
+    .home-start-button {
+        width: 240px;
+        padding: 7px 15px;
+    }
+
+    .home-start-button label {
+        line-height: 36px;
+        font-size: 18px;
+    }
+
+    .home-application-name {
+        color: var(--os-orange-60);
+    }
+}
+

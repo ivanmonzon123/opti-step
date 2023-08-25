@@ -1,5 +1,6 @@
-import {Card, Form, InputGroup, Table} from "react-bootstrap";
+import {Card, Form, Table} from "react-bootstrap";
 import "../styles/components/ProductionDetailsComp.css"
+
 export default function ProductionDetailsComp() {
   return (
       <Card className="production-details-card">

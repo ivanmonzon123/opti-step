@@ -1,0 +1,32 @@
+.opt-result-card {
+    width: 100%;
+}
+
+.opt-result-card-parameters {
+    width: 100%;
+    /*padding: 0 10%;*/
+    /*display: flex;*/
+    /*gap: 10%;*/
+}
+
+.opt-result-card-parameters .input-group {
+    margin: 5px 0;
+    width: 300px;
+}
+
+@media (max-width: 1200px) {
+    .opt-result-card-parameters {
+        padding: 0;
+    }
+}
+
+@media (max-width: 992px) {
+    .opt-result-card-parameters {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .opt-result-card-parameters .input-group {
+        max-width: 300px;
+    }
+}

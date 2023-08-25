@@ -5,13 +5,15 @@ import {useState} from "react";
 import {ProgressBar} from "react-bootstrap";
 import StaffInfoComp from "../components/StaffInfoComp";
 import ProductionDetailsComp from "../components/ProductionDetailsComp";
+import OptimizationResultComp from "../components/OptimizationResultComp";
 
 export default function FormPage() {
   const [barStep$, setBarStep$] = useState(0);
   const title = [
     'Detalles del pedido',
     'Informacion personal',
-    'Detalles de producción'
+    'Detalles de producción',
+    'Resultados de optimizacion'
   ];
   const form = [
     <OrderDetailsComp/>,
@@ -21,8 +23,8 @@ export default function FormPage() {
     workingPeriodQuestion="¿Cuántas horas por dia y cuantas de las 12 semanas trabajara?"
     numberOfWorkers={3}
     />,
-    <ProductionDetailsComp/>
-
+    <ProductionDetailsComp/>,
+    <OptimizationResultComp/>
   ];
 
   return (

@@ -1,5 +1,4 @@
-
-import {Card, Form, Row} from "react-bootstrap";
+import {Card, Form} from "react-bootstrap";
 import "../styles/components/StaffInfoComp.css"
 
 export default function StaffInfoComp({processTitle, setterParamsQuestion, workingPeriodQuestion, numberOfWorkers}) {
@@ -13,7 +12,7 @@ export default function StaffInfoComp({processTitle, setterParamsQuestion, worki
             Proceso de {processTitle}:
           </Card.Title>
 
-          <Card.Text className="staff-info-card-setter-question">
+          <section className="staff-info-card-setter-question">
             <label className="os-txt">{setterParamsQuestion}</label>
 
             <Form.Group className="d-flex mb-3" controlId="formPlaintextPassword">
@@ -21,9 +20,9 @@ export default function StaffInfoComp({processTitle, setterParamsQuestion, worki
 
               <Form.Control type="number" placeholder="" />
             </Form.Group>
-          </Card.Text>
+          </section>
 
-          <Card.Text className="staff-info-card-parameters">
+          <section className="staff-info-card-parameters">
             <label className="os-txt mb-1">{workingPeriodQuestion}</label>
             {Array.from({ length: numberOfWorkers }, (_, index) => (
                 <Form.Group key={index} className="d-flex flex-wrap mb-3" controlId={`formPlaintextPassword${index}`}>
@@ -40,7 +39,7 @@ export default function StaffInfoComp({processTitle, setterParamsQuestion, worki
                   </section>
                 </Form.Group>
             ))}
-          </Card.Text>
+          </section>
         </Card.Body>
       </Card>
 

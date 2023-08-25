@@ -7,7 +7,8 @@ export default function OrderDetailsComp() {
           <Card.Text className="text-center os-txt">
             Ingrese los modelos, costo de producción, precio por unidad de calzado y tiempo máximo para producir en semanas
           </Card.Text>
-          <Card.Text className="order-details-card-parameters">
+
+          <section className="order-details-card-parameters">
             <InputGroup>
               <InputGroup.Text>Cant. modelos:</InputGroup.Text>
 
@@ -19,7 +20,8 @@ export default function OrderDetailsComp() {
 
               <Form.Control required type="number"/>
             </InputGroup>
-          </Card.Text>
+          </section>
+
           <Table responsive className="order-details-table">
             <thead>
             <tr>

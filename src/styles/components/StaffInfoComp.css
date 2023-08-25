@@ -1,0 +1,42 @@
+.staff-info-label {
+    width: 120px;
+    margin: auto 0;
+}
+.staff-info-card-setting input {
+    width: 100px;
+}
+
+.staff-info-card-parameters input {
+    width: 100px;
+}
+
+.staff-info-card-parameters-inputs {
+    display: flex;
+    flex-wrap: wrap;
+    width: auto;
+    gap: 30px;
+}
+
+.staff-info-card-parameters-inputs section{
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    width: auto;
+}
+
+
+@media (max-width: 576px) {
+    .staff-info-card-parameters-inputs {
+        gap: 20px;
+    }
+}
+
+@media (max-width: 397px) {
+    .staff-info-card-parameters input {
+        width: 80px;
+    }
+
+    .staff-info-card-setting input {
+        width: 80px;
+    }
+}

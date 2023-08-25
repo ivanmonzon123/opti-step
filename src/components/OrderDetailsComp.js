@@ -2,12 +2,12 @@ import {Card, Form, InputGroup, Table} from "react-bootstrap";
 import "../styles/components/OrderDetailsComp.css"
 export default function OrderDetailsComp() {
   return (
-      <Card className="forms-order-details-card">
+      <Card className="order-details-card">
         <Card.Body>
           <Card.Text className="text-center os-txt">
             Ingrese los modelos, costo de producción, precio por unidad de calzado y tiempo máximo para producir en semanas
           </Card.Text>
-          <Card.Text className="forms-order-details-card-parameters">
+          <Card.Text className="order-details-card-parameters">
             <InputGroup>
               <InputGroup.Text>Cant. modelos:</InputGroup.Text>
 
@@ -20,7 +20,7 @@ export default function OrderDetailsComp() {
               <Form.Control required type="number"/>
             </InputGroup>
           </Card.Text>
-          <Table responsive className="forms-order-details-table">
+          <Table responsive className="order-details-table">
             <thead>
             <tr>
               <th className="w-25">Modelo</th>

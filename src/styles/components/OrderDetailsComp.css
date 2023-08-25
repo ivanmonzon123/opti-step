@@ -1,36 +1,36 @@
-.forms-order-details-card {
+.order-details-card {
     width: 100%;
 }
 
-.forms-order-details-card-parameters {
+.order-details-card-parameters {
     width: 100%;
     padding: 0 10%;
     display: flex;
     gap: 10%;
 }
 
-.forms-order-details-buttons {
+.forms-buttons {
     display: flex;
     gap: 20px;
 }
 
 @media (max-width: 1200px) {
-    .forms-order-details-card-parameters {
+    .order-details-card-parameters {
         padding: 0;
     }
 }
 
 @media (max-width: 992px) {
-    .forms-order-details-card-parameters {
+    .order-details-card-parameters {
         flex-direction: column;
         gap: 10px;
     }
 
-    .forms-order-details-card-parameters .input-group {
+    .order-details-card-parameters .input-group {
         max-width: 300px;
     }
 
-    .forms-order-details-table span{
+    .order-details-table span{
         display: none;
     }
 }

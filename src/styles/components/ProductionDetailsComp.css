@@ -1,0 +1,8 @@
+.production-details-card {
+    width: 100%;
+}
+
+.forms-buttons {
+    display: flex;
+    gap: 20px;
+}

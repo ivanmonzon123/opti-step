@@ -4,12 +4,14 @@ import OrderDetailsComp from "../components/OrderDetailsComp";
 import {useState} from "react";
 import {ProgressBar} from "react-bootstrap";
 import StaffInfoComp from "../components/StaffInfoComp";
+import ProductionDetailsComp from "../components/ProductionDetailsComp";
 
 export default function FormPage() {
   const [barStep$, setBarStep$] = useState(0);
   const title = [
     'Detalles del pedido',
-    'Informacion personal'
+    'Informacion personal',
+    'Detalles de producción'
   ];
   const form = [
     <OrderDetailsComp/>,
@@ -18,7 +20,9 @@ export default function FormPage() {
     setterParamsQuestion="¿Con cuantos cortadores dispone?"
     workingPeriodQuestion="¿Cuántas horas por dia y cuantas de las 12 semanas trabajara?"
     numberOfWorkers={3}
-    />
+    />,
+    <ProductionDetailsComp/>
+
   ];
 
   return (
@@ -27,7 +31,7 @@ export default function FormPage() {
           <section className="forms-title">
             <label className="os-txt os-txt-lg os-txt-bold">{title[barStep$]}</label>
             <ProgressBar now={(barStep$ / title.length) * 100}
-                         label={`${(barStep$ / title.length) * 100}%`}/>
+                         label={`Paso: ${barStep$}`}/>
           </section>
 
           <section className="w-100">

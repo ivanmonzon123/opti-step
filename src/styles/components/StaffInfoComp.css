@@ -1,0 +1,52 @@
+.staff-info-card {
+    margin: 0 auto;
+    width: 80%;
+}
+
+.staff-info-labels {
+    width: 120px;
+    margin: auto 0;
+}
+.staff-info-card-setter-question input {
+    width: 100px;
+}
+
+.staff-info-card-parameters input {
+    width: 100px;
+}
+
+.staff-info-card-params-input-group {
+    display: flex;
+    flex-wrap: wrap;
+    width: auto;
+    gap: 30px;
+}
+
+.staff-info-card-params-input-group section{
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    width: auto;
+}
+
+@media (max-width: 992px) {
+    .staff-info-card {
+        width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .staff-info-card-params-input-group {
+        gap: 20px;
+    }
+}
+
+@media (max-width: 397px) {
+    .staff-info-card-parameters input {
+        width: 80px;
+    }
+
+    .staff-info-card-setter-question input {
+        width: 80px;
+    }
+}

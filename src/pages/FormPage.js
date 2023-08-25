@@ -1,90 +1,46 @@
 import "../styles/pages/HomePage.css"
 import "../styles/pages/FormPage.css"
-import {Card, Form, InputGroup, Table} from "react-bootstrap";
+import OrderDetailsComp from "../components/OrderDetailsComp";
+import {useState} from "react";
+import {ProgressBar} from "react-bootstrap";
+import StaffInfoComp from "../components/StaffInfoComp";
 
 export default function FormPage() {
+  const [barStep$, setBarStep$] = useState(0);
+  const title = [
+    'Detalles del pedido',
+    'Informacion personal'
+  ];
+  const form = [
+    <OrderDetailsComp/>,
+    <StaffInfoComp
+    processTitle="cortado"
+    setterParamsQuestion="¿Con cuantos cortadores dispone?"
+    workingPeriodQuestion="¿Cuántas horas por dia y cuantas de las 12 semanas trabajara?"
+    numberOfWorkers={3}
+    />
+  ];
+
   return (
       <article className="forms-container">
-        <article className="forms-order-details">
-          <section className="forms-order-details-title">
-            <label className="os-txt os-txt-lg os-txt-bold">Detalles del pedido</label>
+        <article className="forms-content">
+          <section className="forms-title">
+            <label className="os-txt os-txt-lg os-txt-bold">{title[barStep$]}</label>
+            <ProgressBar now={(barStep$ / title.length) * 100}
+                         label={`${(barStep$ / title.length) * 100}%`}/>
           </section>
 
-          <Card className="forms-order-details-card">
-            <Card.Body>
-              <Card.Text className="text-center os-txt">
-                Ingrese los modelos, costo de producción, precio por unidad de calzado y tiempo máximo para producir en semanas
-              </Card.Text>
-              <Card.Text className="forms-order-details-card-parameters">
-                <InputGroup>
-                  <InputGroup.Text>Cant. modelos:</InputGroup.Text>
+          <section className="w-100">
+            {form[barStep$]}
+          </section>
 
-                  <Form.Control required type="number"/>
-                </InputGroup>
-
-                <InputGroup>
-                  <InputGroup.Text>Periodo de prod:</InputGroup.Text>
-
-                  <Form.Control required type="number"/>
-                </InputGroup>
-              </Card.Text>
-              <Table responsive className="forms-order-details-table">
-                <thead>
-                <tr>
-                  <th className="w-25">Modelo</th>
-                  <th>Precio</th>
-                  <th>Costo</th>
-                  <th><span>Cant.</span> min</th>
-                  <th><span>Cant.</span> max</th>
-
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                  {Array.from({length: 5}).map((_, index) => (
-                      <td key={index}>
-                        <Form.Control
-                          required
-                          type="text"
-                          placeholder=""
-                          defaultValue=""
-                      /></td>
-                  ))}
-                </tr>
-                <tr>
-                  {Array.from({length: 5}).map((_, index) => (
-                      <td key={index}>
-                        <Form.Control
-                          required
-                          type="text"
-                          placeholder=""
-                          defaultValue=""
-                      /></td>
-                  ))}
-                </tr>
-                <tr>
-                  {Array.from({length: 5}).map((_, index) => (
-                      <td key={index}>
-                        <Form.Control
-                          required
-                          type="text"
-                          placeholder=""
-                          defaultValue=""
-                      /></td>
-                  ))}
-                </tr>
-                </tbody>
-              </Table>
-            </Card.Body>
-          </Card>
-
-          <section className="forms-order-details-buttons">
+          <section className="forms-buttons">
             <button className="btn btn-primary">
               <label className="os-txt">cancelar</label>
             </button>
 
             <button className="btn btn-primary">
-              <label className="os-txt">siguiente</label>
+              <label className="os-txt" onClick={() => setBarStep$(barStep$ + 1)}>siguiente</label>
             </button>
           </section>
         </article>

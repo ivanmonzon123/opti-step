@@ -13,11 +13,11 @@ export default function StaffInfoComp({processTitle, setterParamsQuestion, worki
             Proceso de {processTitle}:
           </Card.Title>
 
-          <Card.Text className="staff-info-card-setting">
+          <Card.Text className="staff-info-card-setter-question">
             <label className="os-txt">{setterParamsQuestion}</label>
 
             <Form.Group className="d-flex mb-3" controlId="formPlaintextPassword">
-              <Form.Label className="staff-info-label">{capitalCase(processTitle)}res:</Form.Label>
+              <Form.Label className="staff-info-labels">{capitalCase(processTitle)}res:</Form.Label>
 
               <Form.Control type="number" placeholder="" />
             </Form.Group>
@@ -27,9 +27,9 @@ export default function StaffInfoComp({processTitle, setterParamsQuestion, worki
             <label className="os-txt mb-1">{workingPeriodQuestion}</label>
             {Array.from({ length: numberOfWorkers }, (_, index) => (
                 <Form.Group key={index} className="d-flex flex-wrap mb-3" controlId={`formPlaintextPassword${index}`}>
-                  <Form.Label className="staff-info-label">{`Cortador ${index + 1}:`}</Form.Label>
+                  <Form.Label className="staff-info-labels">{`Cortador ${index + 1}:`}</Form.Label>
 
-                  <section className="staff-info-card-parameters-inputs">
+                  <section className="staff-info-card-params-input-group">
                     <section>
                       <Form.Control type="number" placeholder="semanas"/><label>sem</label>
                     </section>

@@ -42,11 +42,11 @@ export default function FormPage() {
 
           <section className="forms-buttons">
             <button className="btn btn-primary">
-              <label className="os-txt">cancelar</label>
+              <label className="os-txt">&nbsp;Anterior&nbsp;</label>
             </button>
 
             <button className="btn btn-primary">
-              <label className="os-txt" onClick={() => setBarStep$(barStep$ + 1)}>siguiente</label>
+              <label className="os-txt" onClick={() => setBarStep$(barStep$ + 1)}>Siguiente</label>
             </button>
           </section>
         </article>

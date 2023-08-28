@@ -1,0 +1,44 @@
+.about-me-modal-container .modal-content{
+    background-color: hsl(var(--os-preset-h), var(--os-preset-s), calc(var(--os-preset-l) - 4%));
+}
+
+.about-me-modal-container .modal-header {
+    padding: 0.2rem 1rem;
+}
+
+.about-me-modal-container .modal-header .modal-title{
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.about-me-modal-card .card{
+    max-width: 370px;
+    margin: 0 auto;
+    border: unset;
+}
+
+.about-me-modal-card-personal-info {
+    display: flex;
+    gap: 20px;
+}
+
+.about-me-modal-card-personal-info img {
+    width: 80px;
+    border-radius: 7px;
+}
+
+.about-me-modal-card-personal-info label {
+    color: var(--os-orange-60);
+}
+
+.about-me-modal-card-personal-info .os-txt-sm {
+    line-height: 0;
+}
+
+.about-me-modal-card-skills-info {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+

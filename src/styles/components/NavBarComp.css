@@ -28,6 +28,11 @@
     gap: 40px;
 }
 
+.navbar-options button label{
+    color: var(--os-preset);
+    cursor: pointer;
+}
+
 @media (max-width: 992px) {
     .navbar-options {
         gap: unset;

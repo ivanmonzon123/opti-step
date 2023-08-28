@@ -3,10 +3,7 @@ import {Card, Modal} from 'react-bootstrap';
 import "../styles/components/AboutMeComp.css"
 import Avatar from "../images/about-me-image.jpeg"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import {faFacebook} from "@fortawesome/free-brands-svg-icons";
-import {faInstagram} from "@fortawesome/free-brands-svg-icons";
-import {faLinkedin} from "@fortawesome/free-brands-svg-icons";
-import {Link} from "react-router-dom";
+import {faFacebook, faInstagram, faLinkedin} from "@fortawesome/free-brands-svg-icons";
 
 const AboutMeModal = ({show$, setShow$}) => {
   const handleClose = () => setShow$(false);
@@ -33,7 +30,7 @@ const AboutMeModal = ({show$, setShow$}) => {
                <section className="about-me-modal-card-personal-info">
                  <img src={Avatar} alt="about-me-avatar"/>
 
-                 <section>
+                 <section className="about-me-modal-card-personal-info-contacts">
                    <label className="os-txt os-txt-md">Ivan <span className="text-black">Monzon Yujra</span></label>
 
                    <label className="os-txt os-txt-sm">ivanmonzon000@gmail.com</label>
@@ -44,10 +41,18 @@ const AboutMeModal = ({show$, setShow$}) => {
              </Card.Body>
            </Card>
 
-           <section className="about-me-modal-card-skills-info mt-4">
-             <FontAwesomeIcon icon={faFacebook} />
-             <FontAwesomeIcon icon={faInstagram} />
-             <FontAwesomeIcon icon={faLinkedin} />
+           <section className="about-me-modal-card-skills-info mt-3">
+             <a href="https://www.facebook.com/ivan.monzonyujra/" target="_blank" rel="noopener noreferrer">
+               <FontAwesomeIcon icon={faFacebook} />
+             </a>
+
+             <a href="https://www.instagram.com/ivanmonzonyujra/" target="_blank" rel="noopener noreferrer">
+               <FontAwesomeIcon icon={faInstagram} />
+             </a>
+
+             <a href="https://www.linkedin.com/in/ivan-franklin-monzon-yujra-b49ba123a/" target="_blank" rel="noopener noreferrer">
+               <FontAwesomeIcon icon={faLinkedin} />
+             </a>
            </section>
          </section>
        </Modal.Body>

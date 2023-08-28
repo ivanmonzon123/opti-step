@@ -5,7 +5,7 @@ export default function OptimizationResultComp() {
   return (
       <Card className="opt-result-card">
         <Card.Body>
-          <section className="opt-result-card-parameters">
+          <section className="opt-result-card-production-models">
             <InputGroup>
               <InputGroup.Text>Oxford (pares):</InputGroup.Text>
 
@@ -25,15 +25,15 @@ export default function OptimizationResultComp() {
               </InputGroup>
           </section>
 
-            <section className="opt-result-card-parameters mt-4">
+            <section className="opt-result-card-total-benefit mt-4">
                 <InputGroup>
-                    <InputGroup.Text>Max.total beneficio:</InputGroup.Text>
+                    <InputGroup.Text>Max. total beneficio:</InputGroup.Text>
 
                     <Form.Control required type="number"/>
                 </InputGroup>
 
                 <InputGroup>
-                    <InputGroup.Text>Max.total beneficio (líquido):</InputGroup.Text>
+                    <InputGroup.Text>Max. total beneficio (líquido):</InputGroup.Text>
 
                     <Form.Control required type="number"/>
                 </InputGroup>

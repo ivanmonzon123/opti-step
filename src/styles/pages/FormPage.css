@@ -16,9 +16,24 @@
     width: 55%;
 }
 
+.forms-title {
+    text-align: center;
+}
+
+.forms-title .progress{
+    width: 350px;
+    margin: 0 auto;
+}
+
 @media (max-width: 768px) {
     .forms-content {
         width: 80%;
+    }
+}
+
+@media (max-width: 576px) {
+    .forms-title .progress{
+        width: 100%
     }
 }
 

@@ -11,6 +11,11 @@ import {faPrint} from "@fortawesome/free-solid-svg-icons"
 
 export default function FormPage() {
   const [barStep$, setBarStep$] = useState(0);
+  const [formData$, setFormData$] = useState({
+    numberOfModels: 0,
+    productionPeriod: 0
+  })
+
   const title = [
     'Detalles del pedido',
     'Informacion personal',
@@ -18,7 +23,7 @@ export default function FormPage() {
     'Resultados de optimizacion'
   ];
   const form = [
-    <OrderDetailsComp/>,
+    <OrderDetailsComp formData$={formData$} setFormData$={setFormData$}/>,
     <StaffInfoComp
     processTitle="cortado"
     setterParamsQuestion="¿Con cuantos cortadores dispone?"

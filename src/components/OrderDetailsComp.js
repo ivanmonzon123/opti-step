@@ -1,6 +1,25 @@
 import {Card, Form, InputGroup, Table} from "react-bootstrap";
 import "../styles/components/OrderDetailsComp.css"
-export default function OrderDetailsComp() {
+import {useEffect, useState} from "react";
+export default function OrderDetailsComp({formData$, setFormData$}) {
+
+  const [inputValue, setInputValue] = useState('');
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      console.log('Input value:', inputValue);
+    }, 1500);
+
+    return () => {
+      clearTimeout(timeoutId); // Cancela el timeout anterior al cambiar el valor
+    };
+  }, [inputValue]);
+//   function setNumberOfModels(value) {
+// setTimeout(() => {
+//       console.log(value)
+//     }, "2000");
+//   }
+
   return (
       <Card className="order-details-card">
         <Card.Body>
@@ -12,7 +31,10 @@ export default function OrderDetailsComp() {
             <InputGroup>
               <InputGroup.Text>Cant. modelos:</InputGroup.Text>
 
-              <Form.Control required type="number"/>
+              <Form.Control
+                  required type="number"
+                  onChange={(e) => {setInputValue(e.target.value)}}
+              />
             </InputGroup>
 
             <InputGroup>

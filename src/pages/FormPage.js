@@ -12,8 +12,20 @@ import {faPrint} from "@fortawesome/free-solid-svg-icons"
 export default function FormPage() {
   const [barStep$, setBarStep$] = useState(0);
   const [formData$, setFormData$] = useState({
+    optimize: "precio",
+    opType: "max",
+    productionPeriod: 0,
     numberOfModels: 0,
-    productionPeriod: 0
+
+    constraints: {
+      cortado: { max: 0 },
+      aparado: { max: 0 },
+      solado: { max: 0 },
+      terminado: { max: 0 },
+    },
+
+    variables: {
+    }
   })
 
   const title = [

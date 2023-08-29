@@ -4,9 +4,27 @@
 
 .order-details-card-parameters {
     width: 100%;
-    padding: 0 10%;
+    padding: 0 10px;
     display: flex;
-    gap: 10%;
+    gap: 20px;
+}
+
+.order-details-card-parameters-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.order-details-card-parameters-buttons button{
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.order-details-card-parameters .input-group {
+    max-width: 300px;
 }
 
 .forms-buttons {
@@ -21,16 +39,14 @@
 }
 
 @media (max-width: 992px) {
+    .order-details-table span{
+        display: none;
+    }
+}
+
+@media (max-width: 576px) {
     .order-details-card-parameters {
         flex-direction: column;
         gap: 10px;
-    }
-
-    .order-details-card-parameters .input-group {
-        max-width: 300px;
-    }
-
-    .order-details-table span{
-        display: none;
     }
 }

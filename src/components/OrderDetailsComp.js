@@ -1,46 +1,81 @@
-import {Card, Form, InputGroup, Table} from "react-bootstrap";
+import {Button, Card, Form, InputGroup, Table} from "react-bootstrap";
 import "../styles/components/OrderDetailsComp.css"
 import {useEffect, useState} from "react";
+
 export default function OrderDetailsComp({formData$, setFormData$}) {
 
-  const [inputValue, setInputValue] = useState('');
+  const [inputRows, setInputRows] = useState([
+    {
+      modelo: "",
+      precio: "",
+      costo: "",
+      cantMin: "",
+      cantMax: "",
+    },
+  ]);
 
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      console.log('Input value:', inputValue);
-    }, 1500);
+  const handleAddRow = () => {
+    setInputRows([...inputRows, { modelo: "", precio: "", costo: "", cantMin: "", cantMax: "" }]);
+  };
 
-    return () => {
-      clearTimeout(timeoutId); // Cancela el timeout anterior al cambiar el valor
-    };
-  }, [inputValue]);
-//   function setNumberOfModels(value) {
-// setTimeout(() => {
-//       console.log(value)
-//     }, "2000");
-//   }
+  const handleRemoveRow = (index) => {
+    if(index <= inputRows.length) {
+      const newInputRows = [...inputRows];
+      newInputRows.splice(index, 1);
+      setInputRows(newInputRows);
+    }
+  };
+
+  const handleInputChange = (index, field, value) => {
+    const newInputRows = [...inputRows];
+    newInputRows[index][field] = value;
+    setInputRows(newInputRows);
+  };
+
+  const updateFormData = () => {
+    const newVariables = {};
+    inputRows.forEach((row) => {
+      if (row.modelo) {
+        newVariables[row.modelo] = {
+          precio: row.precio,
+          costo: row.costo,
+          cantMin: row.cantMin,
+          cantMax: row.cantMax,
+        };
+      }
+    });
+    setFormData$((prevData) => ({
+      ...prevData,
+      variables: newVariables,
+    }));
+  };
+
+// useEffect(() => {
+//   console.log(formData$)
+// }, [formData$])
 
   return (
       <Card className="order-details-card">
         <Card.Body>
           <Card.Text className="text-center os-txt">
-            Ingrese los modelos, costo de producción, precio por unidad de calzado y tiempo máximo para producir en semanas
+            Ingrese los modelos, costo de producción, precio de venta por unidad de calzado y tiempo máximo para producir en semanas
           </Card.Text>
 
           <section className="order-details-card-parameters">
-            <InputGroup>
-              <InputGroup.Text>Cant. modelos:</InputGroup.Text>
+            <section className="order-details-card-parameters-buttons">
+              <Button onClick={handleAddRow}>
+                <label className="os-txt">+</label>
+              </Button>
 
-              <Form.Control
-                  required type="number"
-                  onChange={(e) => {setInputValue(e.target.value)}}
-              />
-            </InputGroup>
+              <Button onClick={() => handleRemoveRow(inputRows.length - 1)}>
+                <label className="os-txt">-</label>
+              </Button>
+            </section>
 
             <InputGroup>
               <InputGroup.Text>Periodo de prod:</InputGroup.Text>
 
-              <Form.Control required type="number"/>
+              <Form.Control required type="number" placeholder={"semanas"}/>
             </InputGroup>
           </section>
 
@@ -52,45 +87,62 @@ export default function OrderDetailsComp({formData$, setFormData$}) {
               <th>Costo</th>
               <th><span>Cant.</span> min</th>
               <th><span>Cant.</span> max</th>
-
             </tr>
             </thead>
+
             <tbody>
-            <tr>
-              {Array.from({length: 5}).map((_, index) => (
-                  <td key={index}>
+            {inputRows.map((row, index) => (
+                <tr key={index}>
+                  <td>
                     <Form.Control
                         required
                         type="text"
                         placeholder=""
-                        defaultValue=""
-                    /></td>
-              ))}
-            </tr>
-            <tr>
-              {Array.from({length: 5}).map((_, index) => (
-                  <td key={index}>
+                        value={row.modelo}
+                        onChange={(e) => handleInputChange(index, "modelo", e.target.value)}
+                    />
+                  </td>
+                  <td>
                     <Form.Control
                         required
-                        type="text"
+                        type="number"
                         placeholder=""
-                        defaultValue=""
-                    /></td>
-              ))}
-            </tr>
-            <tr>
-              {Array.from({length: 5}).map((_, index) => (
-                  <td key={index}>
+                        value={row.precio}
+                        onChange={(e) => handleInputChange(index, "precio", e.target.value)}
+                    />
+                  </td>
+                  <td>
                     <Form.Control
                         required
-                        type="text"
+                        type="number"
                         placeholder=""
-                        defaultValue=""
-                    /></td>
-              ))}
-            </tr>
+                        value={row.costo}
+                        onChange={(e) => handleInputChange(index, "costo", e.target.value)}
+                    />
+                  </td>
+                  <td>
+                    <Form.Control
+                        required
+                        type="number"
+                        placeholder=""
+                        value={row.cantMin}
+                        onChange={(e) => handleInputChange(index, "cantMin", e.target.value)}
+                    />
+                  </td>
+                  <td>
+                    <Form.Control
+                        required
+                        type="number"
+                        placeholder=""
+                        value={row.cantMax}
+                        onChange={(e) => handleInputChange(index, "cantMax", e.target.value)}
+                    />
+                  </td>
+                </tr>
+            ))}
             </tbody>
           </Table>
+          <Button onClick={updateFormData}>Actualizar FormData</Button>
         </Card.Body>
       </Card>
 

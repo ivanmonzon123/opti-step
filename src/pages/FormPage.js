@@ -11,9 +11,9 @@ import {faPrint} from "@fortawesome/free-solid-svg-icons"
 
 export default function FormPage() {
   const [compToRender$, setCompToRender$] = useState(0);
-  const [formStep$, setFormStep$] = useState(0);
+  const [formStepChange$, setFormStepChange$] = useState(0);
 
-  const [formData$, setFormData$] = useState({
+  const [optFormData$, setOptFormData$] = useState({
     optimize: "precio",
     opType: "max",
     productionPeriod: 0,
@@ -30,7 +30,7 @@ export default function FormPage() {
     }
   });
 
-  const [inputRowsOfOrderDet$, setInputRowsOfOrderDet$] = useState([
+  const [orderDetFormData$, setOrderDetFormData$] = useState([
     {modelo: "", precio: "", costo: "", cantMin: "", cantMax: "",},
   ]);
 
@@ -42,9 +42,9 @@ export default function FormPage() {
   ];
   const form = [
     <OrderDetailsComp
-        formData$={formData$} setFormData$={setFormData$}
-        inputRowsOfOrderDet$={inputRowsOfOrderDet$} setInputRowsOfOrderDet$={setInputRowsOfOrderDet$}
-        formStep$={formStep$} setFormStep$={setFormStep$}
+        optFormData$={optFormData$} setOptFormData$={setOptFormData$}
+        orderDetFormData$={orderDetFormData$} setOrderDetFormData$={setOrderDetFormData$}
+        formStepChange$={formStepChange$} setFormStepChange$={setFormStepChange$}
         nextCompToRenderFn={nextCompToRender}
     />,
     <StaffInfoComp
@@ -69,14 +69,14 @@ export default function FormPage() {
 
   function previousCompToRender(){
     if(compToRender$) {
-      setFormStep$(formStep$ - 1);
+      setFormStepChange$(formStepChange$ - 1);
       setCompToRender$(compToRender$ - 1);
     }
   }
 
   useEffect(() => {
-    console.log(formData$)
-  }, [formData$])
+    console.log(optFormData$)
+  }, [optFormData$])
 
   return (
       <article className="forms-container">
@@ -109,7 +109,7 @@ export default function FormPage() {
 
                   <button className="btn btn-primary">
                       {/*<label className="os-txt" onClick={nextCompToRender}>Siguiente</label>*/}
-                    <label className="os-txt" onClick={() => {setFormStep$(formStep$ + 1)}}>Siguiente</label>
+                    <label className="os-txt" onClick={() => {setFormStepChange$(formStepChange$ + 1)}}>Siguiente</label>
                   </button>
                 </section>
           }

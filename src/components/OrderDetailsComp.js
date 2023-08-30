@@ -3,35 +3,41 @@ import "../styles/components/OrderDetailsComp.css"
 import {useEffect, useRef} from "react";
 
 export default function OrderDetailsComp(
-    {formData$, setFormData$,
-      inputRowsOfOrderDet$, setInputRowsOfOrderDet$,
-      formStep$, setFormStep$,
+    { optFormData$, setOptFormData$,
+      orderDetFormData$, setOrderDetFormData$,
+      formStepChange$, setFormStepChange$,
       nextCompToRenderFn
     }
 ) {
 
   const handleAddRow = () => {
-    setInputRowsOfOrderDet$([...inputRowsOfOrderDet$, { modelo: "", precio: "", costo: "", cantMin: "", cantMax: "" }]);
+    setOrderDetFormData$([...orderDetFormData$, { modelo: "", precio: "", costo: "", cantMin: "", cantMax: "" }]);
   };
 
   const handleRemoveRow = (index) => {
-    if(index <= inputRowsOfOrderDet$.length) {
-      const newInputRows = [...inputRowsOfOrderDet$];
+    if(index <= orderDetFormData$.length) {
+      const newInputRows = [...orderDetFormData$];
       newInputRows.splice(index, 1);
-      setInputRowsOfOrderDet$(newInputRows);
+      setOrderDetFormData$(newInputRows);
     }
   };
 
   const handleInputChange = (index, field, value) => {
-    const newInputRows = [...inputRowsOfOrderDet$];
+    const newInputRows = [...orderDetFormData$];
     newInputRows[index][field] = value;
-    setInputRowsOfOrderDet$(newInputRows);
+    setOrderDetFormData$(newInputRows);
   };
+
+  const handleProdPeriod = (value) => {
+    setOptFormData$((prev) => ({
+      ...prev, productionPeriod: value
+    }));
+  }
 
   const updateFormData = () => {
     const newVariables = {};
-    const newConstraints = {...formData$.constraints};
-    inputRowsOfOrderDet$.forEach((row) => {
+    const newConstraints = {...optFormData$.constraints};
+    orderDetFormData$.forEach((row) => {
       if (row.modelo) {
         newVariables[row.modelo] = {
           precio: row.precio,
@@ -40,23 +46,27 @@ export default function OrderDetailsComp(
           aparado: 0,
           solado: 0,
           terminado: 0,
-          [row.modelo+"Min"]: row.cantMin,
-          [row.modelo+"Max"]: row.cantMax,
+          [row.modelo+"Min"]: 1,
+          [row.modelo+"Max"]: 1,
         };
 
         newConstraints[row.modelo+"Max"] = { max: row.cantMax }
         newConstraints[row.modelo+"Min"] = { min: row.cantMin }
       }
     });
-    setFormData$((prevData) => ({
+    setOptFormData$((prevData) => ({
       ...prevData,
       variables: newVariables, constraints: newConstraints
     }));
   };
   
   const orderDetailsFormIsValid = () => {
+    if(!optFormData$.productionPeriod) {
+      return false
+    }
+
     let isValid = true;
-    inputRowsOfOrderDet$.forEach((row, index) => {
+    orderDetFormData$.forEach((row, index) => {
       if (!row.modelo || !row.precio || !row.costo || !row.cantMin || !row.cantMax) {
         isValid = false;
       }
@@ -65,17 +75,17 @@ export default function OrderDetailsComp(
   };
 
   useEffect(() => {
-    if (formStep$ === 1) {
+    if (formStepChange$ === 1) {
       if (!orderDetailsFormIsValid()) {
         formRef.current.click();
-        setFormStep$(0);
+        setFormStepChange$(0);
       }else {
         formRef.current.click();
         nextCompToRenderFn();
       }
     }
     // eslint-disable-next-line
-  }, [formStep$]);
+  }, [formStepChange$]);
 
   const formRef = useRef(null);
 
@@ -85,14 +95,14 @@ export default function OrderDetailsComp(
           <Card.Text className="text-center os-txt">
             Ingrese los modelos, costo de producción, precio de venta por unidad de calzado y tiempo máximo para producir en semanas
           </Card.Text>
-
+          <form onSubmit={(e) => {e.preventDefault()}}>
           <section className="order-details-card-parameters">
             <section className="order-details-card-parameters-buttons">
               <Button onClick={handleAddRow}>
                 <label className="os-txt">+</label>
               </Button>
 
-              <Button onClick={() => handleRemoveRow(inputRowsOfOrderDet$.length - 1)}>
+              <Button onClick={() => handleRemoveRow(orderDetFormData$.length - 1)}>
                 <label className="os-txt">-</label>
               </Button>
             </section>
@@ -100,11 +110,15 @@ export default function OrderDetailsComp(
             <InputGroup>
               <InputGroup.Text>Periodo de prod:</InputGroup.Text>
 
-              <Form.Control required type="number" placeholder={"semanas"}/>
+              <Form.Control
+                  required type="number"
+                  placeholder={"semanas"}
+                  onChange={(e) => handleProdPeriod(e.target.value)}
+              />
             </InputGroup>
           </section>
 
-          <form onSubmit={(e) => {e.preventDefault()}}>
+
           <Table responsive className="order-details-table">
             <thead>
             <tr>
@@ -117,7 +131,7 @@ export default function OrderDetailsComp(
             </thead>
 
             <tbody>
-            {inputRowsOfOrderDet$.map((row, index) => (
+            {orderDetFormData$.map((row, index) => (
                 <tr key={index}>
                   <td>
                     <Form.Control

@@ -11,6 +11,7 @@ import {faPrint} from "@fortawesome/free-solid-svg-icons"
 
 export default function FormPage() {
   const [barStep$, setBarStep$] = useState(0);
+
   const [formData$, setFormData$] = useState({
     optimize: "precio",
     opType: "max",
@@ -31,6 +32,8 @@ export default function FormPage() {
   const [inputRowsOfOrderDet$, setInputRowsOfOrderDet$] = useState([
     {modelo: "", precio: "", costo: "", cantMin: "", cantMax: "",},
   ]);
+  
+  const [nextStep$, setNextStep$] = useState(0)
 
   const title = [
     'Detalles del pedido',
@@ -42,6 +45,8 @@ export default function FormPage() {
     <OrderDetailsComp
         formData$={formData$} setFormData$={setFormData$}
         inputRowsOfOrderDet$={inputRowsOfOrderDet$} setInputRowsOfOrderDet$={setInputRowsOfOrderDet$}
+        nextStep$={nextStep$} setNextStep$={setNextStep$}
+        nextFormStepFn={nextFormStep}
     />,
     <StaffInfoComp
     processTitle="cortado"
@@ -65,6 +70,7 @@ export default function FormPage() {
 
   function previousFormStep(){
     if(barStep$) {
+      setNextStep$(nextStep$ - 1);
       setBarStep$(barStep$ - 1);
     }
   }
@@ -103,7 +109,8 @@ export default function FormPage() {
                   </button>
 
                   <button className="btn btn-primary">
-                      <label className="os-txt" onClick={nextFormStep}>Siguiente</label>
+                      {/*<label className="os-txt" onClick={nextFormStep}>Siguiente</label>*/}
+                    <label className="os-txt" onClick={() => {setNextStep$(nextStep$ + 1)}}>Siguiente</label>
                   </button>
                 </section>
           }

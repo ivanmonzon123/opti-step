@@ -1,9 +1,13 @@
 import {Button, Card, Form, InputGroup, Table} from "react-bootstrap";
 import "../styles/components/OrderDetailsComp.css"
-import {useEffect} from "react";
+import {useEffect, useRef} from "react";
 
 export default function OrderDetailsComp(
-    {formData$, setFormData$, inputRowsOfOrderDet$, setInputRowsOfOrderDet$}
+    {formData$, setFormData$,
+      inputRowsOfOrderDet$, setInputRowsOfOrderDet$,
+      nextStep$, setNextStep$,
+      nextFormStepFn
+    }
 ) {
 
   const handleAddRow = () => {
@@ -49,12 +53,31 @@ export default function OrderDetailsComp(
       variables: newVariables, constraints: newConstraints
     }));
   };
+  
+  const orderDetailsFormIsValid = () => {
+    let isValid = true;
+    inputRowsOfOrderDet$.forEach((row, index) => {
+      if (!row.modelo || !row.precio || !row.costo || !row.cantMin || !row.cantMax) {
+        isValid = false;
+      }
+    });
+    return isValid;
+  };
 
   useEffect(() => {
-    return () => {
-      updateFormData();
-    };
-  }, []);
+    if (nextStep$ === 1) {
+      if (!orderDetailsFormIsValid()) {
+        formRef.current.click();
+        setNextStep$(0);
+      }else {
+        formRef.current.click();
+        nextFormStepFn();
+      }
+    }
+    // eslint-disable-next-line
+  }, [nextStep$]);
+
+  const formRef = useRef(null);
 
   return (
       <Card className="order-details-card">
@@ -81,6 +104,7 @@ export default function OrderDetailsComp(
             </InputGroup>
           </section>
 
+          <form onSubmit={(e) => {e.preventDefault()}}>
           <Table responsive className="order-details-table">
             <thead>
             <tr>
@@ -144,7 +168,8 @@ export default function OrderDetailsComp(
             ))}
             </tbody>
           </Table>
-          {/*<Button onClick={updateFormData}>Actualizar FormData</Button>*/}
+            <input ref={formRef} className="d-none" type="submit" value={"apply"} onClick={updateFormData}/>
+          </form>
         </Card.Body>
       </Card>
 

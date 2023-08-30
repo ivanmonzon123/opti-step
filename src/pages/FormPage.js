@@ -48,10 +48,11 @@ export default function FormPage() {
         nextCompToRenderFn={nextCompToRender}
     />,
     <StaffInfoComp
-    processTitle="cortado"
-    setterParamsQuestion="¿Con cuantos cortadores dispone?"
-    workingPeriodQuestion="¿Cuántas horas por dia y cuantas de las 12 semanas trabajara?"
-    numberOfWorkers={3}
+    params = {{
+        processTitle: "cortado",
+        setterParamsQuestion: "¿Con cuantos cortadores dispone?",
+        workingPeriodQuestion: "¿Cuántas horas por dia y cuantas de las 12 semanas trabajara?"
+      }}
     />,
     <ProductionDetailsComp/>,
     <OptimizationResultComp/>

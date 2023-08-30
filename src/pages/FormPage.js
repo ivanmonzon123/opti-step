@@ -10,7 +10,8 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faPrint} from "@fortawesome/free-solid-svg-icons"
 
 export default function FormPage() {
-  const [barStep$, setBarStep$] = useState(0);
+  const [compToRender$, setCompToRender$] = useState(0);
+  const [formStep$, setFormStep$] = useState(0);
 
   const [formData$, setFormData$] = useState({
     optimize: "precio",
@@ -32,8 +33,6 @@ export default function FormPage() {
   const [inputRowsOfOrderDet$, setInputRowsOfOrderDet$] = useState([
     {modelo: "", precio: "", costo: "", cantMin: "", cantMax: "",},
   ]);
-  
-  const [nextStep$, setNextStep$] = useState(0)
 
   const title = [
     'Detalles del pedido',
@@ -45,8 +44,8 @@ export default function FormPage() {
     <OrderDetailsComp
         formData$={formData$} setFormData$={setFormData$}
         inputRowsOfOrderDet$={inputRowsOfOrderDet$} setInputRowsOfOrderDet$={setInputRowsOfOrderDet$}
-        nextStep$={nextStep$} setNextStep$={setNextStep$}
-        nextFormStepFn={nextFormStep}
+        formStep$={formStep$} setFormStep$={setFormStep$}
+        nextCompToRenderFn={nextCompToRender}
     />,
     <StaffInfoComp
     processTitle="cortado"
@@ -59,19 +58,19 @@ export default function FormPage() {
   ];
 
   function isFinalStep(){
-    return barStep$ + 1 === title.length;
+    return compToRender$ + 1 === title.length;
   }
 
-  function nextFormStep(){
+  function nextCompToRender(){
     if(!isFinalStep()) {
-      setBarStep$(barStep$ + 1);
+      setCompToRender$(compToRender$ + 1);
     }
   }
 
-  function previousFormStep(){
-    if(barStep$) {
-      setNextStep$(nextStep$ - 1);
-      setBarStep$(barStep$ - 1);
+  function previousCompToRender(){
+    if(compToRender$) {
+      setFormStep$(formStep$ - 1);
+      setCompToRender$(compToRender$ - 1);
     }
   }
 
@@ -83,13 +82,13 @@ export default function FormPage() {
       <article className="forms-container">
         <article className="forms-content">
           <section className="forms-title">
-            <label className="os-txt os-txt-lg os-txt-bold">{title[barStep$]}</label>
-            <ProgressBar now={((barStep$ + 1)/ title.length) * 100}
-                         label={`Paso: ${barStep$ + 1}`}/>
+            <label className="os-txt os-txt-lg os-txt-bold">{title[compToRender$]}</label>
+            <ProgressBar now={((compToRender$ + 1)/ title.length) * 100}
+                         label={`Paso: ${compToRender$ + 1}`}/>
           </section>
 
           <section className="w-100">
-            {form[barStep$]}
+            {form[compToRender$]}
           </section>
 
           {
@@ -104,13 +103,13 @@ export default function FormPage() {
                 </section>
                 :
                 <section className="forms-buttons">
-                  <button className="btn btn-primary" disabled={!barStep$}>
-                    <label className="os-txt" onClick={previousFormStep}>&nbsp;Anterior&nbsp;</label>
+                  <button className="btn btn-primary" disabled={!compToRender$}>
+                    <label className="os-txt" onClick={previousCompToRender}>&nbsp;Anterior&nbsp;</label>
                   </button>
 
                   <button className="btn btn-primary">
-                      {/*<label className="os-txt" onClick={nextFormStep}>Siguiente</label>*/}
-                    <label className="os-txt" onClick={() => {setNextStep$(nextStep$ + 1)}}>Siguiente</label>
+                      {/*<label className="os-txt" onClick={nextCompToRender}>Siguiente</label>*/}
+                    <label className="os-txt" onClick={() => {setFormStep$(formStep$ + 1)}}>Siguiente</label>
                   </button>
                 </section>
           }

@@ -5,8 +5,8 @@ import {useEffect, useRef} from "react";
 export default function OrderDetailsComp(
     {formData$, setFormData$,
       inputRowsOfOrderDet$, setInputRowsOfOrderDet$,
-      nextStep$, setNextStep$,
-      nextFormStepFn
+      formStep$, setFormStep$,
+      nextCompToRenderFn
     }
 ) {
 
@@ -65,17 +65,17 @@ export default function OrderDetailsComp(
   };
 
   useEffect(() => {
-    if (nextStep$ === 1) {
+    if (formStep$ === 1) {
       if (!orderDetailsFormIsValid()) {
         formRef.current.click();
-        setNextStep$(0);
+        setFormStep$(0);
       }else {
         formRef.current.click();
-        nextFormStepFn();
+        nextCompToRenderFn();
       }
     }
     // eslint-disable-next-line
-  }, [nextStep$]);
+  }, [formStep$]);
 
   const formRef = useRef(null);
 

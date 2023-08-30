@@ -1,7 +1,7 @@
 import "../styles/pages/HomePage.css"
 import "../styles/pages/FormPage.css"
 import OrderDetailsComp from "../components/OrderDetailsComp";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {ProgressBar} from "react-bootstrap";
 import StaffInfoComp from "../components/StaffInfoComp";
 import ProductionDetailsComp from "../components/ProductionDetailsComp";
@@ -26,7 +26,11 @@ export default function FormPage() {
 
     variables: {
     }
-  })
+  });
+
+  const [inputRowsOfOrderDet$, setInputRowsOfOrderDet$] = useState([
+    {modelo: "", precio: "", costo: "", cantMin: "", cantMax: "",},
+  ]);
 
   const title = [
     'Detalles del pedido',
@@ -35,7 +39,10 @@ export default function FormPage() {
     'Resultados de optimizacion'
   ];
   const form = [
-    <OrderDetailsComp formData$={formData$} setFormData$={setFormData$}/>,
+    <OrderDetailsComp
+        formData$={formData$} setFormData$={setFormData$}
+        inputRowsOfOrderDet$={inputRowsOfOrderDet$} setInputRowsOfOrderDet$={setInputRowsOfOrderDet$}
+    />,
     <StaffInfoComp
     processTitle="cortado"
     setterParamsQuestion="¿Con cuantos cortadores dispone?"
@@ -55,11 +62,16 @@ export default function FormPage() {
       setBarStep$(barStep$ + 1);
     }
   }
+
   function previousFormStep(){
     if(barStep$) {
       setBarStep$(barStep$ - 1);
     }
   }
+
+  useEffect(() => {
+    console.log(formData$)
+  }, [formData$])
 
   return (
       <article className="forms-container">

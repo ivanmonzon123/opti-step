@@ -1,58 +1,60 @@
 import {Button, Card, Form, InputGroup, Table} from "react-bootstrap";
 import "../styles/components/OrderDetailsComp.css"
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 
-export default function OrderDetailsComp({formData$, setFormData$}) {
-
-  const [inputRows, setInputRows] = useState([
-    {
-      modelo: "",
-      precio: "",
-      costo: "",
-      cantMin: "",
-      cantMax: "",
-    },
-  ]);
+export default function OrderDetailsComp(
+    {formData$, setFormData$, inputRowsOfOrderDet$, setInputRowsOfOrderDet$}
+) {
 
   const handleAddRow = () => {
-    setInputRows([...inputRows, { modelo: "", precio: "", costo: "", cantMin: "", cantMax: "" }]);
+    setInputRowsOfOrderDet$([...inputRowsOfOrderDet$, { modelo: "", precio: "", costo: "", cantMin: "", cantMax: "" }]);
   };
 
   const handleRemoveRow = (index) => {
-    if(index <= inputRows.length) {
-      const newInputRows = [...inputRows];
+    if(index <= inputRowsOfOrderDet$.length) {
+      const newInputRows = [...inputRowsOfOrderDet$];
       newInputRows.splice(index, 1);
-      setInputRows(newInputRows);
+      setInputRowsOfOrderDet$(newInputRows);
     }
   };
 
   const handleInputChange = (index, field, value) => {
-    const newInputRows = [...inputRows];
+    const newInputRows = [...inputRowsOfOrderDet$];
     newInputRows[index][field] = value;
-    setInputRows(newInputRows);
+    setInputRowsOfOrderDet$(newInputRows);
   };
 
   const updateFormData = () => {
     const newVariables = {};
-    inputRows.forEach((row) => {
+    const newConstraints = {...formData$.constraints};
+    inputRowsOfOrderDet$.forEach((row) => {
       if (row.modelo) {
         newVariables[row.modelo] = {
           precio: row.precio,
           costo: row.costo,
-          cantMin: row.cantMin,
-          cantMax: row.cantMax,
+          cortado: 0,
+          aparado: 0,
+          solado: 0,
+          terminado: 0,
+          [row.modelo+"Min"]: row.cantMin,
+          [row.modelo+"Max"]: row.cantMax,
         };
+
+        newConstraints[row.modelo+"Max"] = { max: row.cantMax }
+        newConstraints[row.modelo+"Min"] = { min: row.cantMin }
       }
     });
     setFormData$((prevData) => ({
       ...prevData,
-      variables: newVariables,
+      variables: newVariables, constraints: newConstraints
     }));
   };
 
-// useEffect(() => {
-//   console.log(formData$)
-// }, [formData$])
+  useEffect(() => {
+    return () => {
+      updateFormData();
+    };
+  }, []);
 
   return (
       <Card className="order-details-card">
@@ -67,7 +69,7 @@ export default function OrderDetailsComp({formData$, setFormData$}) {
                 <label className="os-txt">+</label>
               </Button>
 
-              <Button onClick={() => handleRemoveRow(inputRows.length - 1)}>
+              <Button onClick={() => handleRemoveRow(inputRowsOfOrderDet$.length - 1)}>
                 <label className="os-txt">-</label>
               </Button>
             </section>
@@ -91,7 +93,7 @@ export default function OrderDetailsComp({formData$, setFormData$}) {
             </thead>
 
             <tbody>
-            {inputRows.map((row, index) => (
+            {inputRowsOfOrderDet$.map((row, index) => (
                 <tr key={index}>
                   <td>
                     <Form.Control
@@ -142,7 +144,7 @@ export default function OrderDetailsComp({formData$, setFormData$}) {
             ))}
             </tbody>
           </Table>
-          <Button onClick={updateFormData}>Actualizar FormData</Button>
+          {/*<Button onClick={updateFormData}>Actualizar FormData</Button>*/}
         </Card.Body>
       </Card>
 

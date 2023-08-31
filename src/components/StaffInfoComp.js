@@ -6,7 +6,9 @@ import {faCircleRight, faPenToSquare} from "@fortawesome/free-regular-svg-icons"
 
 export default function StaffInfoComp({
     formStepChange$, setFormStepChange$,
-    nextCompToRenderFn, params
+    nextCompToRenderFn, params,
+    optFormData$, setOptFormData$,
+                                        staffInfoFormData$, setStaffInfoFormData$
 }) {
   const capitalCase = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -14,8 +16,6 @@ export default function StaffInfoComp({
 
   const [numberOfWorkers$, setNumberOfWorkers$] = useState(0);
   const [isNumberOfWorkersSet$, setIsNumberOfWorkersSet$] = useState(false);
-  const [staffInfoFormData$, setStaffInfoFormData$] = useState([]);
-
 
   function createNewRow(size){
     return Array.from({length: size}, () => ({semanas: "", horasDia: "",}));
@@ -48,7 +48,19 @@ export default function StaffInfoComp({
   };
 
   const updateFormData = () => {
-    console.log(staffInfoFormData$)
+    const totalValue = staffInfoFormData$.reduce((total, item) => {
+      const semanas = parseInt(item.semanas);
+      const horasDia = parseInt(item.horasDia);
+      return total + ((semanas * 6)* horasDia);
+    }, 0);
+
+    setOptFormData$((prevOptFormData) => ({
+      ...prevOptFormData,
+      constraints: {
+        ...prevOptFormData.constraints,
+        [params.processTitle]: { max: totalValue }
+      },
+    }));
   }
 
   const staffInfoFormIsValid = () => {
@@ -97,9 +109,9 @@ export default function StaffInfoComp({
               <Form.Control
                   type="number"
                   required
+                  defaultValue={staffInfoFormData$.length > 0? staffInfoFormData$.length: " "}
                   onChange={(e) => {setNumberOfWorkers$(e.target.value)}}
                   readOnly={isNumberOfWorkersSet$}
-
               />
 
               {!isNumberOfWorkersSet$

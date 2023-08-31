@@ -33,6 +33,7 @@ export default function FormPage() {
   const [orderDetFormData$, setOrderDetFormData$] = useState([
     {modelo: "", precio: "", costo: "", cantMin: "", cantMax: "",},
   ]);
+  const [staffInfoFormData$, setStaffInfoFormData$] = useState([]);
 
   const title = [
     'Detalles del pedido',
@@ -48,14 +49,16 @@ export default function FormPage() {
         nextCompToRenderFn={nextCompToRender}
     />,
     <StaffInfoComp
-    params = {{
-        processTitle: "cortado",
-        setterParamsQuestion: "¿Con cuantos cortadores dispone?",
-        workingPeriodQuestion: "¿Cuántas horas por dia y cuantas de las 12 semanas trabajara?"
-      }}
-    formStepChange$={formStepChange$} setFormStepChange$={setFormStepChange$}
-    nextCompToRenderFn={nextCompToRender}
-    />,
+        params = {{
+            processTitle: "cortado",
+            setterParamsQuestion: "¿Con cuantos cortadores dispone?",
+            workingPeriodQuestion: `¿Cuántas horas por dia y cuantas de las ${optFormData$.productionPeriod} semanas trabajara?`
+          }}
+        optFormData$={optFormData$} setOptFormData$={setOptFormData$}
+        formStepChange$={formStepChange$} setFormStepChange$={setFormStepChange$}
+        staffInfoFormData$={staffInfoFormData$} setStaffInfoFormData$={setStaffInfoFormData$}
+        nextCompToRenderFn={nextCompToRender}
+        />,
     <ProductionDetailsComp/>,
     <OptimizationResultComp/>
   ];
@@ -77,9 +80,9 @@ export default function FormPage() {
     }
   }
 
-  // useEffect(() => {
-  //   console.log(optFormData$)
-  // }, [optFormData$])
+  useEffect(() => {
+    console.log(optFormData$)
+  }, [optFormData$])
 
   return (
       <article className="forms-container">

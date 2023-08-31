@@ -4,7 +4,7 @@ import OrderDetailsComp from "../components/OrderDetailsComp";
 import {useEffect, useState} from "react";
 import {ProgressBar} from "react-bootstrap";
 import StaffInfoComp from "../components/StaffInfoComp";
-import ProductionDetailsComp from "../components/ProductionDetailsComp";
+import ProdDetailsComp from "../components/ProdDetailsComp";
 import OptimizationResultComp from "../components/OptimizationResultComp";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faPrint} from "@fortawesome/free-solid-svg-icons"
@@ -34,6 +34,7 @@ export default function FormPage() {
     {modelo: "", precio: "", costo: "", cantMin: "", cantMax: "",},
   ]);
   const [staffInfoFormData$, setStaffInfoFormData$] = useState([]);
+  const [prodDetFormData$, setProdDetFormData$] = useState([]);
 
   const title = [
     'Detalles del pedido',
@@ -59,7 +60,12 @@ export default function FormPage() {
         staffInfoFormData$={staffInfoFormData$} setStaffInfoFormData$={setStaffInfoFormData$}
         nextCompToRenderFn={nextCompToRender}
         />,
-    <ProductionDetailsComp/>,
+    <ProdDetailsComp
+        optFormData$={optFormData$} setOptFormData$={setOptFormData$}
+        formStepChange$={formStepChange$} setFormStepChange$={setFormStepChange$}
+        prodDetFormData$={prodDetFormData$} setProdDetFormData$={setProdDetFormData$}
+        nextCompToRenderFn={nextCompToRender}
+    />,
     <OptimizationResultComp/>
   ];
 

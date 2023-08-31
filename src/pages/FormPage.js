@@ -53,6 +53,8 @@ export default function FormPage() {
         setterParamsQuestion: "¿Con cuantos cortadores dispone?",
         workingPeriodQuestion: "¿Cuántas horas por dia y cuantas de las 12 semanas trabajara?"
       }}
+    formStepChange$={formStepChange$} setFormStepChange$={setFormStepChange$}
+    nextCompToRenderFn={nextCompToRender}
     />,
     <ProductionDetailsComp/>,
     <OptimizationResultComp/>
@@ -75,9 +77,9 @@ export default function FormPage() {
     }
   }
 
-  useEffect(() => {
-    console.log(optFormData$)
-  }, [optFormData$])
+  // useEffect(() => {
+  //   console.log(optFormData$)
+  // }, [optFormData$])
 
   return (
       <article className="forms-container">

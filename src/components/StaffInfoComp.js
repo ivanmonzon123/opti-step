@@ -1,47 +1,115 @@
-import {Card, Form} from "react-bootstrap";
 import "../styles/components/StaffInfoComp.css"
+import ProcessInfoComp from "./ProcessInfoComp";
+import {useEffect, useState} from "react";
 
-export default function StaffInfoComp({processTitle, setterParamsQuestion, workingPeriodQuestion, numberOfWorkers}) {
-  const capitalCase = (string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  };
+export default function StaffInfoComp(
+  {
+    formStepChange$, setFormStepChange$,
+    optFormData$, setOptFormData$,
+    staffInfoFormData$, setStaffInfoFormData$,
+    nextCompToRenderFn
+  }
+) {
+
+  const [processToCheck$, setProcessToCheck$] = useState({
+    formStep: -1,
+    process: ["cortado", "aparado", "solado", "terminado"]
+  });
+
+  const [isValid$, setIsValid$] = useState({
+    cortado: false,
+    aparado: false,
+    solado: false,
+    terminado: false
+  })
+
+  const [cortadoProcessFormData, setCortadoProcessFormData] = useState(staffInfoFormData$.cortado);
+  const [aparadoProcessFormData, setAparadoProcessFormData] = useState(staffInfoFormData$.aparado);
+  const [soladoProcessFormData, setSoladoProcessFormData] = useState(staffInfoFormData$.solado);
+  const [terminadoProcessFormData, setTerminadoProcessFormData] = useState(staffInfoFormData$.terminado);
+
+
+  useEffect(() => {
+    if (formStepChange$ === 2) {
+      setProcessToCheck$({...processToCheck$, formStep: 0});
+    }
+    // eslint-disable-next-line
+  }, [formStepChange$])
+
+
+  function allFormsAreValid(value) {
+    return value.cortado && value.aparado && value.solado && value.terminado
+  }
+
+  function saveFormsData() {
+    setStaffInfoFormData$({
+      cortado: [...cortadoProcessFormData],
+      aparado: [...aparadoProcessFormData],
+      solado: [...soladoProcessFormData],
+      terminado: [...terminadoProcessFormData]
+    });
+  }
+
+  useEffect(() => {
+    if (allFormsAreValid(isValid$)) {
+      saveFormsData();
+      nextCompToRenderFn();
+      setFormStepChange$(2);
+    } else {
+      setFormStepChange$(1);
+    }
+    // eslint-disable-next-line
+  }, [isValid$])
+
   return (
-      <Card className="staff-info-card">
-        <Card.Body>
-          <Card.Title className="os-txt os-txt-bold">
-            Proceso de {processTitle}:
-          </Card.Title>
+    <article className="d-flex flex-column gap-2">
+      <ProcessInfoComp
+        params={{
+          processTitle: "cortado",
+          setterParamsQuestion: "¿Con cuantos cortadores dispone?",
+          workingPeriodQuestion: `¿Cuántas horas por dia y cuantas de las ${optFormData$.productionPeriod} semanas trabajara?`
+        }}
+        optFormData$={optFormData$} setOptFormData$={setOptFormData$}
+        processInfoFormData$={cortadoProcessFormData} setProcessInfoFormData$={setCortadoProcessFormData}
+        processToCheck$={processToCheck$} setProcessToCheck$={setProcessToCheck$}
+        isValid$={isValid$} setIsValid$={setIsValid$}
+      />
 
-          <section className="staff-info-card-setter-question">
-            <label className="os-txt">{setterParamsQuestion}</label>
+      <ProcessInfoComp
+        params={{
+          processTitle: "aparado",
+          setterParamsQuestion: "¿Con cuantos aparadores dispone?",
+          workingPeriodQuestion: `¿Cuántas horas por dia y cuantas de las ${optFormData$.productionPeriod} semanas trabajara?`
+        }}
+        optFormData$={optFormData$} setOptFormData$={setOptFormData$}
+        processInfoFormData$={aparadoProcessFormData} setProcessInfoFormData$={setAparadoProcessFormData}
+        processToCheck$={processToCheck$} setProcessToCheck$={setProcessToCheck$}
+        isValid$={isValid$} setIsValid$={setIsValid$}
+      />
 
-            <Form.Group className="d-flex mb-3" controlId="formPlaintextPassword">
-              <Form.Label className="staff-info-labels">{capitalCase(processTitle)}res:</Form.Label>
+      <ProcessInfoComp
+        params={{
+          processTitle: "solado",
+          setterParamsQuestion: "¿Con cuantos soladores dispone?",
+          workingPeriodQuestion: `¿Cuántas horas por dia y cuantas de las ${optFormData$.productionPeriod} semanas trabajara?`
+        }}
+        optFormData$={optFormData$} setOptFormData$={setOptFormData$}
+        processInfoFormData$={soladoProcessFormData} setProcessInfoFormData$={setSoladoProcessFormData}
+        processToCheck$={processToCheck$} setProcessToCheck$={setProcessToCheck$}
+        isValid$={isValid$} setIsValid$={setIsValid$}
+      />
 
-              <Form.Control type="number" placeholder="" />
-            </Form.Group>
-          </section>
-
-          <section className="staff-info-card-parameters">
-            <label className="os-txt mb-1">{workingPeriodQuestion}</label>
-            {Array.from({ length: numberOfWorkers }, (_, index) => (
-                <Form.Group key={index} className="d-flex flex-wrap mb-3" controlId={`formPlaintextPassword${index}`}>
-                  <Form.Label className="staff-info-labels">{`Cortador ${index + 1}:`}</Form.Label>
-
-                  <section className="staff-info-card-params-input-group">
-                    <section>
-                      <Form.Control type="number" placeholder="semanas"/><label>sem</label>
-                    </section>
-
-                    <section>
-                      <Form.Control type="number" placeholder="hrs/día"/><label>hrs/día</label>
-                    </section>
-                  </section>
-                </Form.Group>
-            ))}
-          </section>
-        </Card.Body>
-      </Card>
-
+      <ProcessInfoComp
+        params={{
+          processTitle: "terminado",
+          setterParamsQuestion: "¿Con cuantos terminadores dispone?",
+          workingPeriodQuestion: `¿Cuántas horas por dia y cuantas de las ${optFormData$.productionPeriod} semanas trabajara?`
+        }}
+        optFormData$={optFormData$} setOptFormData$={setOptFormData$}
+        processInfoFormData$={terminadoProcessFormData} setProcessInfoFormData$={setTerminadoProcessFormData}
+        processToCheck$={processToCheck$} setProcessToCheck$={setProcessToCheck$}
+        isValid$={isValid$} setIsValid$={setIsValid$}
+      />
+    </article>
   );
 }

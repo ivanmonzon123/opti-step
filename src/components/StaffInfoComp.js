@@ -54,6 +54,7 @@ export default function StaffInfoComp(
     if (allFormsAreValid(isValid$)) {
       saveFormsData();
       nextCompToRenderFn();
+      setFormStepChange$(2);
     } else {
       setFormStepChange$(1);
     }

@@ -88,9 +88,13 @@ export default function FormPage() {
     }
   }
 
+  // useEffect(() => {
+  //   console.log(optFormData$)
+  // }, [optFormData$])
+
   useEffect(() => {
-    console.log(optFormData$)
-  }, [optFormData$])
+    console.log("formStepChange$: ", formStepChange$)
+  }, [formStepChange$])
 
   return (
     <article className="forms-container">

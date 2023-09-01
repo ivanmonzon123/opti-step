@@ -8,7 +8,7 @@ export default function OptResultComp(
     optFormData$
   }
 ) {
-  const [optResult, setOptResult] = useState({});
+  const [optResult, setOptResult] = useState({result: 0, customResult: 0});
 
   useEffect(() => {
 
@@ -17,12 +17,21 @@ export default function OptResultComp(
     // copy.constraints.aparado = {max: 2304}
     // copy.constraints.solado = {max: 2304}
     // copy.constraints.terminado = {max: 576}
-    const solution = solver.Solve(copy);
+    let solution = solver.Solve(copy);
 
     console.log("solution: ", solution);
+    if (!solution.feasible) {
+      for (const item in copy.constraints) {
+        if (item.includes("Min")) {
+          copy.constraints[item] = {min: '0'};
+        }
+      }
+      solution = solver.Solve(copy);
+      console.log(copy)
+      console.log("custom-solution: ", solution);
+    }
 
-
-    let customResult = solution.result;
+      let customResult = solution.result;
     for (let key in copy.variables) {
       customResult = customResult - ((solution[key]) * copy.variables[key].costo)
     }

@@ -30,7 +30,6 @@ export default function StaffInfoComp(
 
 
   useEffect(() => {
-    console.log("formStepChange$: ", formStepChange$)
     if (formStepChange$ === 2) {
       setProcessToCheck$({...processToCheck$, formStep: 0});
     }
@@ -53,7 +52,6 @@ export default function StaffInfoComp(
 
   useEffect(() => {
     if (allFormsAreValid(isValid$)) {
-      console.log("Si es valido papu!!!")
       saveFormsData();
       nextCompToRenderFn();
     } else {

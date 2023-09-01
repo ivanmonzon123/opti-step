@@ -17,7 +17,7 @@ export default function ProcessInfoComp(
         return string.charAt(0).toUpperCase() + string.slice(1);
     };
 
-    const [numberOfWorkers$, setNumberOfWorkers$] = useState(0);
+    const [numberOfWorkers$, setNumberOfWorkers$] = useState(processInfoFormData$.length);
     const [isNumberOfWorkersSet$, setIsNumberOfWorkersSet$] = useState(false);
 
     function createNewRow(size) {
@@ -84,11 +84,11 @@ export default function ProcessInfoComp(
     useEffect(() => {
         const step = processToCheck$.formStep;
         const process = params.processTitle;
-        console.log("pidio un check con formStep: ", step)
+
         if (processToCheck$.process[step] === process) {
             if (!staffInfoFormIsValid()) {
                 formRef.current.click();
-                setIsValid$({...isValid$, process: false});
+                setIsValid$({...isValid$, [process]: false});
                 // setProcessToCheck$(1);
             } else {
                 formRef.current.click();

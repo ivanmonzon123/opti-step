@@ -58,7 +58,7 @@ export default function StaffInfoComp({
       ...prevOptFormData,
       constraints: {
         ...prevOptFormData.constraints,
-        [params.processTitle]: { max: totalValue }
+        [params.processTitle]: { max: (totalValue * 12) }
       },
     }));
   }

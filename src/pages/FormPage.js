@@ -66,7 +66,9 @@ export default function FormPage() {
         prodDetFormData$={prodDetFormData$} setProdDetFormData$={setProdDetFormData$}
         nextCompToRenderFn={nextCompToRender}
     />,
-    <OptimizationResultComp/>
+    <OptimizationResultComp
+        optFormData$={optFormData$}
+    />
   ];
 
   function isFinalStep(){

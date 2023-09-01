@@ -3,7 +3,6 @@ import "../styles/pages/FormPage.css"
 import OrderDetailsComp from "../components/OrderDetailsComp";
 import {useEffect, useState} from "react";
 import {ProgressBar} from "react-bootstrap";
-import ProcessInfoComp from "../components/ProcessInfoComp";
 import ProdDetailsComp from "../components/ProdDetailsComp";
 import OptResultComp from "../components/OptResultComp";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"

@@ -6,10 +6,9 @@ import {faCircleRight, faPenToSquare} from "@fortawesome/free-regular-svg-icons"
 
 export default function ProcessInfoComp(
     {
-        //checkForm
-        //isValid
-        formStepChange$, setFormStepChange$,
-        nextCompToRenderFn, params,
+        params,
+        processToCheck$, setProcessToCheck$,
+        isValid$, setIsValid$,
         optFormData$, setOptFormData$,
         processInfoFormData$, setProcessInfoFormData$
     }
@@ -83,17 +82,24 @@ export default function ProcessInfoComp(
 
     const formRef = useRef(null);
     useEffect(() => {
-        if (formStepChange$ === 2) {
+        const step = processToCheck$.formStep;
+        const process = params.processTitle;
+        console.log("pidio un check con formStep: ", step)
+        if (processToCheck$.process[step] === process) {
             if (!staffInfoFormIsValid()) {
                 formRef.current.click();
-                setFormStepChange$(1);
+                setIsValid$({...isValid$, process: false});
+                // setProcessToCheck$(1);
             } else {
                 formRef.current.click();
-                nextCompToRenderFn();
+                setIsValid$({...isValid$, [process]: true});
+                setProcessToCheck$({
+                    ...processToCheck$, formStep: processToCheck$.formStep + 1
+                });
             }
         }
         // eslint-disable-next-line
-    }, [formStepChange$]);
+    }, [processToCheck$]);
 
     return (
         <Card className="staff-info-card">

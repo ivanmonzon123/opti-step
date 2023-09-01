@@ -74,6 +74,7 @@ export default function FormPage() {
   function nextCompToRender(){
     if(!isFinalStep()) {
       setCompToRender$(compToRender$ + 1);
+      console.log("Se renderizo a un nuevo componente")
     }
   }
 

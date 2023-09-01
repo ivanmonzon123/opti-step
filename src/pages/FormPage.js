@@ -3,11 +3,12 @@ import "../styles/pages/FormPage.css"
 import OrderDetailsComp from "../components/OrderDetailsComp";
 import {useEffect, useState} from "react";
 import {ProgressBar} from "react-bootstrap";
-import StaffInfoComp from "../components/StaffInfoComp";
+import ProcessInfoComp from "../components/ProcessInfoComp";
 import ProdDetailsComp from "../components/ProdDetailsComp";
-import OptimizationResultComp from "../components/OptimizationResultComp";
+import OptResultComp from "../components/OptResultComp";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faPrint} from "@fortawesome/free-solid-svg-icons"
+import StaffInfoComp from "../components/StaffInfoComp";
 
 export default function FormPage() {
   const [compToRender$, setCompToRender$] = useState(0);
@@ -50,11 +51,6 @@ export default function FormPage() {
         nextCompToRenderFn={nextCompToRender}
     />,
     <StaffInfoComp
-        params = {{
-            processTitle: "cortado",
-            setterParamsQuestion: "¿Con cuantos cortadores dispone?",
-            workingPeriodQuestion: `¿Cuántas horas por dia y cuantas de las ${optFormData$.productionPeriod} semanas trabajara?`
-          }}
         optFormData$={optFormData$} setOptFormData$={setOptFormData$}
         formStepChange$={formStepChange$} setFormStepChange$={setFormStepChange$}
         staffInfoFormData$={staffInfoFormData$} setStaffInfoFormData$={setStaffInfoFormData$}
@@ -66,7 +62,7 @@ export default function FormPage() {
         prodDetFormData$={prodDetFormData$} setProdDetFormData$={setProdDetFormData$}
         nextCompToRenderFn={nextCompToRender}
     />,
-    <OptimizationResultComp
+    <OptResultComp
         optFormData$={optFormData$}
     />
   ];

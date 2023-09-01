@@ -3,7 +3,7 @@ import "../styles/components/OptimizationResultComp.css"
 import {useEffect, useState} from "react";
 
 /* global solver */
-export default function OptimizationResultComp(
+export default function OptResultComp(
   {
     optFormData$
   }

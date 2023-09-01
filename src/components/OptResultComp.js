@@ -11,14 +11,14 @@ export default function OptResultComp(
   const [optResult, setOptResult] = useState({});
 
   useEffect(() => {
-    // console.log("se inicio el componente")
+
     let copy = {...optFormData$}
     // eslint-disable-next-line
-    copy.constraints.aparado = {max: 2304}
-    copy.constraints.solado = {max: 2304}
-    copy.constraints.terminado = {max: 576}
+    // copy.constraints.aparado = {max: 2304}
+    // copy.constraints.solado = {max: 2304}
+    // copy.constraints.terminado = {max: 576}
     const solution = solver.Solve(copy);
-    // console.log("copy: ", copy);
+
     console.log("solution: ", solution);
 
 

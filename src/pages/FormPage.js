@@ -1,12 +1,12 @@
 import "../styles/pages/HomePage.css"
 import "../styles/pages/FormPage.css"
 import OrderDetailsComp from "../components/OrderDetailsComp";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {ProgressBar} from "react-bootstrap";
 import ProdDetailsComp from "../components/ProdDetailsComp";
 import OptResultComp from "../components/OptResultComp";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import {faPrint} from "@fortawesome/free-solid-svg-icons"
+import {faFloppyDisk} from "@fortawesome/free-regular-svg-icons";
 import StaffInfoComp from "../components/StaffInfoComp";
 
 export default function FormPage() {
@@ -90,10 +90,10 @@ export default function FormPage() {
   // useEffect(() => {
   //   console.log(optFormData$)
   // }, [optFormData$])
-
-  useEffect(() => {
-    console.log("formStepChange$: ", formStepChange$)
-  }, [formStepChange$])
+  //
+  // useEffect(() => {
+  //   console.log("formStepChange$: ", formStepChange$)
+  // }, [formStepChange$])
 
   return (
     <article className="forms-container">
@@ -112,9 +112,9 @@ export default function FormPage() {
           isFinalStep()
             ?
             <section className="forms-buttons">
-              <button className="btn btn-primary">
+              <button className="btn btn-primary ">
                 <label className="os-txt">
-                  Imprimir <FontAwesomeIcon icon={faPrint}/>
+                  Guardar <FontAwesomeIcon className="fs-5" icon={faFloppyDisk}/>
                 </label>
               </button>
             </section>

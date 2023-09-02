@@ -10,32 +10,34 @@ export default function OptResultComp(
 ) {
   const [optResult, setOptResult] = useState({result: 0, customResult: 0});
 
-  useEffect(() => {
-
-    let copy = {...optFormData$}
-    // eslint-disable-next-line
-    // copy.constraints.aparado = {max: 2304}
-    // copy.constraints.solado = {max: 2304}
-    // copy.constraints.terminado = {max: 576}
-    let solution = solver.Solve(copy);
-
-    console.log("solution: ", solution);
-    if (!solution.feasible) {
-      for (const item in copy.constraints) {
-        if (item.includes("Min")) {
-          copy.constraints[item] = {min: '0'};
-        }
+  const setMinConstraintsToZero = (model) => {
+    for (const item in model.constraints) {
+      if (item.includes("Min")) {
+        model.constraints[item] = {min: '0'};
       }
-      solution = solver.Solve(copy);
-      console.log(copy)
-      console.log("custom-solution: ", solution);
+    }
+  }
+
+  const getCustomResult = (model, solution) => {
+    let customResult = solution.result;
+    for (let key in model.variables) {
+      if(solution[key]){
+        customResult = customResult - ((solution[key]) * model.variables[key].costo)
+      }
+    }
+    return customResult;
+  }
+
+  useEffect(() => {
+    let model = {...optFormData$}
+    let solution = solver.Solve(model);
+
+    if (!solution.feasible) {
+      setMinConstraintsToZero(model);
+      solution = solver.Solve(model);
     }
 
-      let customResult = solution.result;
-    for (let key in copy.variables) {
-      customResult = customResult - ((solution[key]) * copy.variables[key].costo)
-    }
-
+    let customResult = getCustomResult(model, solution);
     setOptResult({...solution, customResult});
     // eslint-disable-next-line
   }, [])

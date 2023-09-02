@@ -72,7 +72,7 @@ export default function OrderDetailsComp(
         row.precio >= 1 &&
         row.costo >= 1 &&
         row.cantMin >= 1 &&
-        row.cantMax >= row.cantMin
+        row.cantMax - 0 >= row.cantMin - 0
       );
     };
 

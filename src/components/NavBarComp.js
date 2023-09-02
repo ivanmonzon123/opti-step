@@ -23,7 +23,7 @@ export default function NavBarComp() {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
             <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="navbar-options">
+              <Nav className="navbar-options os-hide-on-print">
                 <Link to="/" className="os-txt os-txt-md px-1">Inicio</Link>
 
                 <button className="px-1 os-btn" onClick={openAboutMeModal}>

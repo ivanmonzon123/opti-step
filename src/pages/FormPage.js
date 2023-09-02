@@ -1,15 +1,15 @@
 import "../styles/pages/HomePage.css"
 import "../styles/pages/FormPage.css"
 import OrderDetailsComp from "../components/OrderDetailsComp";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {ProgressBar} from "react-bootstrap";
 import ProdDetailsComp from "../components/ProdDetailsComp";
 import OptResultComp from "../components/OptResultComp";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import {faPrint} from "@fortawesome/free-solid-svg-icons"
+import {faFloppyDisk} from "@fortawesome/free-regular-svg-icons";
 import StaffInfoComp from "../components/StaffInfoComp";
 
-export default function FormPage() {
+export default function FormPage({handlePrintResultComp}) {
   const [compToRender$, setCompToRender$] = useState(0);
   const [formStepChange$, setFormStepChange$] = useState(0);
 
@@ -90,17 +90,17 @@ export default function FormPage() {
   // useEffect(() => {
   //   console.log(optFormData$)
   // }, [optFormData$])
-
-  useEffect(() => {
-    console.log("formStepChange$: ", formStepChange$)
-  }, [formStepChange$])
+  //
+  // useEffect(() => {
+  //   console.log("formStepChange$: ", formStepChange$)
+  // }, [formStepChange$])
 
   return (
     <article className="forms-container">
       <article className="forms-content">
         <section className="forms-title">
           <label className="os-txt os-txt-lg os-txt-bold">{title[compToRender$]}</label>
-          <ProgressBar now={((compToRender$ + 1) / title.length) * 100}
+          <ProgressBar className="os-hide-on-print" now={((compToRender$ + 1) / title.length) * 100}
                        label={`Paso: ${compToRender$ + 1}`}/>
         </section>
 
@@ -111,10 +111,10 @@ export default function FormPage() {
         {
           isFinalStep()
             ?
-            <section className="forms-buttons">
-              <button className="btn btn-primary">
+            <section className="forms-buttons os-hide-on-print">
+              <button className="btn btn-primary" onClick={handlePrintResultComp}>
                 <label className="os-txt">
-                  Imprimir <FontAwesomeIcon icon={faPrint}/>
+                  Guardar <FontAwesomeIcon className="fs-5" icon={faFloppyDisk}/>
                 </label>
               </button>
             </section>

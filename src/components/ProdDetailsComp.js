@@ -27,13 +27,17 @@ export default function ProdDetailsComp(
   };
 
   const prodDetailsFormIsValid = () => {
-    let isValid = true;
-    prodDetFormData$.forEach((row, index) => {
-      if (!row.modelo || !row.cortado || !row.aparado || !row.solado || !row.terminado) {
-        isValid = false;
-      }
-    });
-    return isValid;
+    const isValidRow = (row) => {
+      return (
+        row.modelo &&
+        row.cortado >= 1 &&
+        row.aparado >= 1 &&
+        row.solado >= 1 &&
+        row.terminado >= 1
+      );
+    };
+
+    return prodDetFormData$.every(isValidRow);
   };
 
   const formRef = useRef(null);
@@ -99,7 +103,8 @@ export default function ProdDetailsComp(
                 <td>
                   <Form.Control
                     required
-                    type="text"
+                    min={1}
+                    type="number"
                     placeholder=""
                     onChange={(e) => handleInputChange(index, "cortado", e.target.value)}
                     value={row.cortado}
@@ -109,7 +114,8 @@ export default function ProdDetailsComp(
                 <td>
                   <Form.Control
                     required
-                    type="text"
+                    min={1}
+                    type="number"
                     placeholder=""
                     onChange={(e) => handleInputChange(index, "aparado", e.target.value)}
                     value={row.aparado}
@@ -119,7 +125,8 @@ export default function ProdDetailsComp(
                 <td>
                   <Form.Control
                     required
-                    type="text"
+                    min={1}
+                    type="number"
                     placeholder=""
                     onChange={(e) => handleInputChange(index, "solado", e.target.value)}
                     value={row.solado}
@@ -129,7 +136,8 @@ export default function ProdDetailsComp(
                 <td>
                   <Form.Control
                     required
-                    type="text"
+                    min={1}
+                    type="number"
                     placeholder=""
                     onChange={(e) => handleInputChange(index, "terminado", e.target.value)}
                     value={row.terminado}

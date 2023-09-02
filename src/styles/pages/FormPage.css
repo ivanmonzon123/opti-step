@@ -44,3 +44,13 @@
     }
 }
 
+@media print {
+    .forms-container {
+        justify-content: flex-start;
+    }
+
+    .forms-content {
+        width: 80%;
+    }
+}
+

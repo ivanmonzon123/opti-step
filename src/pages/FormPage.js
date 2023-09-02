@@ -9,7 +9,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faFloppyDisk} from "@fortawesome/free-regular-svg-icons";
 import StaffInfoComp from "../components/StaffInfoComp";
 
-export default function FormPage() {
+export default function FormPage({handlePrintResultComp}) {
   const [compToRender$, setCompToRender$] = useState(0);
   const [formStepChange$, setFormStepChange$] = useState(0);
 
@@ -100,7 +100,7 @@ export default function FormPage() {
       <article className="forms-content">
         <section className="forms-title">
           <label className="os-txt os-txt-lg os-txt-bold">{title[compToRender$]}</label>
-          <ProgressBar now={((compToRender$ + 1) / title.length) * 100}
+          <ProgressBar className="os-hide-on-print" now={((compToRender$ + 1) / title.length) * 100}
                        label={`Paso: ${compToRender$ + 1}`}/>
         </section>
 
@@ -111,8 +111,8 @@ export default function FormPage() {
         {
           isFinalStep()
             ?
-            <section className="forms-buttons">
-              <button className="btn btn-primary ">
+            <section className="forms-buttons os-hide-on-print">
+              <button className="btn btn-primary" onClick={handlePrintResultComp}>
                 <label className="os-txt">
                   Guardar <FontAwesomeIcon className="fs-5" icon={faFloppyDisk}/>
                 </label>

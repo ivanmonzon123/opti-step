@@ -41,8 +41,8 @@ export default function FormPage({handlePrintResultComp}) {
   const [prodDetFormData$, setProdDetFormData$] = useState([]);
 
   const title = [
-    'Detalles del pedido',
-    'Informacion personal',
+    'Detalles de pedido',
+    'Informacion del personal',
     'Detalles de producción',
     'Resultados de optimizacion'
   ];

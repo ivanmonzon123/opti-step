@@ -153,7 +153,7 @@ export default function ProcessInfoComp(
             {processInfoFormData$.map((row, index) => (
               <Form.Group key={index} className="d-flex flex-wrap mb-3"
                           controlId={`formPlaintextPassword${index}`}>
-                <Form.Label className="staff-info-labels">{`Cortador ${index + 1}:`}</Form.Label>
+                <Form.Label className="staff-info-labels">{`${params.processTitle} ${index + 1}:`}</Form.Label>
 
                 <section className="staff-info-card-params-input-group">
                   <section>

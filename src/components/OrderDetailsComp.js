@@ -15,10 +15,10 @@ export default function OrderDetailsComp(
     setOrderDetFormData$([...orderDetFormData$, {modelo: "", precio: "", costo: "", cantMin: "", cantMax: ""}]);
   };
 
-  const handleRemoveRow = (index) => {
-    if (index <= orderDetFormData$.length) {
+  const handleRemoveRow = () => {
+    if (orderDetFormData$.length > 1) {
       const newInputRows = [...orderDetFormData$];
-      newInputRows.splice(index, 1);
+      newInputRows.pop();
       setOrderDetFormData$(newInputRows);
     }
   };
@@ -111,7 +111,7 @@ export default function OrderDetailsComp(
                 <label className="os-txt">+</label>
               </Button>
 
-              <Button onClick={() => handleRemoveRow(orderDetFormData$.length - 1)}>
+              <Button onClick={() => handleRemoveRow()}>
                 <label className="os-txt">-</label>
               </Button>
             </section>

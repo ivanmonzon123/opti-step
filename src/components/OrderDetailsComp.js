@@ -170,7 +170,7 @@ export default function OrderDetailsComp(
                     type="number"
                     placeholder=""
                     value={row.costo}
-                    min={1}
+                    min={orderDetFormData$[index]['precio'] ?? 1}
                     onChange={(e) => handleInputChange(index, "costo", e.target.value)}
                   />
                 </td>

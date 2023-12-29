@@ -165,7 +165,7 @@ export default function ProcessInfoComp(
           </section>
 
           <section className="staff-info-card-parameters">
-            {processInfoFormData$ ?
+            {processInfoFormData$.length > 0 ?
               <label className="os-txt mb-1">{params.workingPeriodQuestion}</label> : ""}
             {processInfoFormData$.map((row, index) => (
               <Form.Group key={index} className="d-flex flex-wrap mb-3"

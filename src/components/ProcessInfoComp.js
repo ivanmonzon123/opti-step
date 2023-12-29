@@ -20,6 +20,13 @@ export default function ProcessInfoComp(
   const [numberOfWorkers$, setNumberOfWorkers$] = useState(processInfoFormData$.length);
   const [isNumberOfWorkersSet$, setIsNumberOfWorkersSet$] = useState(false);
 
+  const limits = {
+    mimWeeks: 1,
+    maxWeeks: parseInt(optFormData$.productionPeriod),
+    minHrs: 1,
+    maxHrs: 16
+  }
+
   function createNewRow(size) {
     return Array.from({length: size}, () => ({semanas: "", horasDia: "",}));
   }
@@ -58,14 +65,14 @@ export default function ProcessInfoComp(
     const totalValue = processInfoFormData$.reduce((total, item) => {
       const semanas = parseInt(item.semanas);
       const horasDia = parseInt(item.horasDia);
-      return total + ((semanas * 6) * horasDia);
+      return total + ((semanas * 5.5) * horasDia);
     }, 0);
 
     setOptFormData$((prevOptFormData) => ({
       ...prevOptFormData,
       constraints: {
         ...prevOptFormData.constraints,
-        [params.processTitle]: {max: (totalValue * 12)}
+        [params.processTitle]: {max: (parseInt(totalValue) * 12)}
       },
     }));
   }
@@ -81,7 +88,13 @@ export default function ProcessInfoComp(
       return false;
     }
 
-    return !processInfoFormData$.some((row) => row.semanas < 1 || row.horasDia < 1);
+    return !processInfoFormData$.some(
+      (row) =>
+        row.semanas < limits.mimWeeks ||
+        row.semanas > limits.maxWeeks ||
+        row.horasDia < limits.minHrs ||
+        row.horasDia > limits.maxHrs
+    );
   };
 
   const formRef = useRef(null);
@@ -165,7 +178,8 @@ export default function ProcessInfoComp(
                       type="number"
                       placeholder="semanas"
                       value={row.semanas}
-                      min={1}
+                      min={limits.mimWeeks}
+                      max={limits.maxWeeks}
                       required
                       onChange={(e) => handleInputChange(index, "semanas", e.target.value)}
                     /><label>sem</label>
@@ -177,7 +191,8 @@ export default function ProcessInfoComp(
                       placeholder="hrs/día"
                       value={row.horasDia}
                       required
-                      min={1}
+                      min={limits.minHrs}
+                      max={limits.maxHrs}
                       onChange={(e) => handleInputChange(index, "horasDia", e.target.value)}
                     /><label>hrs/día</label>
                   </section>

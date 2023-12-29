@@ -1,7 +1,7 @@
 import "../styles/pages/HomePage.css"
 import "../styles/pages/FormPage.css"
 import OrderDetailsComp from "../components/OrderDetailsComp";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {ProgressBar} from "react-bootstrap";
 import ProdDetailsComp from "../components/ProdDetailsComp";
 import OptResultComp from "../components/OptResultComp";
@@ -87,9 +87,9 @@ export default function FormPage({handlePrintResultComp}) {
     }
   }
 
-  // useEffect(() => {
-  //   console.log(optFormData$)
-  // }, [optFormData$])
+  useEffect(() => {
+    console.log(optFormData$)
+  }, [optFormData$])
   //
   // useEffect(() => {
   //   console.log("formStepChange$: ", formStepChange$)
@@ -105,7 +105,7 @@ export default function FormPage({handlePrintResultComp}) {
         </section>
 
         <section className="w-100">
-          {form[compToRender$]}
+          {form[compToRender$]} 
         </section>
 
         {

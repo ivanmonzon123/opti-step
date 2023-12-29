@@ -7,7 +7,6 @@ import {faFacebook, faInstagram, faLinkedin} from "@fortawesome/free-brands-svg-
 
 const AboutMeModal = ({show$, setShow$}) => {
   const handleClose = () => setShow$(false);
-  // const handleShow = () => setShow$(true);
 
   return (
      <Modal show={show$} onHide={handleClose}

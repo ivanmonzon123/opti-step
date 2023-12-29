@@ -24,7 +24,11 @@ export default function ProcessInfoComp(
     return Array.from({length: size}, () => ({semanas: "", horasDia: "",}));
   }
 
-  const handleSetNumberOfWorkers = () => {
+  function handleSetNumberOfWorkers() {
+    if(numberOfWorkers$ < 1) {
+      return
+    }
+    
     setIsNumberOfWorkersSet$(true);
 
     if (processInfoFormData$.length === 0) {

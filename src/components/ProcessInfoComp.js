@@ -1,5 +1,5 @@
 import {Card, Form} from "react-bootstrap";
-import "../styles/components/StaffInfoComp.css"
+import "../styles/components/ProcessInfoComp.css"
 import {useEffect, useRef, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCircleRight, faPenToSquare} from "@fortawesome/free-regular-svg-icons";
@@ -119,7 +119,7 @@ export default function ProcessInfoComp(
   }, [processToCheck$]);
 
   return (
-    <Card className="staff-info-card">
+    <Card className="process-info-card">
       <Card.Body>
 
         <Card.Title className="os-txt os-txt-bold">
@@ -129,12 +129,12 @@ export default function ProcessInfoComp(
         <form onSubmit={(e) => {
           e.preventDefault()
         }}>
-          <section className="staff-info-card-setter-question">
+          <section className="process-info-card-setter-question">
             <label className="os-txt">{params.setterParamsQuestion}</label>
 
             <Form.Group className="d-flex mb-3 align-items-center gap-2" controlId="formPlaintextPassword">
               <Form.Label
-                className="staff-info-labels">{capitalCase(params.processTitle)}res:</Form.Label>
+                className="process-info-labels">{capitalCase(params.processTitle)}res:</Form.Label>
 
               <Form.Control
                 type="number"
@@ -164,15 +164,15 @@ export default function ProcessInfoComp(
             </Form.Group>
           </section>
 
-          <section className="staff-info-card-parameters">
+          <section className="process-info-card-parameters">
             {processInfoFormData$.length > 0 ?
               <label className="os-txt mb-1">{params.workingPeriodQuestion}</label> : ""}
             {processInfoFormData$.map((row, index) => (
               <Form.Group key={index} className="d-flex flex-wrap mb-3"
                           controlId={`formPlaintextPassword${index}`}>
-                <Form.Label className="staff-info-labels">{`${params.processTitle} ${index + 1}:`}</Form.Label>
+                <Form.Label className="process-info-labels">{`${params.processTitle} ${index + 1}:`}</Form.Label>
 
-                <section className="staff-info-card-params-input-group">
+                <section className="process-info-card-params-input-group">
                   <section>
                     <Form.Control
                       type="number"

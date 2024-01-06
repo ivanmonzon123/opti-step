@@ -62,7 +62,7 @@ export default function StaffInfoComp(
   }, [isValid$])
 
   return (
-    <article className="d-flex flex-column gap-2">
+    <article className="staff-info-container">
       <ProcessInfoComp
         params={{
           processTitle: "cortado",

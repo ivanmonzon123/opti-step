@@ -1,5 +1,5 @@
 import {Card, Form, InputGroup} from "react-bootstrap";
-import "../styles/components/OptimizationResultComp.css"
+import "../styles/components/OptResultComp.css"
 import {useEffect, useState} from "react";
 
 /* global solver */

@@ -31,13 +31,14 @@ export default function OrderDetailsComp(
 
   const handleProdPeriod = (value) => {
     setOptFormData$((prev) => ({
-      ...prev, productionPeriod: value
+      ...prev,
+      productionPeriod: value,
     }));
-  }
+  };
 
   const updateFormData = () => {
     const newVariables = {};
-    const newConstraints = {...optFormData$.constraints};
+    const newConstraints = { ...optFormData$.constraints };
     orderDetFormData$.forEach((row) => {
       if (row.modelo) {
         newVariables[row.modelo] = {
@@ -51,13 +52,14 @@ export default function OrderDetailsComp(
           [row.modelo + "Max"]: 1,
         };
 
-        newConstraints[row.modelo + "Max"] = {max: row.cantMax}
-        newConstraints[row.modelo + "Min"] = {min: row.cantMin}
+        newConstraints[row.modelo + "Max"] = { max: row.cantMax };
+        newConstraints[row.modelo + "Min"] = { min: row.cantMin };
       }
     });
     setOptFormData$((prevData) => ({
       ...prevData,
-      variables: newVariables, constraints: newConstraints
+      variables: newVariables,
+      constraints: newConstraints,
     }));
   };
 
@@ -67,18 +69,24 @@ export default function OrderDetailsComp(
     }
 
     const isValidRow = (row) => {
+      const order = {
+        model: row.modelo,
+        price: parseInt(row.precio),
+        cost: parseInt(row.costo),
+        min: parseInt(row.cantMin),
+        max: parseInt(row.cantMax),
+      };
       return (
-        row.modelo &&
-        row.precio >= 1 &&
-        row.costo >= 1 &&
-        row.cantMin >= 1 &&
-        row.cantMax - 0 >= row.cantMin - 0
+        order.model &&
+        order.price >= 1 &&
+        order.price >= order.cost &&
+        order.min >= 1 &&
+        order.max >= order.min
       );
     };
 
     return orderDetFormData$.every(isValidRow);
   };
-
 
   useEffect(() => {
     if (formStepChange$ === 1) {
@@ -99,12 +107,14 @@ export default function OrderDetailsComp(
     <Card className="order-details-card">
       <Card.Body>
         <Card.Text className="text-center os-txt">
-          Ingrese los modelos, costo de producción, precio de venta por unidad de calzado y tiempo máximo para producir
-          en semanas
+          Ingrese los modelos, costo de producción, precio de venta por unidad
+          de calzado y tiempo máximo para producir en semanas
         </Card.Text>
-        <form onSubmit={(e) => {
-          e.preventDefault()
-        }}>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+          }}
+        >
           <section className="order-details-card-parameters">
             <section className="order-details-card-parameters-buttons">
               <Button onClick={handleAddRow}>
@@ -129,7 +139,6 @@ export default function OrderDetailsComp(
               />
             </InputGroup>
           </section>
-
 
           <Table responsive className="order-details-table">
             <thead>
@@ -202,6 +211,5 @@ export default function OrderDetailsComp(
         </form>
       </Card.Body>
     </Card>
-
   );
 }

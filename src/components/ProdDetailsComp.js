@@ -1,5 +1,5 @@
 import {Card, Form, Table} from "react-bootstrap";
-import "../styles/components/ProductionDetailsComp.css"
+import "../styles/components/ProdDetailsComp.css"
 import {useEffect, useRef} from "react";
 
 export default function ProdDetailsComp(

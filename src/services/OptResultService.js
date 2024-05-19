@@ -39,12 +39,12 @@ export const getOptResult = (model) => {
   const resultType = evaluateOptResult();
 
   if (resultType === "error") {
-    solution = solver.Solve(changeMinConstraints(model, 0));
+    solution = solver.Solve(changeMinConstraints({ ...model }, 0));
     setGlobalOptResult(solution);
   }
 
   const liquitProfit = getLiquitProfit(model, solution);
-  const feedback = getFeedback({ ...solution, liquitProfit, resultType });
+  const feedback = getFeedback(resultType);
 
   return { ...solution, liquitProfit, feedback };
 };
@@ -87,9 +87,7 @@ export const meetsRequiredPercentage = () => {
     return acc + (resultModelValue * 100) / modelMaxDemand;
   }, 0);
 
-  return (
-    parseInt(totalModelValues / (modelKeys.length * 100)) >= PERCENTAGE_CRITERIA
-  );
+  return parseInt(totalModelValues / modelKeys.length) >= PERCENTAGE_CRITERIA;
 };
 
 // Private Mehtods
@@ -131,21 +129,24 @@ const generateAdviceByResult = (optResult) => {
 
   if (optResult === "success") {
     if (meetsMinDemand()) {
-      const model = changeMaxConstraints(_modelData, MAX_VALUE_PRODUCTION);
-      const solution = solver.Solve(model);
+      const fbModel = changeMaxConstraints(
+        JSON.parse(JSON.stringify(_modelData)),
+        MAX_VALUE_PRODUCTION
+      );
+      const fbSolution = solver.Solve(fbModel);
 
-      if (solution.result > optResult.result) {
-        advice = { empty: true, message: JSON.stringify(solution, null, 2) };
+      if (fbSolution.result > _optResult.result) {
+        advice = { empty: false, message: JSON.stringify(fbSolution, null, 2) };
       }
     }
   }
 
   if (optResult === "warning") {
-    const model = changeMinConstraints(_modelData, 0);
-    const solution = solver.Solve(model);
+    const fbModel = changeMinConstraints({ ..._modelData }, 0);
+    const fbSolution = solver.Solve(fbModel);
 
-    if (solution.result > optResult.result) {
-      advice = { empty: true, message: JSON.stringify(solution, null, 2) };
+    if (fbSolution.result > _optResult.result) {
+      advice = { empty: false, message: JSON.stringify(fbSolution, null, 2) };
     }
   }
 

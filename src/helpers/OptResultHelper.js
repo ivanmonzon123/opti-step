@@ -24,7 +24,7 @@ export const HEADER_FEEDBACK_VALUES = Object.freeze({
     title: "Atencion!",
     description: `
       El resultado se ve bien, con la cantidad de personal que cuenta usted podra cumplir con la demanda
-      po debajo del ${PERCENTAGE_CRITERIA}% en relacion al maximo nivel de demanda.
+      por debajo del ${PERCENTAGE_CRITERIA}% en relacion al maximo nivel de demanda.
     `,
   },
   error: {
@@ -39,24 +39,24 @@ export const HEADER_FEEDBACK_VALUES = Object.freeze({
 });
 
 export const changeMinConstraints = (modelData, value) => {
-  const model = { ...modelData };
-  for (const item in model.constraints) {
+  const newMinModel = { ...modelData };
+  for (const item in newMinModel.constraints) {
     if (item.includes("Min")) {
-      model.constraints[item] = { min: value };
+      newMinModel.constraints[item] = { min: value };
     }
   }
-  return model;
+  return newMinModel;
 };
 
 export const changeMaxConstraints = (modelData, value) => {
-  const model = { ...modelData };
+  const newMaxModel = { ...modelData };
 
-  for (const item in model.constraints) {
+  for (const item in newMaxModel.constraints) {
     if (item.includes("Max")) {
-      model.constraints[item] = { min: value };
+      newMaxModel.constraints[item] = { max: value };
     }
   }
-  return model;
+  return newMaxModel;
 };
 
 export const getLiquitProfit = (model, solution) => {

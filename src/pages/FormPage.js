@@ -71,7 +71,8 @@ export default function FormPage({handlePrintResultComp}) {
   ];
 
   function isFinalStep() {
-    return compToRender$ + 1 === title.length;
+    return false;
+    // return compToRender$ + 1 === title.length;
   }
 
   function nextCompToRender() {

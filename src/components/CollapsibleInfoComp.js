@@ -5,7 +5,7 @@ import "../styles/components/CollapsibleInfoComp.css";
 
 export default function CollapsibleInfoComp({ feedback }) {
   const [open, setOpen] = useState(false);
-  const { icon, type, title, description } = feedback;
+  const { icon, type, title, description, advice } = feedback;
 
   const getIconStyles = (feedbackType) => {
     const colors = {
@@ -29,7 +29,11 @@ export default function CollapsibleInfoComp({ feedback }) {
       </section>
 
       <Collapse in={open} className="collapsible-info-content-body">
-        <section>{description}</section>
+        <section>
+          <label>{description}</label>
+
+          {!advice?.empty ? <label>{advice?.message}</label> : ""}
+        </section>
       </Collapse>
     </article>
   );

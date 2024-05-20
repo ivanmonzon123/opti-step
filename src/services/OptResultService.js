@@ -7,6 +7,7 @@ import {
   HEADER_FEEDBACK_VALUES,
   PERCENTAGE_CRITERIA,
   MAX_VALUE_PRODUCTION,
+  cloneDeep,
 } from "../helpers/OptResultHelper";
 
 var _feedbackValues = HEADER_FEEDBACK_VALUES;
@@ -33,8 +34,8 @@ export const getGlobalModelData = (modelData) => {
 // Public Mehtods
 export const getOptResult = (model) => {
   let solution = solver.Solve(model);
-  setGlobalOptResult({ ...solution });
-  setGlobalModelData({ ...model });
+  setGlobalOptResult(cloneDeep(solution));
+  setGlobalModelData(cloneDeep(model));
 
   const resultType = evaluateOptResult();
 
@@ -112,7 +113,7 @@ const getModelKeysFromData = () => {
 // eslint-disable-next-line
 const getModelValuesFromConstraints = ({ type }) => {
   const aditionalType = type === "min" ? "Min" : "Max";
-  const modelKeys = getModelKeysFromData({ _modelData });
+  const modelKeys = getModelKeysFromData();
 
   return modelKeys.map((modelKey) => ({
     [modelKey]: _modelData.constraints[modelKey + aditionalType][type],
@@ -129,14 +130,11 @@ const generateAdviceByResult = (optResult) => {
 
   if (optResult === "success") {
     if (meetsMinDemand()) {
-      const fbModel = changeMaxConstraints(
-        JSON.parse(JSON.stringify(_modelData)),
-        MAX_VALUE_PRODUCTION
-      );
+      const fbModel = changeMaxConstraints(_modelData, MAX_VALUE_PRODUCTION);
       const fbSolution = solver.Solve(fbModel);
 
-      if (fbSolution.result > _optResult.result) {
-        advice = { empty: false, message: JSON.stringify(fbSolution, null, 2) };
+      if (showFeedbackResult(fbSolution)) {
+        advice = generateOptAdvice(fbModel, fbSolution);
       }
     }
   }
@@ -145,8 +143,8 @@ const generateAdviceByResult = (optResult) => {
     const fbModel = changeMinConstraints({ ..._modelData }, 0);
     const fbSolution = solver.Solve(fbModel);
 
-    if (fbSolution.result > _optResult.result) {
-      advice = { empty: false, message: JSON.stringify(fbSolution, null, 2) };
+    if (showFeedbackResult(fbSolution)) {
+      advice = generateOptAdvice(fbModel, fbSolution);
     }
   }
 
@@ -155,4 +153,31 @@ const generateAdviceByResult = (optResult) => {
   }
 
   return advice;
+};
+
+export const generateOptAdvice = (fbModel, fbSolution) => {
+  const fbLiquitProfit = getLiquitProfit(fbModel, fbSolution);
+  const fbModels = getModelKeysFromData().reduce(
+    (acc, modelKey) =>
+      (acc = { ...acc, [modelKey]: `${fbSolution[modelKey] ?? 0} pares` }),
+    {}
+  );
+
+  const newOptAdvice = {
+    ...fbModels,
+    "Ganancia": `${fbSolution.result} bs`,
+    "Ganancia líquida": `${fbLiquitProfit} bs`,
+  };
+
+  return {
+    empty: false,
+    message: newOptAdvice,
+  };
+};
+
+const showFeedbackResult = (fbSolution) => {
+  return (
+    getLiquitProfit(_modelData, fbSolution) >=
+    getLiquitProfit(_modelData, _optResult)
+  );
 };

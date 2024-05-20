@@ -17,9 +17,12 @@
 }
 
 .collapsible-info-content-body {
+  display: flex;
+  flex-direction: column;
   width: 99%;
   background-color: #fff;
   border-radius: 5px;
   padding: 16px;
   align-self: center;
+  gap: 7px;
 }

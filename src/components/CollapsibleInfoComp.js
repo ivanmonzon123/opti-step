@@ -25,14 +25,26 @@ export default function CollapsibleInfoComp({ feedback }) {
       >
         <FontAwesomeIcon icon={icon} style={getIconStyles(type)} />
 
-        <label>{title}</label>
+        <label className="os-txt-md">{title}</label>
       </section>
 
-      <Collapse in={open} className="collapsible-info-content-body">
-        <section>
+      <Collapse in={open}>
+        <section className="collapsible-info-content-body">
           <label>{description}</label>
 
-          {!advice?.empty ? <label>{advice?.message}</label> : ""}
+          {advice?.empty ? (
+            ""
+          ) : (
+            <section>
+              <label className="os-txt-bold mb-1">Sugerencia:</label>
+              
+              {Object.entries(advice?.message ?? {}).map(([key, value]) => (
+                <section>
+                  <strong>{key}:</strong> {value}
+                </section>
+              ))}
+            </section>
+          )}
         </section>
       </Collapse>
     </article>

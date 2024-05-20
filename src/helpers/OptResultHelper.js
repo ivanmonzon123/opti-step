@@ -39,7 +39,7 @@ export const HEADER_FEEDBACK_VALUES = Object.freeze({
 });
 
 export const changeMinConstraints = (modelData, value) => {
-  const newMinModel = { ...modelData };
+  const newMinModel = cloneDeep(modelData);
   for (const item in newMinModel.constraints) {
     if (item.includes("Min")) {
       newMinModel.constraints[item] = { min: value };
@@ -49,7 +49,7 @@ export const changeMinConstraints = (modelData, value) => {
 };
 
 export const changeMaxConstraints = (modelData, value) => {
-  const newMaxModel = { ...modelData };
+  const newMaxModel = cloneDeep(modelData);
 
   for (const item in newMaxModel.constraints) {
     if (item.includes("Max")) {
@@ -68,3 +68,8 @@ export const getLiquitProfit = (model, solution) => {
   }
   return liquitProfit;
 };
+
+export const cloneDeep = (obj) => {
+  return JSON.parse(JSON.stringify(obj));
+};
+

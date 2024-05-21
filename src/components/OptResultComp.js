@@ -1,87 +1,70 @@
-import {Card, Form, InputGroup} from "react-bootstrap";
-import "../styles/components/OptResultComp.css"
-import {useEffect, useState} from "react";
+import { Card, Form, InputGroup } from "react-bootstrap";
+import CollapsibleInfoComp from "./CollapsibleInfoComp";
+import { useEffect, useState } from "react";
+import "../styles/components/OptResultComp.css";
 
-/* global solver */
-export default function OptResultComp(
-  {
-    optFormData$
-  }
-) {
-  const [optResult, setOptResult] = useState({result: 0, customResult: 0});
+import * as optResultService from "../services/OptResultService";
 
-  const setMinConstraintsToZero = (model) => {
-    for (const item in model.constraints) {
-      if (item.includes("Min")) {
-        model.constraints[item] = {min: '0'};
-      }
-    }
-  }
+export default function OptResultComp({ optFormData$ }) {
+  const [optResult, setOptResult] = useState({
+    result: 0,
+    customResult: 0,
+    feedback: {},
+  });
 
-  const getCustomResult = (model, solution) => {
-    let customResult = solution.result;
-    for (let key in model.variables) {
-      if(solution[key]){
-        customResult = customResult - ((solution[key]) * model.variables[key].costo)
-      }
-    }
-    return customResult;
-  }
+  const profit = [
+    { title: "Max. total beneficio:", key: "result" },
+    { title: "Max. total beneficio (líquido):", key: "liquitProfit" },
+  ];
 
   useEffect(() => {
-    let model = {...optFormData$}
-    let solution = solver.Solve(model);
-
-    if (!solution.feasible) {
-      setMinConstraintsToZero(model);
-      solution = solver.Solve(model);
-    }
-
-    let customResult = getCustomResult(model, solution);
-    setOptResult({...solution, customResult});
+    setOptResult(optResultService.getOptResult({ ...optFormData$ }));
     // eslint-disable-next-line
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    console.log(optResult);
+  }, [optResult]);
 
   return (
-    <Card className="opt-result-card">
-      <Card.Body>
-        <section className="opt-result-card-production-models">
-          {Object.entries(optFormData$.variables).map(([nombre, valores]) => (
-            <InputGroup key={nombre}>
-              <InputGroup.Text>{`${nombre} (pares):`}</InputGroup.Text>
+    <article className="opt-result-container">
+      <section className="opt-result-card">
+        <CollapsibleInfoComp feedback={optResult["feedback"]} />
+      </section>
 
-              <Form.Control
-                type="number"
-                value={optResult[nombre] ? optResult[nombre] : 0}
-                readOnly
-              />
-            </InputGroup>
-          ))}
-        </section>
+      <Card className="opt-result-card">
+        <Card.Body>
+          <section className="opt-result-card-production-models">
+            {Object.entries(optFormData$.variables).map(
+              ([shoeModelName, values]) => (
+                <InputGroup key={shoeModelName}>
+                  <InputGroup.Text>{`${shoeModelName}:`}</InputGroup.Text>
 
-        <section className="opt-result-card-total-benefit mt-4">
-          <InputGroup>
-            <InputGroup.Text>Max. total beneficio:</InputGroup.Text>
+                  <Form.Control
+                    type="number"
+                    value={optResult[shoeModelName] ?? 0}
+                    readOnly
+                  />
 
-            <Form.Control
-              type="number"
-              value={optResult.result}
-              readOnly
-            />
-          </InputGroup>
+                  <label className="os-txt-sm ms-1">{"(Pares)"}</label>
+                </InputGroup>
+              )
+            )}
+          </section>
 
-          <InputGroup>
-            <InputGroup.Text>Max. total beneficio (líquido):</InputGroup.Text>
+          <section className="opt-result-card-total-benefit mt-4">
+            {profit.map(({ title, key }) => (
+              <InputGroup>
+                <InputGroup.Text>{title}</InputGroup.Text>
 
-            <Form.Control
-              type="number"
-              value={optResult.customResult}
-              readOnly
-            />
-          </InputGroup>
-        </section>
-      </Card.Body>
-    </Card>
+                <Form.Control type="number" value={optResult[key]} readOnly />
 
+                <label className="os-txt-sm ms-1">{"(Bs)"}</label>
+              </InputGroup>
+            ))}
+          </section>
+        </Card.Body>
+      </Card>
+    </article>
   );
 }

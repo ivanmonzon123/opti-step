@@ -1,0 +1,34 @@
+.collapsible-info-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.collapsible-info-content-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 45px;
+  padding: 16px;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.collapsible-info-content-header-title {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.collapsible-info-content-body {
+  display: flex;
+  flex-direction: column;
+  width: 99%;
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 16px;
+  align-self: center;
+  gap: 7px;
+}

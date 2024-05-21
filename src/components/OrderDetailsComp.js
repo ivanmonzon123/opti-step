@@ -80,7 +80,7 @@ export default function OrderDetailsComp(
         order.model &&
         order.price >= 1 &&
         order.price >= order.cost &&
-        order.min >= 1 &&
+        order.min >= 0 &&
         order.max >= order.min
       );
     };
@@ -144,8 +144,8 @@ export default function OrderDetailsComp(
             <thead>
             <tr>
               <th className="w-25">Modelo</th>
-              <th>Precio</th>
               <th>Costo</th>
+              <th>Precio</th>
               <th><span>Cant.</span> min</th>
               <th><span>Cant.</span> max</th>
             </tr>
@@ -168,18 +168,8 @@ export default function OrderDetailsComp(
                     required
                     type="number"
                     placeholder=""
-                    value={row.precio}
-                    min={1}
-                    onChange={(e) => handleInputChange(index, "precio", e.target.value)}
-                  />
-                </td>
-                <td>
-                  <Form.Control
-                    required
-                    type="number"
-                    placeholder=""
                     value={row.costo}
-                    min={orderDetFormData$[index]['precio'] ?? 1}
+                    min={1}
                     onChange={(e) => handleInputChange(index, "costo", e.target.value)}
                   />
                 </td>
@@ -188,8 +178,18 @@ export default function OrderDetailsComp(
                     required
                     type="number"
                     placeholder=""
+                    value={row.precio}
+                    min={orderDetFormData$[index]['costo'] ?? 1}
+                    onChange={(e) => handleInputChange(index, "precio", e.target.value)}
+                  />
+                </td>
+                <td>
+                  <Form.Control
+                    required
+                    type="number"
+                    placeholder=""
                     value={row.cantMin}
-                    min={1}
+                    min={0}
                     onChange={(e) => handleInputChange(index, "cantMin", e.target.value)}
                   />
                 </td>

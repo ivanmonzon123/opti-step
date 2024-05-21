@@ -14,7 +14,12 @@
 }
 
 .opt-result-card-production-models span {
-  width: 150px;
+  width: 120px;
+}
+
+.opt-result-card-production-models label {
+  align-self: flex-end;
+  margin-bottom: 0.7px;
 }
 
 .opt-result-card-production-models .input-group {
@@ -28,6 +33,11 @@
 
 .opt-result-card-total-benefit span {
   width: 230px;
+}
+
+.opt-result-card-total-benefit label {
+  align-self: flex-end;
+  margin-bottom: 0.7px;
 }
 
 .opt-result-card-total-benefit .input-group {

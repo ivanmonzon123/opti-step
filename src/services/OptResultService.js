@@ -155,7 +155,7 @@ const generateAdviceByResult = (optResult) => {
   return advice;
 };
 
-export const generateOptAdvice = (fbModel, fbSolution) => {
+const generateOptAdvice = (fbModel, fbSolution) => {
   const fbLiquitProfit = getLiquitProfit(fbModel, fbSolution);
   const fbModels = getModelKeysFromData().reduce(
     (acc, modelKey) =>

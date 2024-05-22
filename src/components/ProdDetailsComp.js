@@ -10,13 +10,22 @@ export default function ProdDetailsComp(
     nextCompToRenderFn
   }
 ) {
-  useEffect(() => {
-    const result = [];
-    for (const modelo in optFormData$.variables) {
-      result.push({modelo: modelo, cortado: "", solado: "", aparado: "", terminado: ""});
-    }
 
-    setProdDetFormData$([...result])
+  useEffect(() => {
+    if (!prodDetFormData$.length) {
+      const result = [];
+      for (const modelo in optFormData$.variables) {
+        result.push({
+          modelo: modelo,
+          cortado: "",
+          solado: "",
+          aparado: "",
+          terminado: "",
+        });
+      }
+
+      setProdDetFormData$([...result]);
+    }
     // eslint-disable-next-line
   }, []);
 
@@ -43,11 +52,11 @@ export default function ProdDetailsComp(
   const formRef = useRef(null);
   useEffect(() => {
     if (formStepChange$ === 3) {
+      formRef.current.click();
+
       if (!prodDetailsFormIsValid()) {
-        formRef.current.click();
         setFormStepChange$(2);
       } else {
-        formRef.current.click();
         nextCompToRenderFn();
       }
     }

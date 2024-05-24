@@ -20,31 +20,31 @@ export default function FormPage({handlePrintResultComp}) {
     numberOfModels: 0,
 
     constraints: {
-      cortado: {max: 0},
-      aparado: {max: 0},
-      solado: {max: 0},
-      terminado: {max: 0},
+      cortado: { max: 0 },
+      aparado: { max: 0 },
+      solado: { max: 0 },
+      terminado: { max: 0 },
     },
 
-    variables: {}
+    variables: {},
   });
 
   const [orderDetFormData$, setOrderDetFormData$] = useState([
-    {modelo: "", precio: "", costo: "", cantMin: "", cantMax: "",},
+    { modelo: "", precio: "", costo: "", cantMin: "", cantMax: "" },
   ]);
   const [staffInfoFormData$, setStaffInfoFormData$] = useState({
     cortado: [],
     aparado: [],
     solado: [],
-    terminado: []
+    terminado: [],
   });
   const [prodDetFormData$, setProdDetFormData$] = useState([]);
 
   const title = [
-    'Detalles de pedido',
-    'Informacion del personal',
-    'Detalles de producción',
-    'Resultados de optimizacion'
+    "Detalles de pedido",
+    "Informacion del personal",
+    "Detalles de producción",
+    "Resultados de optimizacion",
   ];
   const form = [
     <OrderDetailsComp
@@ -88,8 +88,8 @@ export default function FormPage({handlePrintResultComp}) {
   }
 
   useEffect(() => {
-    console.log(optFormData$)
-  }, [optFormData$])
+    console.log(optFormData$);
+  }, [optFormData$]);
   //
   // useEffect(() => {
   //   console.log("formStepChange$: ", formStepChange$)
@@ -97,41 +97,49 @@ export default function FormPage({handlePrintResultComp}) {
 
   return (
     <article className="forms-container">
-      <article className="forms-content">
+      <article className="forms-content os-clr-margin-on-print">
         <section className="forms-title">
-          <label className="os-txt os-txt-lg os-txt-bold">{title[compToRender$]}</label>
-          <ProgressBar className="os-hide-on-print" now={((compToRender$ + 1) / title.length) * 100}
-                       label={`Paso: ${compToRender$ + 1}`}/>
+          <label className="os-txt os-txt-lg os-txt-bold">
+            {title[compToRender$]}
+          </label>
+
+          <ProgressBar
+            className="os-hide-on-print"
+            now={((compToRender$ + 1) / title.length) * 100}
+            label={`Paso: ${compToRender$ + 1}`}
+          />
         </section>
 
-        <section className="w-100">
-          {form[compToRender$]} 
+        <section className="w-100">{form[compToRender$]}</section>
+
+        <section className="forms-buttons mb-3 os-hide-on-print">
+          <button
+            className="btn btn-primary"
+            disabled={!compToRender$}
+            onClick={previousCompToRender}
+          >
+            <label className="os-txt forms-buttons-back">
+              &nbsp;Anterior&nbsp;
+            </label>
+          </button>
+
+          {!isFinalStep() ? (
+            <button
+              className="btn btn-primary"
+              onClick={() => {
+                setFormStepChange$(formStepChange$ + 1);
+              }}
+            >
+              <label className="os-txt forms-buttons-nxt">Siguiente</label>
+            </button>
+          ) : (
+            <button className="btn btn-primary" onClick={handlePrintResultComp}>
+              <label className="os-txt">
+                Guardar <FontAwesomeIcon className="fs-5" icon={faFloppyDisk} />
+              </label>
+            </button>
+          )}
         </section>
-
-        {
-          isFinalStep()
-            ?
-            <section className="forms-buttons os-hide-on-print">
-              <button className="btn btn-primary" onClick={handlePrintResultComp}>
-                <label className="os-txt">
-                  Guardar <FontAwesomeIcon className="fs-5" icon={faFloppyDisk}/>
-                </label>
-              </button>
-            </section>
-            :
-            <section className="forms-buttons mb-3">
-              <button className="btn btn-primary" disabled={!compToRender$}>
-                <label className="os-txt" onClick={previousCompToRender}>&nbsp;Anterior&nbsp;</label>
-              </button>
-
-              <button className="btn btn-primary">
-                {/*<label className="os-txt" onClick={nextCompToRender}>Siguiente</label>*/}
-                <label className="os-txt" onClick={() => {
-                  setFormStepChange$(formStepChange$ + 1)
-                }}>Siguiente</label>
-              </button>
-            </section>
-        }
       </article>
     </article>
   );

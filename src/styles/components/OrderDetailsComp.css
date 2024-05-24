@@ -27,10 +27,6 @@
     max-width: 300px;
 }
 
-.forms-buttons {
-    display: flex;
-    gap: 20px;
-}
 
 @media (max-width: 1200px) {
     .order-details-card-parameters {

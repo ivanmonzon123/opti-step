@@ -1,56 +1,68 @@
 .forms-container {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex-grow: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
 }
 
 .forms-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    width: 55%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto 0;
+  width: 55%;
+  gap: 20px;
 }
 
 .forms-title {
-    text-align: center;
+  text-align: center;
 }
 
-.forms-title .progress{
-    width: 350px;
-    margin: 0 auto;
+.forms-title .progress {
+  width: 350px;
+  margin: 0 auto;
+}
+
+.forms-buttons {
+  display: flex;
+  gap: 20px;
+}
+
+.forms-buttons-back {
+  padding: 0 9px;
+}
+
+.forms-buttons-nxt {
+  padding: 0 9px;
 }
 
 @media (max-width: 768px) {
-    .forms-content {
-        width: 80%;
-    }
+  .forms-content {
+    width: 80%;
+  }
 }
 
 @media (max-width: 576px) {
-    .forms-title .progress{
-        width: 100%
-    }
+  .forms-title .progress {
+    width: 100%;
+  }
 }
 
 @media (max-width: 397px) {
-    .forms-content {
-        width: 100%;
-        padding: 0 10px;
-    }
+  .forms-content {
+    width: 100%;
+    padding: 0 10px;
+  }
 }
 
 @media print {
-    .forms-container {
-        justify-content: flex-start;
-    }
+  .forms-container {
+    justify-content: flex-start;
+  }
 
-    .forms-content {
-        width: 80%;
-    }
+  .forms-content {
+    width: 80%;
+  }
 }
-

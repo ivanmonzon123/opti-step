@@ -3,7 +3,7 @@
 import {
   changeMinConstraints,
   changeMaxConstraints,
-  getLiquitProfit,
+  getTotalProfit,
   HEADER_FEEDBACK_VALUES,
   PERCENTAGE_CRITERIA,
   MAX_VALUE_PRODUCTION,
@@ -44,10 +44,10 @@ export const getOptResult = (model) => {
     setGlobalOptResult(solution);
   }
 
-  const liquitProfit = getLiquitProfit(model, solution);
+  const totalProfit = getTotalProfit(model, solution);
   const feedback = getFeedback(resultType);
 
-  return { ...solution, liquitProfit, feedback };
+  return { ...solution, totalProfit, feedback };
 };
 
 export const getFeedback = (optimizationResult) => {
@@ -156,7 +156,7 @@ const generateAdviceByResult = (optResult) => {
 };
 
 const generateOptAdvice = (fbModel, fbSolution) => {
-  const fbLiquitProfit = getLiquitProfit(fbModel, fbSolution);
+  const fbTotalProfit = getTotalProfit(fbModel, fbSolution);
   const fbModels = getModelKeysFromData().reduce(
     (acc, modelKey) =>
       (acc = { ...acc, [modelKey]: `${fbSolution[modelKey] ?? 0} pares` }),
@@ -165,8 +165,8 @@ const generateOptAdvice = (fbModel, fbSolution) => {
 
   const newOptAdvice = {
     ...fbModels,
-    "Ganancia": `${fbSolution.result} bs`,
-    "Ganancia líquida": `${fbLiquitProfit} bs`,
+    Ingresos: `${fbTotalProfit} bs`,
+    Utilidad: `${fbSolution.result} bs`,
   };
 
   return {
@@ -176,8 +176,5 @@ const generateOptAdvice = (fbModel, fbSolution) => {
 };
 
 const showFeedbackResult = (fbSolution) => {
-  return (
-    getLiquitProfit(_modelData, fbSolution) >=
-    getLiquitProfit(_modelData, _optResult)
-  );
+  return fbSolution.result >= _optResult.result;
 };

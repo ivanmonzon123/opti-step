@@ -14,7 +14,7 @@ export default function FormPage({handlePrintResultComp}) {
   const [formStepChange$, setFormStepChange$] = useState(0);
 
   const [optFormData$, setOptFormData$] = useState({
-    optimize: "precio",
+    optimize: "utility",
     opType: "max",
     productionPeriod: 0,
     numberOfModels: 0,

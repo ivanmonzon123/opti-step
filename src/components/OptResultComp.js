@@ -13,8 +13,8 @@ export default function OptResultComp({ optFormData$ }) {
   });
 
   const profit = [
-    { title: "Max. total beneficio:", key: "result" },
-    { title: "Max. total beneficio (líquido):", key: "liquitProfit" },
+    { title: "Max. Ingresos:", key: "totalProfit" },
+    { title: "Max. Utilidad:", key: "result" },
   ];
 
   useEffect(() => {

@@ -39,11 +39,15 @@ export default function OrderDetailsComp(
   const updateFormData = () => {
     const newVariables = {};
     const newConstraints = { ...optFormData$.constraints };
+    
     orderDetFormData$.forEach((row) => {
+      const utility = row.precio - row.costo;
+
       if (row.modelo) {
         newVariables[row.modelo] = {
           precio: row.precio,
           costo: row.costo,
+          utility: utility,
           cortado: 0,
           aparado: 0,
           solado: 0,
@@ -56,6 +60,7 @@ export default function OrderDetailsComp(
         newConstraints[row.modelo + "Min"] = { min: row.cantMin };
       }
     });
+
     setOptFormData$((prevData) => ({
       ...prevData,
       variables: newVariables,

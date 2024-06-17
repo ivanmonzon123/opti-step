@@ -69,6 +69,16 @@ export const getLiquitProfit = (model, solution) => {
   return liquitProfit;
 };
 
+export const getTotalProfit = (model, solution) => {
+  let totalProfit = 0;
+  for (let key in model.variables) {
+    if (solution[key]) {
+      totalProfit = totalProfit + (solution[key] * model.variables[key].precio);
+    }
+  }
+  return totalProfit;
+};
+
 export const cloneDeep = (obj) => {
   return JSON.parse(JSON.stringify(obj));
 };

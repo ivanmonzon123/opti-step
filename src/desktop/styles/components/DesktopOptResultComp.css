@@ -1,0 +1,68 @@
+.opt-result-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.opt-result-card {
+  width: 65%;
+  margin: 0 auto;
+}
+
+.opt-result-card-production-models {
+  width: 100%;
+}
+
+.opt-result-card-production-models span {
+  width: 120px;
+}
+
+.opt-result-card-production-models label {
+  align-self: flex-end;
+  margin-bottom: 0.7px;
+}
+
+.opt-result-card-production-models .input-group {
+  margin: 5px 0;
+  max-width: 250px;
+}
+
+.opt-result-card-total-benefit {
+  width: 100%;
+}
+
+.opt-result-card-total-benefit span {
+  width: 230px;
+}
+
+.opt-result-card-total-benefit label {
+  align-self: flex-end;
+  margin-bottom: 0.7px;
+}
+
+.opt-result-card-total-benefit .input-group {
+  margin: 5px 0;
+  max-width: 350px;
+}
+
+@media (max-width: 576px) {
+  .opt-result-card-total-benefit .input-group .form-control {
+    flex-grow: unset;
+    flex-shrink: unset;
+    flex-basis: unset;
+    width: 150px;
+    margin: 10px 0;
+  }
+}
+
+@media (max-width: 1200px) {
+  .opt-result-card {
+    width: 80%;
+  }
+}
+
+@media (max-width: 992px) {
+  .opt-result-card {
+    width: 100%;
+  }
+}

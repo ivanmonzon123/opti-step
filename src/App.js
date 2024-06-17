@@ -5,12 +5,16 @@ import FormPage from "./pages/FormPage";
 import { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 import "./App.css";
+import DesktopFormPage from "./desktop/pages/DesktopFormPage";
 
 function App() {
   const resultCompRef = useRef();
+  const viewportWidth = window.innerWidth;
+
   const handlePrintResultComp = useReactToPrint({
     content: () => resultCompRef.current,
   });
+
   return (
     <article ref={resultCompRef}>
       <BrowserRouter>
@@ -24,7 +28,13 @@ function App() {
             <Route
               path="/forms"
               element={
-                <FormPage handlePrintResultComp={handlePrintResultComp} />
+                viewportWidth < 1530 ? (
+                  <FormPage handlePrintResultComp={handlePrintResultComp} />
+                ) : (
+                  <DesktopFormPage
+                    handlePrintResultComp={handlePrintResultComp}
+                  />
+                )
               }
             />
           </Routes>

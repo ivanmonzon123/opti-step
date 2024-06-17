@@ -44,15 +44,21 @@ export default function DesktopFormPage({handlePrintResultComp}) {
   });
   const [prodDetFormData$, setProdDetFormData$] = useState([]);
 
-  // const title = [
-  //   "Detalles de pedido",
-  //   "Informacion del personal",
-  //   "Detalles de producción",
-  //   "Resultados de optimizacion",
-  // ];
+  const title = [
+    "Detalles de pedido",
+    "Informacion del personal",
+    "Detalles de producción",
+    "Resultados de optimizacion",
+  ];
   const form = [
-    <>
+    <section className="w-100 grid-container">
       <section className="area-1">
+      <section className="forms-title">
+          <label className="os-txt os-txt-lg os-txt-bold">
+            {title[0]}
+          </label>
+      </section>
+
         <DesktopOrderDetailsComp
           optFormData$={optFormData$} setOptFormData$={setOptFormData$}
           orderDetFormData$={orderDetFormData$} setOrderDetFormData$={setOrderDetFormData$}
@@ -63,6 +69,12 @@ export default function DesktopFormPage({handlePrintResultComp}) {
 
 
       <section className="area-2">
+      <section className="forms-title">
+          <label className="os-txt os-txt-lg os-txt-bold">
+            {title[1]}
+          </label>
+      </section>
+
         <DesktopStaffInfoComp
           className="area-2"
           optFormData$={optFormData$} setOptFormData$={setOptFormData$}
@@ -74,6 +86,12 @@ export default function DesktopFormPage({handlePrintResultComp}) {
       
 
       <section className="area-3">
+      <section className="forms-title">
+          <label className="os-txt os-txt-lg os-txt-bold">
+            {title[2]}
+          </label>
+      </section>
+
         <DesktopProdDetailsComp
           className="area-3"
           optFormData$={optFormData$} setOptFormData$={setOptFormData$}
@@ -82,11 +100,21 @@ export default function DesktopFormPage({handlePrintResultComp}) {
           nextCompToRenderFn={nextCompToRender}
         />
       </section>
-    </>,
+    </section>,
 
-    <OptResultComp
-      optFormData$={optFormData$}
-    />
+    <section className="w-100 dk-opt-result-container">
+      <section className="forms-title">
+          <label className="os-txt os-txt-lg os-txt-bold">
+            {title[3]}
+          </label>
+      </section>
+
+      <section className="dk-opt-result-content">
+        <OptResultComp
+          optFormData$={optFormData$}
+        />
+      </section>
+    </section>
   ];
 
   function isFinalStep() {
@@ -126,7 +154,7 @@ export default function DesktopFormPage({handlePrintResultComp}) {
           </label>
         </section> */}
 
-        <section className="w-100 grid-container">{form[compToRender$]}</section>
+        <section>{form[compToRender$]}</section>
 
         <section className="dk-forms-buttons os-hide-on-print">
           <button

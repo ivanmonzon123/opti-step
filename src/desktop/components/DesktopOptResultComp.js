@@ -1,9 +1,9 @@
 import { Card, Form, InputGroup } from "react-bootstrap";
-import CollapsibleInfoComp from "./CollapsibleInfoComp";
+import CollapsibleInfoComp from "../../components/CollapsibleInfoComp";
 import { useEffect, useState } from "react";
 import "../styles/components/DesktopOptResultComp.css";
+import * as optResultService from "../../services/OptResultService";
 
-import * as optResultService from "../services/OptResultService";
 
 export default function DesktopOptResultComp({ optFormData$ }) {
   const [optResult, setOptResult] = useState({

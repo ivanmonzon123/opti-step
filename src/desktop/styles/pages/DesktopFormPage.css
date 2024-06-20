@@ -9,14 +9,30 @@
 
 .dk-opt-result-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  height: calc(100vh - 120px);
 }
 
 .dk-opt-result-content {
-  width: 55%;
-  margin: 10px 0;
+  /*width: 55%;*/
+  /*margin: 10px 0;*/
+  /*gap: 20px;*/
+
+}
+
+.dk-opt-result-card-container {
+  height: 100%;
+  overflow: auto;
+}
+
+.dk-opt-result-charts {
+  /*width: 55%;*/
+  /*margin: 10px 0;*/
+  /*gap: 20px;*/
+  display: flex;
+  flex-direction: column;
   gap: 20px;
+  height: 100%;
+  overflow: auto;
 }
 
 .grid-container {

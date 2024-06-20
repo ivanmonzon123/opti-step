@@ -3,10 +3,12 @@ import DesktopOrderDetailsComp from "../components/DesktopOrderDetailsComp";
 import {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import DesktopProdDetailsComp from "../components/DesktopProdDetailsComp";
-import OptResultComp from "../../components/OptResultComp";
+import DesktopOptResultComp from "../components/DesktopOptResultComp";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faFloppyDisk} from "@fortawesome/free-regular-svg-icons";
 import DesktopStaffInfoComp from "../components/DesktopStaffInfoComp";
+import Bar from "../charts/Bar";
+import Cake from "../charts/Cake";
 
 export default function DesktopFormPage({handlePrintResultComp}) {
   const navigate = useNavigate();
@@ -50,6 +52,19 @@ export default function DesktopFormPage({handlePrintResultComp}) {
     "Detalles de producción",
     "Resultados de optimizacion",
   ];
+
+  const data = {
+    labels: ['one', 'two'],
+    datasets: [
+      {
+        label: "labels",
+        data: [10, 20],
+        backgroundColor: ['red', 'green'],
+        borderWidth: 1,
+      },
+    ],
+  };
+
   const form = [
     <section className="w-100 grid-container">
       <section className="area-1">
@@ -103,16 +118,23 @@ export default function DesktopFormPage({handlePrintResultComp}) {
     </section>,
 
     <section className="w-100 dk-opt-result-container">
-      <section className="forms-title">
+      <section className="w-50 dk-opt-result-card-container">
+        <section className="forms-title">
           <label className="os-txt os-txt-lg os-txt-bold">
             {title[3]}
           </label>
+        </section>
+
+        <section className="dk-opt-result-content">
+          <DesktopOptResultComp
+            optFormData$={optFormData$}
+          />
+        </section>
       </section>
 
-      <section className="dk-opt-result-content">
-        <OptResultComp
-          optFormData$={optFormData$}
-        />
+      <section className="w-50 dk-opt-result-charts">
+        <Cake datos={data}/>
+        <Bar datos={data}/>
       </section>
     </section>
   ];

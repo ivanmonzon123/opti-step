@@ -7,8 +7,8 @@ import DesktopOptResultComp from "../components/DesktopOptResultComp";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faFloppyDisk} from "@fortawesome/free-regular-svg-icons";
 import DesktopStaffInfoComp from "../components/DesktopStaffInfoComp";
-import Bar from "../charts/Bar";
-import Cake from "../charts/Cake";
+import Bar from "../../charts/Bar";
+import Cake from "../../charts/Cake";
 
 export default function DesktopFormPage({handlePrintResultComp}) {
   const navigate = useNavigate();

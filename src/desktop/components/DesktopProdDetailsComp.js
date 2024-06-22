@@ -1,16 +1,17 @@
-import {Card, Form, Table} from "react-bootstrap";
-import "../styles/components/DesktopProdDetailsComp.css"
-import {useEffect, useRef} from "react";
+import { Card, Form, Table } from "react-bootstrap";
+import "../styles/components/DesktopProdDetailsComp.css";
+import { useEffect, useRef } from "react";
 
-export default function DesktopProdDetailsComp(
-  {
-    optFormData$, setOptFormData$,
-    prodDetFormData$, setProdDetFormData$,
-    formStepChange$, setFormStepChange$,
-    nextCompToRenderFn,
-  }
-) {
+export default function DesktopProdDetailsComp({
+  optFormData$,
+  setOptFormData$,
 
+  prodDetFormData$,
+  setProdDetFormData$,
+
+  formStepChange$,
+  setFormStepChange$,
+}) {
   useEffect(() => {
     const result = [];
     Object.entries(optFormData$.variables).forEach(([key, value]) => {
@@ -21,9 +22,9 @@ export default function DesktopProdDetailsComp(
         aparado: value.aparado ?? 0,
         terminado: value.terminado ?? 0,
       });
-    })
+    });
 
-      setProdDetFormData$([...result]);
+    setProdDetFormData$([...result]);
     // eslint-disable-next-line
   }, [optFormData$]);
 
@@ -50,13 +51,13 @@ export default function DesktopProdDetailsComp(
 
   const formRef = useRef(null);
   useEffect(() => {
-    if (formStepChange$ === 3) {
+    if (formStepChange$ === 'production') {
       showErrorsAndSaveData();
 
       if (!prodDetailsFormIsValid()) {
-        setFormStepChange$(2);
+        setFormStepChange$('init');
       } else {
-        nextCompToRenderFn();
+        setFormStepChange$('staff')
       }
     }
     // eslint-disable-next-line
@@ -67,16 +68,17 @@ export default function DesktopProdDetailsComp(
   };
 
   const updateFormData = () => {
-    let newOptFormData = {...optFormData$}
+    let newOptFormData = { ...optFormData$ };
     prodDetFormData$.forEach((item) => {
-      const {modelo, ...prodDetails} = item
+      const { modelo, ...prodDetails } = item;
       newOptFormData.variables[modelo] = {
-        ...(newOptFormData.variables[modelo]), ...prodDetails
-      }
-    })
+        ...newOptFormData.variables[modelo],
+        ...prodDetails,
+      };
+    });
 
     setOptFormData$(newOptFormData);
-  }
+  };
 
   return (
     <Card className="production-details-card">

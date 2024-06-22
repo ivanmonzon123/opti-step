@@ -4,9 +4,16 @@ import {useEffect, useState} from "react";
 
 export default function DesktopStaffInfoComp(
   {
-    formStepChange$, setFormStepChange$,
-    optFormData$, setOptFormData$,
-    staffInfoFormData$, setStaffInfoFormData$,
+    formStepChange$,
+    setFormStepChange$,
+
+    optFormData$,
+    setOptFormData$,
+
+    staffInfoFormData$,
+    setStaffInfoFormData$,
+
+    setFormView$,
   }
 ) {
 
@@ -29,7 +36,8 @@ export default function DesktopStaffInfoComp(
 
 
   useEffect(() => {
-    if (formStepChange$ === 2) {
+    if (formStepChange$ === 'staff') {
+    console.log("is in staff subscription")
       setProcessToCheck$({...processToCheck$, formStep: 0});
     }
     // eslint-disable-next-line
@@ -50,20 +58,17 @@ export default function DesktopStaffInfoComp(
   }
 
   useEffect(() => {
-    if(formStepChange$ === 2) {
+    if(formStepChange$ === 'staff') {
+      console.log("All forms are valid ? : ", allFormsAreValid(isValid$))
       if (allFormsAreValid(isValid$)) {
         saveFormsData();
-        showErrorsAndNavigateTo(3);
-      } else {
-        showErrorsAndNavigateTo(1);
+        setFormView$('end');
       }
+
+      setFormStepChange$('init');
     }
     // eslint-disable-next-line
   }, [isValid$])
-
-  const showErrorsAndNavigateTo = (step) => {
-    setFormStepChange$(step);
-  };
 
   return (
     <article className="staff-info-container">

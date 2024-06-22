@@ -116,20 +116,20 @@ export default function DesktopOrderDetailsComp({
   };
 
   useEffect(() => {
-    if (formStepChange$ === 1) {
+    if (formStepChange$ === 'order') {
+      showErrorsAndSaveData();
       if (!orderDetailsFormIsValid()) {
-        showErrorsAndSaveData(0);
+        setFormStepChange$('init');
       } else {
-        showErrorsAndSaveData(2);
+        setFormStepChange$('production');
       }
     }
     // eslint-disable-next-line
   }, [formStepChange$]);
 
   const formRef = useRef(null);
-  const showErrorsAndSaveData = (step) => {
+  const showErrorsAndSaveData = () => {
     formRef.current.click();
-    setFormStepChange$(step);
   };
 
   return (

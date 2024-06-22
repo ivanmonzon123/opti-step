@@ -28,8 +28,8 @@ export default function DesktopFormPage({ handlePrintResultComp }) {
   const options = DEFAULT_OPTIONS;
 
   // Step handlers
-  const [compToRender$, setCompToRender$] = useState(0);
-  const [formStepChange$, setFormStepChange$] = useState(0);
+  const [formView$, setFormView$] = useState("init");
+  const [formStep$, setFormStep$] = useState("init");
 
   // Global object to send the request
   const [optFormData$, setOptFormData$] = useState(DEFAULT_OPT_FORM_DATA);
@@ -39,118 +39,115 @@ export default function DesktopFormPage({ handlePrintResultComp }) {
   const [staffInfoFormData$, setStaffInfoFormData$] = useState(PROCCESES_DATA);
   const [prodDetFormData$, setProdDetFormData$] = useState([PRODUCTION_DATA]);
 
-  const form = [
-    <section className="w-100 grid-container">
-      <section className="area-1">
-        <section className="forms-title">
-          <label className="os-txt os-txt-lg os-txt-bold">{title[0]}</label>
+  const form = {
+    init: (
+      <section className="w-100 grid-container">
+        <section className="area-1">
+          <section className="forms-title">
+            <label className="os-txt os-txt-lg os-txt-bold">{title[0]}</label>
+          </section>
+
+          <DesktopOrderDetailsComp
+            optFormData$={optFormData$}
+            setOptFormData$={setOptFormData$}
+            orderDetFormData$={orderDetFormData$}
+            setOrderDetFormData$={setOrderDetFormData$}
+            formStepChange$={formStep$}
+            setFormStepChange$={setFormStep$}
+          />
         </section>
 
-        <DesktopOrderDetailsComp
-          optFormData$={optFormData$}
-          setOptFormData$={setOptFormData$}
-          orderDetFormData$={orderDetFormData$}
-          setOrderDetFormData$={setOrderDetFormData$}
-          formStepChange$={formStepChange$}
-          setFormStepChange$={setFormStepChange$}
-        />
-      </section>
+        <section className="area-2">
+          <section className="forms-title">
+            <label className="os-txt os-txt-lg os-txt-bold">{title[1]}</label>
+          </section>
 
-      <section className="area-2">
-        <section className="forms-title">
-          <label className="os-txt os-txt-lg os-txt-bold">{title[1]}</label>
+          <DesktopStaffInfoComp
+            className="area-2"
+            optFormData$={optFormData$}
+            setOptFormData$={setOptFormData$}
+            formStepChange$={formStep$}
+            setFormStepChange$={setFormStep$}
+            staffInfoFormData$={staffInfoFormData$}
+            setStaffInfoFormData$={setStaffInfoFormData$}
+            setFormView$={setFormView$}
+          />
         </section>
 
-        <DesktopStaffInfoComp
-          className="area-2"
-          optFormData$={optFormData$}
-          setOptFormData$={setOptFormData$}
-          formStepChange$={formStepChange$}
-          setFormStepChange$={setFormStepChange$}
-          staffInfoFormData$={staffInfoFormData$}
-          setStaffInfoFormData$={setStaffInfoFormData$}
-          nextCompToRenderFn={nextCompToRender}
-        />
-      </section>
+        <section className="area-3">
+          <section className="forms-title">
+            <label className="os-txt os-txt-lg os-txt-bold">{title[2]}</label>
+          </section>
 
-      <section className="area-3">
-        <section className="forms-title">
-          <label className="os-txt os-txt-lg os-txt-bold">{title[2]}</label>
-        </section>
-
-        <DesktopProdDetailsComp
-          className="area-3"
-          optFormData$={optFormData$}
-          setOptFormData$={setOptFormData$}
-          formStepChange$={formStepChange$}
-          setFormStepChange$={setFormStepChange$}
-          prodDetFormData$={prodDetFormData$}
-          setProdDetFormData$={setProdDetFormData$}
-          nextCompToRenderFn={nextCompToRender}
-        />
-      </section>
-    </section>,
-
-    <section className="w-100 dk-opt-result-container">
-      <section className="w-50 dk-opt-result-card-container">
-        <section className="forms-title">
-          <label className="os-txt os-txt-lg os-txt-bold">{title[3]}</label>
-        </section>
-
-        <section className="dk-opt-result-content">
-          <DesktopOptResultComp optFormData$={optFormData$} />
+          <DesktopProdDetailsComp
+            className="area-3"
+            optFormData$={optFormData$}
+            setOptFormData$={setOptFormData$}
+            formStepChange$={formStep$}
+            setFormStepChange$={setFormStep$}
+            prodDetFormData$={prodDetFormData$}
+            setProdDetFormData$={setProdDetFormData$}
+          />
         </section>
       </section>
+    ),
 
-      <section className="w-50 dk-opt-result-charts">
-        {/*<Cake datos={data}/>*/}
-        <Bar datos={data} options={options} />
-        <Bar datos={data} options={options} />
+    end: (
+      <section className="w-100 dk-opt-result-container">
+        <section className="w-50 dk-opt-result-card-container">
+          <section className="forms-title">
+            <label className="os-txt os-txt-lg os-txt-bold">{title[3]}</label>
+          </section>
+
+          <section className="dk-opt-result-content">
+            <DesktopOptResultComp optFormData$={optFormData$} />
+          </section>
+        </section>
+
+        <section className="w-50 dk-opt-result-charts">
+          {/*<Cake datos={data}/>*/}
+          <Bar datos={data} options={options} />
+          <Bar datos={data} options={options} />
+        </section>
       </section>
-    </section>,
-  ];
+    ),
+  };
 
   function isFinalStep() {
-    return compToRender$ + 1 === form.length;
+    return formView$ === "end";
   }
 
-  function nextCompToRender() {
-    if (!isFinalStep()) {
-      setCompToRender$(compToRender$ + 1);
+  function previousView() {
+    if (formView$ === "end") {
+      setFormView$("init");
     }
-  }
 
-  function previousCompToRender() {
-    if (compToRender$ > 0) {
-      setFormStepChange$(formStepChange$ - 1);
-      setCompToRender$(compToRender$ - 1);
-    } else {
+    if (formView$ === "init") {
       navigate("/");
     }
   }
 
   useEffect(() => {
     console.log(optFormData$);
-    console.trace();
   }, [optFormData$]);
-  //
+
   // useEffect(() => {
-  //   console.log("formStepChange$: ", formStepChange$)
-  // }, [formStepChange$])
+  //   console.log("formStepChange$: ", formStep$)
+  // }, [formStep$])
 
   return (
     <article className="forms-container">
       <article className="dk-forms-content os-clr-margin-on-print">
         {/* <section className="forms-title">
           <label className="os-txt os-txt-lg os-txt-bold">
-            {title[compToRender$]}
+            {title[formView$]}
           </label>
         </section> */}
 
-        <section>{form[compToRender$]}</section>
+        <section>{form[formView$]}</section>
 
         <section className="dk-forms-buttons os-hide-on-print">
-          <button className="btn btn-primary" onClick={previousCompToRender}>
+          <button className="btn btn-primary" onClick={previousView}>
             <label className="os-txt dk-forms-buttons-back">
               &nbsp;Anterior&nbsp;
             </label>
@@ -160,7 +157,7 @@ export default function DesktopFormPage({ handlePrintResultComp }) {
             <button
               className="btn btn-primary"
               onClick={() => {
-                setFormStepChange$(formStepChange$ + 1);
+                setFormStep$("order");
               }}
             >
               <label className="os-txt dk-forms-buttons-nxt">Siguiente</label>

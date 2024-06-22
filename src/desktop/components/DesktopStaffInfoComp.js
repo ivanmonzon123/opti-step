@@ -7,7 +7,6 @@ export default function DesktopStaffInfoComp(
     formStepChange$, setFormStepChange$,
     optFormData$, setOptFormData$,
     staffInfoFormData$, setStaffInfoFormData$,
-    nextCompToRenderFn
   }
 ) {
 
@@ -51,15 +50,20 @@ export default function DesktopStaffInfoComp(
   }
 
   useEffect(() => {
-    if (allFormsAreValid(isValid$)) {
-      saveFormsData();
-      // nextCompToRenderFn();
-      setFormStepChange$(2);
-    } else {
-      setFormStepChange$(1);
+    if(formStepChange$ === 2) {
+      if (allFormsAreValid(isValid$)) {
+        saveFormsData();
+        showErrorsAndNavigateTo(3);
+      } else {
+        showErrorsAndNavigateTo(1);
+      }
     }
     // eslint-disable-next-line
   }, [isValid$])
+
+  const showErrorsAndNavigateTo = (step) => {
+    setFormStepChange$(step);
+  };
 
   return (
     <article className="staff-info-container">

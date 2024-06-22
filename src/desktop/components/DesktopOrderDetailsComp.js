@@ -1,19 +1,21 @@
-import {Button, Card, Form, InputGroup, Table} from "react-bootstrap";
-import "../styles/components/DesktopOrderDetailsComp.css"
-import {useEffect, useRef, useState} from "react";
+import { Button, Card, Form, InputGroup, Table } from "react-bootstrap";
+import "../styles/components/DesktopOrderDetailsComp.css";
+import { useEffect, useRef, useState } from "react";
 
-export default function DesktopOrderDetailsComp(
-  {
-    optFormData$, setOptFormData$,
-    orderDetFormData$, setOrderDetFormData$,
-    formStepChange$, setFormStepChange$,
-    nextCompToRenderFn
-  }
-) {
+export default function DesktopOrderDetailsComp({
+  optFormData$,
+  setOptFormData$,
+
+  orderDetFormData$,
+  setOrderDetFormData$,
+
+  formStepChange$,
+  setFormStepChange$,
+}) {
   const [modelCounterId, setmodelCounterId] = useState(2);
 
   const handleAddRow = () => {
-    const modelName = `Modelo${modelCounterId}`
+    const modelName = `Modelo${modelCounterId}`;
     setOrderDetFormData$([
       ...orderDetFormData$,
       {
@@ -35,9 +37,9 @@ export default function DesktopOrderDetailsComp(
     if (orderDetFormData$.length > 1) {
       const newInputRows = [...orderDetFormData$];
       const modelToRemove = newInputRows.pop().modelo;
-      delete optFormData$.variables[modelToRemove]
+      delete optFormData$.variables[modelToRemove];
       setOrderDetFormData$(newInputRows);
-      setOptFormData$({...optFormData$});
+      setOptFormData$({ ...optFormData$ });
       setmodelCounterId(modelCounterId - 1);
     }
   };
@@ -59,7 +61,7 @@ export default function DesktopOrderDetailsComp(
   const updateFormData = () => {
     const newVariables = {};
     const newConstraints = { ...optFormData$.constraints };
-    
+
     orderDetFormData$.forEach((row) => {
       const utility = row.precio - row.costo;
 
@@ -68,10 +70,10 @@ export default function DesktopOrderDetailsComp(
           precio: row.precio,
           costo: row.costo,
           utility: utility,
-          cortado: optFormData$.variables[row.modelo]['cortado'] ?? 0,
-          aparado: optFormData$.variables[row.modelo]['aparado'] ?? 0,
-          solado: optFormData$.variables[row.modelo]['solado'] ?? 0,
-          terminado: optFormData$.variables[row.modelo]['terminado'] ?? 0,
+          cortado: optFormData$.variables[row.modelo]["cortado"] ?? 0,
+          aparado: optFormData$.variables[row.modelo]["aparado"] ?? 0,
+          solado: optFormData$.variables[row.modelo]["solado"] ?? 0,
+          terminado: optFormData$.variables[row.modelo]["terminado"] ?? 0,
           [row.modelo + "Min"]: 1,
           [row.modelo + "Max"]: 1,
         };
@@ -116,17 +118,19 @@ export default function DesktopOrderDetailsComp(
   useEffect(() => {
     if (formStepChange$ === 1) {
       if (!orderDetailsFormIsValid()) {
-        formRef.current.click();
-        setFormStepChange$(0);
+        showErrorsAndSaveData(0);
       } else {
-        formRef.current.click();
-        // nextCompToRenderFn();
+        showErrorsAndSaveData(2);
       }
     }
     // eslint-disable-next-line
   }, [formStepChange$]);
 
   const formRef = useRef(null);
+  const showErrorsAndSaveData = (step) => {
+    formRef.current.click();
+    setFormStepChange$(step);
+  };
 
   return (
     <Card className="order-details-card">
@@ -167,72 +171,92 @@ export default function DesktopOrderDetailsComp(
 
           <Table responsive className="order-details-table">
             <thead>
-            <tr>
-              <th className="w-25">Modelo</th>
-              <th>Costo</th>
-              <th>Precio</th>
-              <th><span>Cant.</span> min</th>
-              <th><span>Cant.</span> max</th>
-            </tr>
+              <tr>
+                <th className="w-25">Modelo</th>
+                <th>Costo</th>
+                <th>Precio</th>
+                <th>
+                  <span>Cant.</span> min
+                </th>
+                <th>
+                  <span>Cant.</span> max
+                </th>
+              </tr>
             </thead>
 
             <tbody>
-            {orderDetFormData$.map((row, index) => (
-              <tr key={index}>
-                <td>
-                  <Form.Control
-                    required
-                    type="text"
-                    placeholder=""
-                    value={row.modelo}
-                    onChange={(e) => handleInputChange(index, "modelo", e.target.value)}
-                  />
-                </td>
-                <td>
-                  <Form.Control
-                    required
-                    type="number"
-                    placeholder=""
-                    value={row.costo}
-                    min={1}
-                    onChange={(e) => handleInputChange(index, "costo", e.target.value)}
-                  />
-                </td>
-                <td>
-                  <Form.Control
-                    required
-                    type="number"
-                    placeholder=""
-                    value={row.precio}
-                    min={orderDetFormData$[index]['costo'] ?? 1}
-                    onChange={(e) => handleInputChange(index, "precio", e.target.value)}
-                  />
-                </td>
-                <td>
-                  <Form.Control
-                    required
-                    type="number"
-                    placeholder=""
-                    value={row.cantMin}
-                    min={0}
-                    onChange={(e) => handleInputChange(index, "cantMin", e.target.value)}
-                  />
-                </td>
-                <td>
-                  <Form.Control
-                    required
-                    type="number"
-                    placeholder=""
-                    value={row.cantMax}
-                    min={orderDetFormData$[index]['cantMin'] || 1}
-                    onChange={(e) => handleInputChange(index, "cantMax", e.target.value)}
-                  />
-                </td>
-              </tr>
-            ))}
+              {orderDetFormData$.map((row, index) => (
+                <tr key={index}>
+                  <td>
+                    <Form.Control
+                      required
+                      type="text"
+                      placeholder=""
+                      value={row.modelo}
+                      onChange={(e) =>
+                        handleInputChange(index, "modelo", e.target.value)
+                      }
+                    />
+                  </td>
+                  <td>
+                    <Form.Control
+                      required
+                      type="number"
+                      placeholder=""
+                      value={row.costo}
+                      min={1}
+                      onChange={(e) =>
+                        handleInputChange(index, "costo", e.target.value)
+                      }
+                    />
+                  </td>
+                  <td>
+                    <Form.Control
+                      required
+                      type="number"
+                      placeholder=""
+                      value={row.precio}
+                      min={orderDetFormData$[index]["costo"] ?? 1}
+                      onChange={(e) =>
+                        handleInputChange(index, "precio", e.target.value)
+                      }
+                    />
+                  </td>
+                  <td>
+                    <Form.Control
+                      required
+                      type="number"
+                      placeholder=""
+                      value={row.cantMin}
+                      min={0}
+                      onChange={(e) =>
+                        handleInputChange(index, "cantMin", e.target.value)
+                      }
+                    />
+                  </td>
+                  <td>
+                    <Form.Control
+                      required
+                      type="number"
+                      placeholder=""
+                      value={row.cantMax}
+                      min={orderDetFormData$[index]["cantMin"] || 1}
+                      onChange={(e) =>
+                        handleInputChange(index, "cantMax", e.target.value)
+                      }
+                    />
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </Table>
-          <input ref={formRef} className="d-none" type="submit" value={"apply"} onClick={updateFormData}/>
+          <input
+            ref={formRef}
+            className="d-none"
+            type="submit"
+            value={"apply"}
+            onClick={updateFormData}
+          />
         </form>
       </Card.Body>
     </Card>

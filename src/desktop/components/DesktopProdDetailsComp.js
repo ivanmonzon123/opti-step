@@ -51,7 +51,7 @@ export default function DesktopProdDetailsComp(
   const formRef = useRef(null);
   useEffect(() => {
     if (formStepChange$ === 3) {
-      formRef.current.click();
+      showErrorsAndSaveData();
 
       if (!prodDetailsFormIsValid()) {
         setFormStepChange$(2);
@@ -61,6 +61,10 @@ export default function DesktopProdDetailsComp(
     }
     // eslint-disable-next-line
   }, [formStepChange$]);
+
+  const showErrorsAndSaveData = () => {
+    formRef.current.click();
+  };
 
   const updateFormData = () => {
     let newOptFormData = {...optFormData$}

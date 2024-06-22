@@ -1,4 +1,4 @@
-import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import NavBarComp from "./components/NavBarComp";
 import HomePage from "./pages/HomePage";
 import FormPage from "./pages/FormPage";
@@ -22,7 +22,7 @@ function App() {
   };
 
   const getFormToRenderByScreenSize = () => {
-    if (VIEWPORT_WIDTH < DESKTOP_SCRREN) {
+    if (VIEWPORT_WIDTH > DESKTOP_SCRREN) {
       return formVertions.desktop;
     }
 

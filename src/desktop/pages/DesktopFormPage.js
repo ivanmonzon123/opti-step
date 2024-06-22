@@ -19,6 +19,7 @@ import {
   ORDER_DATA,
   PRODUCTION_DATA,
 } from "../../helpers/FormPageHelper";
+import {FormStep, FormView} from "../helper/DesktopFormPageHelper"
 
 export default function DesktopFormPage({ handlePrintResultComp }) {
   const navigate = useNavigate();
@@ -28,8 +29,8 @@ export default function DesktopFormPage({ handlePrintResultComp }) {
   const options = DEFAULT_OPTIONS;
 
   // Step handlers
-  const [formView$, setFormView$] = useState("init");
-  const [formStep$, setFormStep$] = useState("init");
+  const [formView$, setFormView$] = useState(FormView.CONFIG);
+  const [formStep$, setFormStep$] = useState(FormStep.INIT);
 
   // Global object to send the request
   const [optFormData$, setOptFormData$] = useState(DEFAULT_OPT_FORM_DATA);
@@ -40,7 +41,7 @@ export default function DesktopFormPage({ handlePrintResultComp }) {
   const [prodDetFormData$, setProdDetFormData$] = useState([PRODUCTION_DATA]);
 
   const form = {
-    init: (
+    [FormView.CONFIG]: (
       <section className="w-100 grid-container">
         <section className="area-1">
           <section className="forms-title">
@@ -52,8 +53,8 @@ export default function DesktopFormPage({ handlePrintResultComp }) {
             setOptFormData$={setOptFormData$}
             orderDetFormData$={orderDetFormData$}
             setOrderDetFormData$={setOrderDetFormData$}
-            formStepChange$={formStep$}
-            setFormStepChange$={setFormStep$}
+            formStep$={formStep$}
+            setFormStep$={setFormStep$}
           />
         </section>
 
@@ -63,11 +64,10 @@ export default function DesktopFormPage({ handlePrintResultComp }) {
           </section>
 
           <DesktopStaffInfoComp
-            className="area-2"
             optFormData$={optFormData$}
             setOptFormData$={setOptFormData$}
-            formStepChange$={formStep$}
-            setFormStepChange$={setFormStep$}
+            formStep$={formStep$}
+            setFormStep$={setFormStep$}
             staffInfoFormData$={staffInfoFormData$}
             setStaffInfoFormData$={setStaffInfoFormData$}
             setFormView$={setFormView$}
@@ -80,11 +80,10 @@ export default function DesktopFormPage({ handlePrintResultComp }) {
           </section>
 
           <DesktopProdDetailsComp
-            className="area-3"
             optFormData$={optFormData$}
             setOptFormData$={setOptFormData$}
-            formStepChange$={formStep$}
-            setFormStepChange$={setFormStep$}
+            formStep$={formStep$}
+            setFormStep$={setFormStep$}
             prodDetFormData$={prodDetFormData$}
             setProdDetFormData$={setProdDetFormData$}
           />
@@ -92,7 +91,7 @@ export default function DesktopFormPage({ handlePrintResultComp }) {
       </section>
     ),
 
-    end: (
+  [FormView.RESULT]: (
       <section className="w-100 dk-opt-result-container">
         <section className="w-50 dk-opt-result-card-container">
           <section className="forms-title">
@@ -118,18 +117,22 @@ export default function DesktopFormPage({ handlePrintResultComp }) {
   }
 
   function previousView() {
-    if (formView$ === "end") {
-      setFormView$("init");
+    if (formView$ === FormView.RESULT) {
+      setFormView$(FormView.CONFIG);
     }
 
-    if (formView$ === "init") {
+    if (formView$ === FormView.CONFIG) {
       navigate("/");
     }
   }
 
-  // useEffect(() => {
-  //   console.log(optFormData$);
-  // }, [optFormData$]);
+  function nextView() {
+    setFormStep$(FormStep.ORDER);
+  }
+
+  useEffect(() => {
+    console.log(optFormData$);
+  }, [optFormData$]);
 
   // useEffect(() => {
   //   console.log("formStepChange$: ", formStep$)
@@ -155,11 +158,7 @@ export default function DesktopFormPage({ handlePrintResultComp }) {
 
           {!isFinalStep() ? (
             <button
-              className="btn btn-primary"
-              onClick={() => {
-                setFormStep$("order");
-              }}
-            >
+              className="btn btn-primary" onClick={nextView}>
               <label className="os-txt dk-forms-buttons-nxt">Siguiente</label>
             </button>
           ) : (

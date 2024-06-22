@@ -1,9 +1,9 @@
 export const FormStep = Object.freeze({
   INIT: 'INIT',
   ORDER: 'ORDER',
-  PROCESS: 'PROCESS',
+  PRODUCTION: 'PRODUCTION',
   STAFF: 'STAFF',
-  FINAL: 'PROCESS',
+  FINAL: 'FINAL',
 })
 
 export const StaffSubFormStep = Object.freeze({
@@ -13,4 +13,9 @@ export const StaffSubFormStep = Object.freeze({
   SOLADO: 'SOLADO',
   TERMINADO: 'TERMINADO',
   FINAL: 'FINAL',
+})
+
+export const FormView = Object.freeze({
+  CONFIG: 'CONFIG',
+  RESULT: 'RESULT',
 })

@@ -1,6 +1,7 @@
 import { Card, Form, Table } from "react-bootstrap";
 import "../styles/components/DesktopProdDetailsComp.css";
 import { useEffect, useRef } from "react";
+import {FormStep} from "../helper/DesktopFormPageHelper";
 
 export default function DesktopProdDetailsComp({
   optFormData$,
@@ -9,8 +10,8 @@ export default function DesktopProdDetailsComp({
   prodDetFormData$,
   setProdDetFormData$,
 
-  formStepChange$,
-  setFormStepChange$,
+  formStep$,
+  setFormStep$,
 }) {
   useEffect(() => {
     const result = [];
@@ -51,17 +52,17 @@ export default function DesktopProdDetailsComp({
 
   const formRef = useRef(null);
   useEffect(() => {
-    if (formStepChange$ === 'production') {
+    if (formStep$ === FormStep.PRODUCTION) {
       showErrorsAndSaveData();
 
       if (!prodDetailsFormIsValid()) {
-        setFormStepChange$('init');
+        setFormStep$(FormStep.INIT);
       } else {
-        setFormStepChange$('staff')
+        setFormStep$(FormStep.STAFF)
       }
     }
     // eslint-disable-next-line
-  }, [formStepChange$]);
+  }, [formStep$]);
 
   const showErrorsAndSaveData = () => {
     formRef.current.click();

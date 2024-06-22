@@ -1,6 +1,7 @@
 import { Button, Card, Form, InputGroup, Table } from "react-bootstrap";
 import "../styles/components/DesktopOrderDetailsComp.css";
 import { useEffect, useRef, useState } from "react";
+import {FormStep} from "../helper/DesktopFormPageHelper";
 
 export default function DesktopOrderDetailsComp({
   optFormData$,
@@ -9,8 +10,8 @@ export default function DesktopOrderDetailsComp({
   orderDetFormData$,
   setOrderDetFormData$,
 
-  formStepChange$,
-  setFormStepChange$,
+  formStep$,
+  setFormStep$,
 }) {
   const [modelCounterId, setmodelCounterId] = useState(2);
 
@@ -70,10 +71,10 @@ export default function DesktopOrderDetailsComp({
           precio: row.precio,
           costo: row.costo,
           utility: utility,
-          cortado: optFormData$.variables[row.modelo]["cortado"] ?? 0,
-          aparado: optFormData$.variables[row.modelo]["aparado"] ?? 0,
-          solado: optFormData$.variables[row.modelo]["solado"] ?? 0,
-          terminado: optFormData$.variables[row.modelo]["terminado"] ?? 0,
+          cortado: optFormData$.variables[row.modelo]?.cortado ?? 0,
+          aparado: optFormData$.variables[row.modelo]?.aparado ?? 0,
+          solado: optFormData$.variables[row.modelo]?.solado ?? 0,
+          terminado: optFormData$.variables[row.modelo]?.terminado ?? 0,
           [row.modelo + "Min"]: 1,
           [row.modelo + "Max"]: 1,
         };
@@ -116,16 +117,16 @@ export default function DesktopOrderDetailsComp({
   };
 
   useEffect(() => {
-    if (formStepChange$ === 'order') {
+    if (formStep$ === FormStep.ORDER) {
       showErrorsAndSaveData();
       if (!orderDetailsFormIsValid()) {
-        setFormStepChange$('init');
+        setFormStep$(FormStep.INIT);
       } else {
-        setFormStepChange$('production');
+        setFormStep$(FormStep.PRODUCTION);
       }
     }
     // eslint-disable-next-line
-  }, [formStepChange$]);
+  }, [formStep$]);
 
   const formRef = useRef(null);
   const showErrorsAndSaveData = () => {

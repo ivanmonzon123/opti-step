@@ -1,12 +1,13 @@
 import "../styles/components/DesktopStaffInfoComp.css"
 import ProcessInfoComp from "./DesktopProcessInfoComp";
 import {useEffect, useState} from "react";
-import {StaffSubFormStep} from "../helper/DesktopFormPageHelper"
+import {FormView, StaffSubFormStep} from "../helper/DesktopFormPageHelper"
+import {FormStep} from "../helper/DesktopFormPageHelper";
 
 export default function DesktopStaffInfoComp(
   {
-    formStepChange$,
-    setFormStepChange$,
+    formStep$,
+    setFormStep$,
 
     optFormData$,
     setOptFormData$,
@@ -27,12 +28,12 @@ export default function DesktopStaffInfoComp(
 
 
   useEffect(() => {
-    if (formStepChange$ === 'staff') {
+    if (formStep$ === FormStep.STAFF) {
       // If the form step is staff we are going to start validating for Cut process.
       setProcessToCheck$(StaffSubFormStep.CORTADO);
     }
     // eslint-disable-next-line
-  }, [formStepChange$])
+  }, [formStep$])
 
   function saveFormsData() {
     setStaffInfoFormData$({
@@ -44,11 +45,11 @@ export default function DesktopStaffInfoComp(
   }
 
   useEffect(() => {
-    if(formStepChange$ === 'staff') {
+    if(formStep$ === FormStep.STAFF) {
       if (processToCheck$ === StaffSubFormStep.FINAL) {
         saveFormsData();
-        setFormStepChange$('init')
-        setFormView$('end');
+        setFormStep$('init')
+        setFormView$(FormView.RESULT);
       }
     }
     // eslint-disable-next-line
@@ -65,7 +66,7 @@ export default function DesktopStaffInfoComp(
         optFormData$={optFormData$} setOptFormData$={setOptFormData$}
         processInfoFormData$={cortadoProcessFormData} setProcessInfoFormData$={setCortadoProcessFormData}
         processToCheck$={processToCheck$} setProcessToCheck$={setProcessToCheck$}
-        setFormStep$={setFormStepChange$}
+        setFormStep$={setFormStep$}
       />
 
       <ProcessInfoComp
@@ -77,7 +78,7 @@ export default function DesktopStaffInfoComp(
         optFormData$={optFormData$} setOptFormData$={setOptFormData$}
         processInfoFormData$={aparadoProcessFormData} setProcessInfoFormData$={setAparadoProcessFormData}
         processToCheck$={processToCheck$} setProcessToCheck$={setProcessToCheck$}
-        setFormStep$={setFormStepChange$}
+        setFormStep$={setFormStep$}
       />
 
       <ProcessInfoComp
@@ -89,7 +90,7 @@ export default function DesktopStaffInfoComp(
         optFormData$={optFormData$} setOptFormData$={setOptFormData$}
         processInfoFormData$={soladoProcessFormData} setProcessInfoFormData$={setSoladoProcessFormData}
         processToCheck$={processToCheck$} setProcessToCheck$={setProcessToCheck$}
-        setFormStep$={setFormStepChange$}
+        setFormStep$={setFormStep$}
       />
 
       <ProcessInfoComp
@@ -101,7 +102,7 @@ export default function DesktopStaffInfoComp(
         optFormData$={optFormData$} setOptFormData$={setOptFormData$}
         processInfoFormData$={terminadoProcessFormData} setProcessInfoFormData$={setTerminadoProcessFormData}
         processToCheck$={processToCheck$} setProcessToCheck$={setProcessToCheck$}
-        setFormStep$={setFormStepChange$}
+        setFormStep$={setFormStep$}
       />
     </article>
   );

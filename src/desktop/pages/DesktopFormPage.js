@@ -127,9 +127,9 @@ export default function DesktopFormPage({ handlePrintResultComp }) {
     }
   }
 
-  useEffect(() => {
-    console.log(optFormData$);
-  }, [optFormData$]);
+  // useEffect(() => {
+  //   console.log(optFormData$);
+  // }, [optFormData$]);
 
   // useEffect(() => {
   //   console.log("formStepChange$: ", formStep$)

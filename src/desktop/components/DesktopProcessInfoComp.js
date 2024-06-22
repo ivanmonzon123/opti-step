@@ -3,14 +3,22 @@ import "../styles/components/DesktopProcessInfoComp.css"
 import {useEffect, useRef, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCircleRight, faPenToSquare} from "@fortawesome/free-regular-svg-icons";
+import {StaffSubFormStep} from "../helper/DesktopFormPageHelper"
 
 export default function DesktopProcessInfoComp(
   {
     params,
-    processToCheck$, setProcessToCheck$,
-    isValid$, setIsValid$,
-    optFormData$, setOptFormData$,
-    processInfoFormData$, setProcessInfoFormData$
+
+    processToCheck$,
+    setProcessToCheck$,
+
+    optFormData$,
+    setOptFormData$,
+
+    processInfoFormData$,
+    setProcessInfoFormData$,
+
+    setFormStep$
   }
 ) {
   const capitalCase = (string) => {
@@ -99,24 +107,41 @@ export default function DesktopProcessInfoComp(
 
   const formRef = useRef(null);
   useEffect(() => {
-    const step = processToCheck$.formStep;
     const process = params.processTitle;
+    if (processToCheck$ === process.toUpperCase()) {
+      showErrorsAndSaveOptData();
 
-    if (processToCheck$.process[step] === process) {
-      if (!staffInfoFormIsValid()) {
-        formRef.current.click();
-        setIsValid$({...isValid$, [process]: false});
-        // setProcessToCheck$(1);
+      if (staffInfoFormIsValid()) {
+        validateNextProcess(process.toUpperCase());
       } else {
-        formRef.current.click();
-        setIsValid$({...isValid$, [process]: true});
-        setProcessToCheck$({
-          ...processToCheck$, formStep: processToCheck$.formStep + 1
-        });
+        setProcessToCheck$(StaffSubFormStep.INIT);
+        setFormStep$('init');
       }
     }
     // eslint-disable-next-line
   }, [processToCheck$]);
+
+  const validateNextProcess = (process) => {
+    if (process === StaffSubFormStep.CORTADO) {
+      setProcessToCheck$(StaffSubFormStep.APARADO);
+    }
+
+    if (process === StaffSubFormStep.APARADO) {
+      setProcessToCheck$(StaffSubFormStep.SOLADO);
+    }
+
+    if (process === StaffSubFormStep.SOLADO) {
+      setProcessToCheck$(StaffSubFormStep.TERMINADO);
+    }
+
+    if (process === StaffSubFormStep.TERMINADO) {
+      setProcessToCheck$(StaffSubFormStep.FINAL);
+    }
+  }
+
+  const showErrorsAndSaveOptData = () => {
+    formRef.current.click();
+  }
 
   return (
     <Card className="process-info-card">

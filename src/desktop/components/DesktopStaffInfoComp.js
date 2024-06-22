@@ -1,6 +1,7 @@
 import "../styles/components/DesktopStaffInfoComp.css"
 import ProcessInfoComp from "./DesktopProcessInfoComp";
 import {useEffect, useState} from "react";
+import {StaffSubFormStep} from "../helper/DesktopFormPageHelper"
 
 export default function DesktopStaffInfoComp(
   {
@@ -17,17 +18,7 @@ export default function DesktopStaffInfoComp(
   }
 ) {
 
-  const [processToCheck$, setProcessToCheck$] = useState({
-    formStep: -1,
-    process: ["cortado", "aparado", "solado", "terminado"]
-  });
-
-  const [isValid$, setIsValid$] = useState({
-    cortado: false,
-    aparado: false,
-    solado: false,
-    terminado: false
-  })
+  const [processToCheck$, setProcessToCheck$] = useState(StaffSubFormStep.INIT);
 
   const [cortadoProcessFormData, setCortadoProcessFormData] = useState(staffInfoFormData$.cortado);
   const [aparadoProcessFormData, setAparadoProcessFormData] = useState(staffInfoFormData$.aparado);
@@ -37,16 +28,11 @@ export default function DesktopStaffInfoComp(
 
   useEffect(() => {
     if (formStepChange$ === 'staff') {
-    console.log("is in staff subscription")
-      setProcessToCheck$({...processToCheck$, formStep: 0});
+      // If the form step is staff we are going to start validating for Cut process.
+      setProcessToCheck$(StaffSubFormStep.CORTADO);
     }
     // eslint-disable-next-line
   }, [formStepChange$])
-
-
-  function allFormsAreValid(value) {
-    return value.cortado && value.aparado && value.solado && value.terminado
-  }
 
   function saveFormsData() {
     setStaffInfoFormData$({
@@ -59,16 +45,14 @@ export default function DesktopStaffInfoComp(
 
   useEffect(() => {
     if(formStepChange$ === 'staff') {
-      console.log("All forms are valid ? : ", allFormsAreValid(isValid$))
-      if (allFormsAreValid(isValid$)) {
+      if (processToCheck$ === StaffSubFormStep.FINAL) {
         saveFormsData();
+        setFormStepChange$('init')
         setFormView$('end');
       }
-
-      setFormStepChange$('init');
     }
     // eslint-disable-next-line
-  }, [isValid$])
+  }, [processToCheck$])
 
   return (
     <article className="staff-info-container">
@@ -81,7 +65,7 @@ export default function DesktopStaffInfoComp(
         optFormData$={optFormData$} setOptFormData$={setOptFormData$}
         processInfoFormData$={cortadoProcessFormData} setProcessInfoFormData$={setCortadoProcessFormData}
         processToCheck$={processToCheck$} setProcessToCheck$={setProcessToCheck$}
-        isValid$={isValid$} setIsValid$={setIsValid$}
+        setFormStep$={setFormStepChange$}
       />
 
       <ProcessInfoComp
@@ -93,7 +77,7 @@ export default function DesktopStaffInfoComp(
         optFormData$={optFormData$} setOptFormData$={setOptFormData$}
         processInfoFormData$={aparadoProcessFormData} setProcessInfoFormData$={setAparadoProcessFormData}
         processToCheck$={processToCheck$} setProcessToCheck$={setProcessToCheck$}
-        isValid$={isValid$} setIsValid$={setIsValid$}
+        setFormStep$={setFormStepChange$}
       />
 
       <ProcessInfoComp
@@ -105,7 +89,7 @@ export default function DesktopStaffInfoComp(
         optFormData$={optFormData$} setOptFormData$={setOptFormData$}
         processInfoFormData$={soladoProcessFormData} setProcessInfoFormData$={setSoladoProcessFormData}
         processToCheck$={processToCheck$} setProcessToCheck$={setProcessToCheck$}
-        isValid$={isValid$} setIsValid$={setIsValid$}
+        setFormStep$={setFormStepChange$}
       />
 
       <ProcessInfoComp
@@ -117,7 +101,7 @@ export default function DesktopStaffInfoComp(
         optFormData$={optFormData$} setOptFormData$={setOptFormData$}
         processInfoFormData$={terminadoProcessFormData} setProcessInfoFormData$={setTerminadoProcessFormData}
         processToCheck$={processToCheck$} setProcessToCheck$={setProcessToCheck$}
-        isValid$={isValid$} setIsValid$={setIsValid$}
+        setFormStep$={setFormStepChange$}
       />
     </article>
   );

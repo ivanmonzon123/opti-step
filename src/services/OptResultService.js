@@ -6,6 +6,7 @@ import {
   getTotalProfit,
   getBarCharTitles,
   getOccupancyPercentageByProcess,
+  getWeeksToCompleteOrder,
   getColors,
   HEADER_FEEDBACK_VALUES,
   PERCENTAGE_CRITERIA,
@@ -108,7 +109,32 @@ export const getProcessBarChartConfig = () => {
   return {data, options};
 }
 export const getWeeksChartConfig = () => {
-  return undefined;
+  const titles = getBarCharTitles('process');
+  const prodPeriod = parseInt(_modelData.productionPeriod);
+  const processesPercentage = getWeeksToCompleteOrder({
+    ..._formData,
+    optResult: _optResult,
+    prodPeriod
+  });
+  const colors = getColors('process');
+
+  const data = BarChartDataBuilder.build({
+    placeholder: 'Semanas',
+    labels: titles,
+    data: processesPercentage,
+    colors: colors
+  });
+
+  const options = BarChartOptionsBuilder.build({
+    step: 1,
+    yMax: prodPeriod,
+    xTitle: 'Procesos',
+    yTitle: 'Semanas',
+    colors: colors,
+    titles: titles
+  });
+
+  return {data, options};
 }
 
 export const evaluateOptResult = () => {

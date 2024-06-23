@@ -118,7 +118,7 @@ export const getAvailableHours = (staffData) => {
 export const getProductionTime = (prodData, optResult) => {
   const {bounded, feasible, result, ...models} = optResult;
   const prodDataObj = prodData?.reduce((acc, item) => {
-    const { modelo, ...processes } = item;
+    const {modelo, ...processes} = item;
     acc[item.modelo] = processes;
     return acc;
   }, {});
@@ -145,4 +145,57 @@ export const getOccupancyPercentageByProcess = ({order, production, staff, optRe
     (prodTime[process] * 100) / availableHours[process]
   )
 }
+
+export const getWeeksToCompleteOrder = ({order, production, staff, optResult, prodPeriod}) => {
+  const availableHours = getHoursArrayPeerWeek(staff, prodPeriod);
+  const prodTime = getProductionTime(production, optResult);
+
+  console.log(availableHours, prodTime);
+
+  return PROCESSES.map((processKey) => getWeeksPercentage({
+    requiredProdTime: prodTime[processKey],
+    avHoursPeerWeeks: availableHours[processKey],
+    index: 0
+  }))
+}
+
+const getHoursArrayPeerWeek = (staff, prodPeriod) => {
+  let availableHours = {
+    cortado: [],
+    aparado: [],
+    solado: [],
+    terminado: []
+  }
+  for (const process in staff) {
+    for (let index = 1; index <= prodPeriod; index++) {
+      const newWeekCalc = staff[process].reduce((acc, item) => {
+        const weeks = parseInt(item.semanas);
+        if (index <= weeks) {
+          const totalHours = 5.5 * item.horasDia;
+          return acc = [acc[0] + totalHours];
+        }
+
+        return acc;
+      }, [0])
+
+      availableHours[process].push(newWeekCalc);
+    }
+  }
+
+  return availableHours;
+}
+
+const getWeeksPercentage = (data = {requiredProdTime: 0, avHoursPeerWeeks: [], index: 0}) => {
+  const prodTime = data.requiredProdTime
+  const avDayHours = data.avHoursPeerWeeks[data.index][0];
+  const diff = prodTime - avDayHours;
+  const nextIndex = data.index + 1;
+  if(diff <= 0){
+    return prodTime / avDayHours;
+  }else {
+    return 1 + getWeeksPercentage({...data, requiredProdTime: diff, index: nextIndex})
+  }
+}
+
+
 

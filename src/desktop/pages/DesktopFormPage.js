@@ -121,10 +121,10 @@ export default function DesktopFormPage({ handlePrintResultComp }) {
           </section>
         </section>
 
-        { optResult$.processConfig ?
+        { optResult$.processConfig && optResult$.weeksConfig ?
           <section className="w-50 dk-opt-result-charts">
             <Bar data={optResult$.processConfig.data} options={optResult$.processConfig.options} />
-            <Bar data={optResult$.processConfig.data} options={optResult$.processConfig.options} />
+            <Bar data={optResult$.weeksConfig.data} options={optResult$.weeksConfig.options} />
           </section>
           : <></>
         }

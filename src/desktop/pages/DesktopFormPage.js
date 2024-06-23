@@ -9,24 +9,20 @@ import { faFloppyDisk } from "@fortawesome/free-regular-svg-icons";
 import DesktopStaffInfoComp from "../components/DesktopStaffInfoComp";
 import Bar from "../../charts/Bar";
 import {
-  DEFAULT_OPTIONS,
-  DEFAULT_CHARS_DATA,
-} from "../../helpers/ChartsBarNCakeHelper";
-import {
   DEFAULT_OPT_FORM_DATA,
   TITLE_STEPS,
   PROCCESES_DATA,
   ORDER_DATA,
   PRODUCTION_DATA,
 } from "../../helpers/FormPageHelper";
-import {FormStep, FormView} from "../helper/DesktopFormPageHelper"
+import {FormStep, FormView} from "../helper/DesktopFormPageHelper";
+import * as optResultService from "../../services/OptResultService";
 
 export default function DesktopFormPage({ handlePrintResultComp }) {
   const navigate = useNavigate();
+  const { processBarChartConfig } = optResultService.getOptCharts();
 
   const title = TITLE_STEPS;
-  const data = DEFAULT_CHARS_DATA;
-  const options = DEFAULT_OPTIONS;
 
   // Step handlers
   const [formView$, setFormView$] = useState(FormView.CONFIG);
@@ -105,8 +101,9 @@ export default function DesktopFormPage({ handlePrintResultComp }) {
 
         <section className="w-50 dk-opt-result-charts">
           {/*<Cake datos={data}/>*/}
-          <Bar datos={data} options={options} />
-          <Bar datos={data} options={options} />
+          <Bar datos={processBarChartConfig.data} options={processBarChartConfig.options} />
+          <Bar datos={processBarChartConfig.data} options={processBarChartConfig.options} />
+          {/*<Bar datos={data} options={options} />*/}
         </section>
       </section>
     ),

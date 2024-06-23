@@ -38,6 +38,16 @@ export const HEADER_FEEDBACK_VALUES = Object.freeze({
   },
 });
 
+export const PROCESS_CHART_COLOR = Object.freeze({
+  process: ['#1B3A4B', '#1B3A4B', '#D3D3D3', '#FF6F61'],
+  weeks: ['#1B3A4B', '#1B3A4B', '#D3D3D3', '#FF6F61']
+})
+
+export const PROCESS_CHART_TITLES = Object.freeze({
+  process: ['Cortado', 'Aparado', 'Solado', 'Terminado'],
+  weeks: ['Cortado', 'Aparado', 'Solado', 'Terminado']
+})
+
 export const changeMinConstraints = (modelData, value) => {
   const newMinModel = cloneDeep(modelData);
   for (const item in newMinModel.constraints) {
@@ -82,4 +92,16 @@ export const getTotalProfit = (model, solution) => {
 export const cloneDeep = (obj) => {
   return JSON.parse(JSON.stringify(obj));
 };
+
+export const getBarCharTitles = (key) => {
+  return PROCESS_CHART_TITLES[key]
+}
+
+export const getColors = (key) => {
+  return PROCESS_CHART_COLOR[key]
+}
+
+export const getOccupancyPercentageByProcess = () => {
+  return [30, 20, 30, 80]
+}
 

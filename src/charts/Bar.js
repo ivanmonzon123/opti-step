@@ -23,7 +23,7 @@ ChartJS.register(
 const bar = ({datos, options}) => {
   
     return (
-      <div style={{width: '100%', height: 'auto', margin:'auto', maxWidth:'400px'}}>
+      <div style={{width: '100%', height: 'auto', margin:'auto', maxWidth:'550px'}}>
         <Bar data={datos} options={options}/>
       </div>
     )

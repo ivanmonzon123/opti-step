@@ -4,11 +4,16 @@ import {
   changeMinConstraints,
   changeMaxConstraints,
   getTotalProfit,
+  getBarCharTitles,
+  getOccupancyPercentageByProcess,
+  getColors,
   HEADER_FEEDBACK_VALUES,
   PERCENTAGE_CRITERIA,
   MAX_VALUE_PRODUCTION,
   cloneDeep,
 } from "../helpers/OptResultHelper";
+import {BarChartDataBuilder} from "../builders/BarChartDataBuilder";
+import {BarChartOptionsBuilder} from "../builders/BarChartOptionsBuilder";
 
 var _feedbackValues = HEADER_FEEDBACK_VALUES;
 var _modelData = {};
@@ -50,10 +55,43 @@ export const getOptResult = (model) => {
   return { ...solution, totalProfit, feedback };
 };
 
+export const getOptCharts = () => {
+  const processBarChartConfig = getProcessBarChartConfig(_modelData, _optResult);
+  const weeksBarChartConfig = getWeeksChartConfig(_modelData, _optResult);
+  return { processBarChartConfig , weeksBarChartConfig}
+}
+
 export const getFeedback = (optimizationResult) => {
   const advice = generateAdviceByResult(optimizationResult);
   return { ..._feedbackValues[optimizationResult], advice };
 };
+
+export const getProcessBarChartConfig = (model, solution) => {
+  const titles = getBarCharTitles('process');
+  const processesPercentage = getOccupancyPercentageByProcess();
+  const colors = getColors('process');
+
+  const data = BarChartDataBuilder.build({
+    placeholder: '%',
+    labels: titles,
+    data: processesPercentage,
+    colors: colors
+  });
+
+  const options = BarChartOptionsBuilder.build({
+    step: 10,
+    yMax: 100,
+    xTitle: 'Procesos',
+    yTitle: 'Porcentaje',
+    colors: colors,
+    titles: titles
+  });
+
+  return {data, options};
+}
+export const getWeeksChartConfig = (model, solution) => {
+  return undefined;
+}
 
 export const evaluateOptResult = () => {
   if (!_optResult.feasible) {

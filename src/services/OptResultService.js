@@ -18,10 +18,11 @@ import {BarChartOptionsBuilder} from "../builders/BarChartOptionsBuilder";
 var _feedbackValues = HEADER_FEEDBACK_VALUES;
 var _modelData = {};
 var _optResult = {};
+var _formData = {};
 
 // Getters & Setters
 export const setGlobalOptResult = (optResult) => {
-  _optResult = optResult;
+  _optResult = cloneDeep(optResult);
 };
 
 export const getGlobalOptResult = (optResult) => {
@@ -29,18 +30,31 @@ export const getGlobalOptResult = (optResult) => {
 };
 
 export const setGlobalModelData = (modelData) => {
-  _modelData = modelData;
+  _modelData = cloneDeep(modelData);
 };
 
 export const getGlobalModelData = (modelData) => {
   return _modelData;
 };
 
+export const setGlobalFormData = (order, production, staff) => {
+  _formData = {
+    order: cloneDeep(order),
+    production: cloneDeep(production),
+    staff: cloneDeep(staff),
+  }
+};
+
+export const getGlobalFormData = () => {
+  return _formData;
+};
+
 // Public Mehtods
-export const getOptResult = (model) => {
+export const getOptResult = ({model, order, production, staff}) => {
   let solution = solver.Solve(model);
-  setGlobalOptResult(cloneDeep(solution));
-  setGlobalModelData(cloneDeep(model));
+  setGlobalOptResult(solution);
+  setGlobalModelData(model);
+  setGlobalFormData(order, production, staff);
 
   const resultType = evaluateOptResult();
 
@@ -51,14 +65,15 @@ export const getOptResult = (model) => {
 
   const totalProfit = getTotalProfit(model, solution);
   const feedback = getFeedback(resultType);
+  const charts = getOptCharts();
 
-  return { ...solution, totalProfit, feedback };
+  return { ...solution, ...charts, totalProfit, feedback };
 };
 
-export const getOptCharts = () => {
-  const processBarChartConfig = getProcessBarChartConfig(_modelData, _optResult);
-  const weeksBarChartConfig = getWeeksChartConfig(_modelData, _optResult);
-  return { processBarChartConfig , weeksBarChartConfig}
+export const getOptCharts = (prod, staff) => {
+  const processBarChartConfig = getProcessBarChartConfig();
+  const weeksBarChartConfig = getWeeksChartConfig();
+  return { processConfig: processBarChartConfig , weeksConfig: weeksBarChartConfig}
 }
 
 export const getFeedback = (optimizationResult) => {
@@ -66,9 +81,12 @@ export const getFeedback = (optimizationResult) => {
   return { ..._feedbackValues[optimizationResult], advice };
 };
 
-export const getProcessBarChartConfig = (model, solution) => {
+export const getProcessBarChartConfig = () => {
   const titles = getBarCharTitles('process');
-  const processesPercentage = getOccupancyPercentageByProcess();
+  const processesPercentage = getOccupancyPercentageByProcess({
+    ..._formData,
+    optResult: _optResult
+  });
   const colors = getColors('process');
 
   const data = BarChartDataBuilder.build({
@@ -89,7 +107,7 @@ export const getProcessBarChartConfig = (model, solution) => {
 
   return {data, options};
 }
-export const getWeeksChartConfig = (model, solution) => {
+export const getWeeksChartConfig = () => {
   return undefined;
 }
 

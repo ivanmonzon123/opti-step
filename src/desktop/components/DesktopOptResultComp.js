@@ -1,35 +1,18 @@
 import { Card, Form, InputGroup } from "react-bootstrap";
 import CollapsibleInfoComp from "../../components/CollapsibleInfoComp";
-import { useEffect, useState } from "react";
 import "../styles/components/DesktopOptResultComp.css";
-import * as optResultService from "../../services/OptResultService";
 
-
-export default function DesktopOptResultComp({ optFormData$ }) {
-  const [optResult, setOptResult] = useState({
-    result: 0,
-    customResult: 0,
-    feedback: {},
-  });
+export default function DesktopOptResultComp({ optFormData$, optResult$ }) {
 
   const profit = [
     { title: "Max. Ingresos:", key: "totalProfit" },
     { title: "Max. Utilidad:", key: "result" },
   ];
 
-  useEffect(() => {
-    setOptResult(optResultService.getOptResult({ ...optFormData$ }));
-    // eslint-disable-next-line
-  }, []);
-
-  useEffect(() => {
-    console.log(optResult);
-  }, [optResult]);
-
   return (
     <article className="opt-result-container">
       <section className="opt-result-card">
-        <CollapsibleInfoComp feedback={optResult["feedback"]} />
+        <CollapsibleInfoComp feedback={optResult$["feedback"]} />
       </section>
 
       <Card className="opt-result-card">
@@ -42,7 +25,7 @@ export default function DesktopOptResultComp({ optFormData$ }) {
 
                   <Form.Control
                     type="number"
-                    value={optResult[shoeModelName] ?? 0}
+                    value={optResult$[shoeModelName] ?? 0}
                     readOnly
                   />
 
@@ -57,7 +40,7 @@ export default function DesktopOptResultComp({ optFormData$ }) {
               <InputGroup>
                 <InputGroup.Text>{title}</InputGroup.Text>
 
-                <Form.Control type="number" value={optResult[key]} readOnly />
+                <Form.Control type="number" value={optResult$[key]} readOnly />
 
                 <label className="os-txt-sm ms-1">{"(Bs)"}</label>
               </InputGroup>

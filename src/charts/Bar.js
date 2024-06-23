@@ -20,11 +20,11 @@ ChartJS.register(
   );
 
 
-const bar = ({datos, options}) => {
+const bar = ({data, options}) => {
   
     return (
       <div style={{width: '100%', height: 'auto', margin:'auto', maxWidth:'550px'}}>
-        <Bar data={datos} options={options}/>
+        <Bar data={data} options={options}/>
       </div>
     )
   }

@@ -2,7 +2,7 @@ import {
   faCircleExclamation,
   faTriangleExclamation,
 } from "@fortawesome/free-solid-svg-icons";
-import { faCircleCheck } from "@fortawesome/free-regular-svg-icons";
+import {faCircleCheck} from "@fortawesome/free-regular-svg-icons";
 
 export const PERCENTAGE_CRITERIA = 70;
 export const MAX_VALUE_PRODUCTION = 10000;
@@ -48,11 +48,13 @@ export const PROCESS_CHART_TITLES = Object.freeze({
   weeks: ['Cortado', 'Aparado', 'Solado', 'Terminado']
 })
 
+export const PROCESSES = ['cortado', 'aparado', 'solado', 'terminado']
+
 export const changeMinConstraints = (modelData, value) => {
   const newMinModel = cloneDeep(modelData);
   for (const item in newMinModel.constraints) {
     if (item.includes("Min")) {
-      newMinModel.constraints[item] = { min: value };
+      newMinModel.constraints[item] = {min: value};
     }
   }
   return newMinModel;
@@ -63,7 +65,7 @@ export const changeMaxConstraints = (modelData, value) => {
 
   for (const item in newMaxModel.constraints) {
     if (item.includes("Max")) {
-      newMaxModel.constraints[item] = { max: value };
+      newMaxModel.constraints[item] = {max: value};
     }
   }
   return newMaxModel;
@@ -101,7 +103,46 @@ export const getColors = (key) => {
   return PROCESS_CHART_COLOR[key]
 }
 
-export const getOccupancyPercentageByProcess = () => {
-  return [30, 20, 30, 80]
+export const getAvailableHours = (staffData) => {
+  let availableHours = {};
+  PROCESSES.forEach(process => {
+    availableHours[process] = staffData[process].reduce((acc, current) => {
+      acc = acc + ((current.semanas * 5.5) * current.horasDia)
+      return acc;
+    }, 0)
+  })
+
+  return availableHours;
+}
+
+export const getProductionTime = (prodData, optResult) => {
+  const {bounded, feasible, result, ...models} = optResult;
+  const prodDataObj = prodData?.reduce((acc, item) => {
+    const { modelo, ...processes } = item;
+    acc[item.modelo] = processes;
+    return acc;
+  }, {});
+
+  return Object.entries(models).reduce((acc, [key, value]) => {
+    const dozens = value / 12;
+    const times = prodDataObj[key];
+
+    return {
+      cortado: acc.cortado + (dozens * times['cortado']),
+      aparado: acc.aparado + (dozens * times['aparado']),
+      solado: acc.solado + (dozens * times['solado']),
+      terminado: acc.terminado + (dozens * times['terminado'])
+    }
+  }, {cortado: 0, aparado: 0, solado: 0, terminado: 0})
+}
+
+export const getOccupancyPercentageByProcess = ({order, production, staff, optResult}) => {
+  const availableHours = getAvailableHours(staff);
+  const prodTime = getProductionTime(production, optResult);
+  console.log(availableHours, prodTime)
+
+  return PROCESSES.map(process =>
+    (prodTime[process] * 100) / availableHours[process]
+  )
 }
 

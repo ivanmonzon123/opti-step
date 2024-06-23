@@ -23,7 +23,7 @@ export const TITLE_STEPS = [
   "Resultados de optimizacion",
 ];
 
-export const PROCCESES_DATA = {
+export const PROCESES_DATA = {
   cortado: [],
   aparado: [],
   solado: [],

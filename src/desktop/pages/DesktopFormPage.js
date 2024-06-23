@@ -11,17 +11,24 @@ import Bar from "../../charts/Bar";
 import {
   DEFAULT_OPT_FORM_DATA,
   TITLE_STEPS,
-  PROCCESES_DATA,
+  PROCESES_DATA,
   ORDER_DATA,
   PRODUCTION_DATA,
 } from "../../helpers/FormPageHelper";
 import {FormStep, FormView} from "../helper/DesktopFormPageHelper";
 import * as optResultService from "../../services/OptResultService";
+import {OptResultRequestBuilder} from "../../builders/OptResultRequestBuilder";
 
 export default function DesktopFormPage({ handlePrintResultComp }) {
-  const navigate = useNavigate();
-  const { processBarChartConfig } = optResultService.getOptCharts();
+  const [optResult$, setOptResult$] = useState({
+    result: 0,
+    customResult: 0,
+    feedback: {},
+    processConfig: undefined,
+    weeksConfig: undefined,
+  });
 
+  const navigate = useNavigate();
   const title = TITLE_STEPS;
 
   // Step handlers
@@ -33,8 +40,23 @@ export default function DesktopFormPage({ handlePrintResultComp }) {
 
   // Steps data manager
   const [orderDetFormData$, setOrderDetFormData$] = useState([ORDER_DATA]);
-  const [staffInfoFormData$, setStaffInfoFormData$] = useState(PROCCESES_DATA);
+  const [staffInfoFormData$, setStaffInfoFormData$] = useState(PROCESES_DATA);
   const [prodDetFormData$, setProdDetFormData$] = useState([PRODUCTION_DATA]);
+
+  useEffect(() => {
+    if(formView$ === FormView.RESULT){
+      const optResultRquest = OptResultRequestBuilder.build({
+        model: optFormData$,
+        order: orderDetFormData$,
+        production: prodDetFormData$,
+        staff: staffInfoFormData$
+      })
+      const optimizationResult = optResultService.getOptResult(optResultRquest);
+      console.log(optimizationResult);
+      setOptResult$(optimizationResult);
+    }
+    // eslint-disable-next-line
+  }, [formView$]);
 
   const form = {
     [FormView.CONFIG]: (
@@ -95,16 +117,17 @@ export default function DesktopFormPage({ handlePrintResultComp }) {
           </section>
 
           <section className="dk-opt-result-content">
-            <DesktopOptResultComp optFormData$={optFormData$} />
+            <DesktopOptResultComp optFormData$={optFormData$} optResult$={optResult$} />
           </section>
         </section>
 
-        <section className="w-50 dk-opt-result-charts">
-          {/*<Cake datos={data}/>*/}
-          <Bar datos={processBarChartConfig.data} options={processBarChartConfig.options} />
-          <Bar datos={processBarChartConfig.data} options={processBarChartConfig.options} />
-          {/*<Bar datos={data} options={options} />*/}
-        </section>
+        { optResult$.processConfig ?
+          <section className="w-50 dk-opt-result-charts">
+            <Bar data={optResult$.processConfig.data} options={optResult$.processConfig.options} />
+            <Bar data={optResult$.processConfig.data} options={optResult$.processConfig.options} />
+          </section>
+          : <></>
+        }
       </section>
     ),
   };

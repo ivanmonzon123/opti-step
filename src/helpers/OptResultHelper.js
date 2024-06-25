@@ -39,8 +39,8 @@ export const HEADER_FEEDBACK_VALUES = Object.freeze({
 });
 
 export const PROCESS_CHART_COLOR = Object.freeze({
-  process: ['#1B3A4B', '#1B3A4B', '#D3D3D3', '#FF6F61'],
-  weeks: ['#1B3A4B', '#1B3A4B', '#D3D3D3', '#FF6F61']
+  process: ['#B556FF', '#56B7FF', '#78FFA9', '#FF6F61'],
+  weeks: ['#B556FF', '#56B7FF', '#78FFA9', '#FF6F61']
 })
 
 export const PROCESS_CHART_TITLES = Object.freeze({

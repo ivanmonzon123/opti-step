@@ -20,12 +20,19 @@ ChartJS.register(
   );
 
 
-const bar = ({data, options}) => {
+const bar = ({data, options, title}) => {
   
     return (
-      <div style={{width: '100%', height: 'auto', margin:'auto', maxWidth:'550px'}}>
-        <Bar data={data} options={options}/>
-      </div>
+      <>
+        <section className="forms-title">
+          <label className="os-txt os-txt-lg os-txt-bold">{title}</label>
+        </section>
+
+        <div style={{width: '100%', height: 'auto', margin:'auto', maxWidth:'460px'}}>
+          <Bar data={data} options={options}/>
+        </div>
+      </>
+
     )
   }
 

@@ -14,6 +14,7 @@ import {
   PROCESES_DATA,
   ORDER_DATA,
   PRODUCTION_DATA,
+  CHART_TITLES,
 } from "../../helpers/FormPageHelper";
 import {FormStep, FormView} from "../helper/DesktopFormPageHelper";
 import * as optResultService from "../../services/OptResultService";
@@ -30,6 +31,7 @@ export default function DesktopFormPage({ handlePrintResultComp }) {
 
   const navigate = useNavigate();
   const title = TITLE_STEPS;
+  const chartTitles = CHART_TITLES;
 
   // Step handlers
   const [formView$, setFormView$] = useState(FormView.CONFIG);
@@ -123,8 +125,14 @@ export default function DesktopFormPage({ handlePrintResultComp }) {
 
         { optResult$.processConfig && optResult$.weeksConfig ?
           <section className="w-50 dk-opt-result-charts">
-            <Bar data={optResult$.processConfig.data} options={optResult$.processConfig.options} />
-            <Bar data={optResult$.weeksConfig.data} options={optResult$.weeksConfig.options} />
+            <Bar
+              title={chartTitles.employees}
+              data={optResult$.processConfig.data}
+              options={optResult$.processConfig.options} />
+            <Bar
+              title={chartTitles.weeks}
+              data={optResult$.weeksConfig.data}
+              options={optResult$.weeksConfig.options} />
           </section>
           : <></>
         }

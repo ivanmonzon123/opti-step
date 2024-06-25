@@ -23,6 +23,11 @@ export const TITLE_STEPS = [
   "Resultados de optimizacion",
 ];
 
+export const CHART_TITLES = {
+  employees: "Porcentaje de trabajo por procesos",
+  weeks: "Ucupación de procesos por semana"
+}
+
 export const PROCESES_DATA = {
   cortado: [],
   aparado: [],

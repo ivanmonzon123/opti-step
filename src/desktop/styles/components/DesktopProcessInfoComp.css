@@ -1,0 +1,52 @@
+.process-info-card {
+    margin: 0 auto;
+    width: 80%;
+}
+
+.process-info-labels {
+    width: 120px;
+    margin: auto 0;
+}
+.process-info-card-setter-question input {
+    width: 100px;
+}
+
+.process-info-card-parameters input {
+    width: 100px;
+}
+
+.process-info-card-params-input-group {
+    display: flex;
+    flex-wrap: wrap;
+    width: auto;
+    gap: 30px;
+}
+
+.process-info-card-params-input-group section{
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    width: auto;
+}
+
+@media (max-width: 992px) {
+    .process-info-card {
+        width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .process-info-card-params-input-group {
+        gap: 20px;
+    }
+}
+
+@media (max-width: 397px) {
+    .process-info-card-parameters input {
+        width: 80px;
+    }
+
+    .process-info-card-setter-question input {
+        width: 80px;
+    }
+}

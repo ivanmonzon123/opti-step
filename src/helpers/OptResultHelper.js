@@ -2,7 +2,7 @@ import {
   faCircleExclamation,
   faTriangleExclamation,
 } from "@fortawesome/free-solid-svg-icons";
-import { faCircleCheck } from "@fortawesome/free-regular-svg-icons";
+import {faCircleCheck} from "@fortawesome/free-regular-svg-icons";
 
 export const PERCENTAGE_CRITERIA = 70;
 export const MAX_VALUE_PRODUCTION = 10000;
@@ -38,11 +38,23 @@ export const HEADER_FEEDBACK_VALUES = Object.freeze({
   },
 });
 
+export const PROCESS_CHART_COLOR = Object.freeze({
+  process: ['#B556FF', '#56B7FF', '#78FFA9', '#FF6F61'],
+  weeks: ['#B556FF', '#56B7FF', '#78FFA9', '#FF6F61']
+})
+
+export const PROCESS_CHART_TITLES = Object.freeze({
+  process: ['Cortado', 'Aparado', 'Solado', 'Terminado'],
+  weeks: ['Cortado', 'Aparado', 'Solado', 'Terminado']
+})
+
+export const PROCESSES = ['cortado', 'aparado', 'solado', 'terminado']
+
 export const changeMinConstraints = (modelData, value) => {
   const newMinModel = cloneDeep(modelData);
   for (const item in newMinModel.constraints) {
     if (item.includes("Min")) {
-      newMinModel.constraints[item] = { min: value };
+      newMinModel.constraints[item] = {min: value};
     }
   }
   return newMinModel;
@@ -53,7 +65,7 @@ export const changeMaxConstraints = (modelData, value) => {
 
   for (const item in newMaxModel.constraints) {
     if (item.includes("Max")) {
-      newMaxModel.constraints[item] = { max: value };
+      newMaxModel.constraints[item] = {max: value};
     }
   }
   return newMaxModel;
@@ -82,4 +94,108 @@ export const getTotalProfit = (model, solution) => {
 export const cloneDeep = (obj) => {
   return JSON.parse(JSON.stringify(obj));
 };
+
+export const getBarCharTitles = (key) => {
+  return PROCESS_CHART_TITLES[key]
+}
+
+export const getColors = (key) => {
+  return PROCESS_CHART_COLOR[key]
+}
+
+export const getAvailableHours = (staffData) => {
+  let availableHours = {};
+  PROCESSES.forEach(process => {
+    availableHours[process] = staffData[process].reduce((acc, current) => {
+      acc = acc + ((current.semanas * 5.5) * current.horasDia)
+      return acc;
+    }, 0)
+  })
+
+  return availableHours;
+}
+
+export const getProductionTime = (prodData, optResult) => {
+  const {bounded, feasible, result, ...models} = optResult;
+  const prodDataObj = prodData?.reduce((acc, item) => {
+    const {modelo, ...processes} = item;
+    acc[item.modelo] = processes;
+    return acc;
+  }, {});
+
+  return Object.entries(models).reduce((acc, [key, value]) => {
+    const dozens = value / 12;
+    const times = prodDataObj[key];
+
+    return {
+      cortado: acc.cortado + (dozens * times['cortado']),
+      aparado: acc.aparado + (dozens * times['aparado']),
+      solado: acc.solado + (dozens * times['solado']),
+      terminado: acc.terminado + (dozens * times['terminado'])
+    }
+  }, {cortado: 0, aparado: 0, solado: 0, terminado: 0})
+}
+
+export const getOccupancyPercentageByProcess = ({order, production, staff, optResult}) => {
+  const availableHours = getAvailableHours(staff);
+  const prodTime = getProductionTime(production, optResult);
+  console.log(availableHours, prodTime)
+
+  return PROCESSES.map(process =>
+    (prodTime[process] * 100) / availableHours[process]
+  )
+}
+
+export const getWeeksToCompleteOrder = ({order, production, staff, optResult, prodPeriod}) => {
+  const availableHours = getHoursArrayPeerWeek(staff, prodPeriod);
+  const prodTime = getProductionTime(production, optResult);
+
+  console.log(availableHours, prodTime);
+
+  return PROCESSES.map((processKey) => getWeeksPercentage({
+    requiredProdTime: prodTime[processKey],
+    avHoursPeerWeeks: availableHours[processKey],
+    index: 0
+  }))
+}
+
+const getHoursArrayPeerWeek = (staff, prodPeriod) => {
+  let availableHours = {
+    cortado: [],
+    aparado: [],
+    solado: [],
+    terminado: []
+  }
+  for (const process in staff) {
+    for (let index = 1; index <= prodPeriod; index++) {
+      const newWeekCalc = staff[process].reduce((acc, item) => {
+        const weeks = parseInt(item.semanas);
+        if (index <= weeks) {
+          const totalHours = 5.5 * item.horasDia;
+          return acc = [acc[0] + totalHours];
+        }
+
+        return acc;
+      }, [0])
+
+      availableHours[process].push(newWeekCalc);
+    }
+  }
+
+  return availableHours;
+}
+
+const getWeeksPercentage = (data = {requiredProdTime: 0, avHoursPeerWeeks: [], index: 0}) => {
+  const prodTime = data.requiredProdTime
+  const avDayHours = data.avHoursPeerWeeks[data.index][0];
+  const diff = prodTime - avDayHours;
+  const nextIndex = data.index + 1;
+  if(diff <= 0){
+    return prodTime / avDayHours;
+  }else {
+    return 1 + getWeeksPercentage({...data, requiredProdTime: diff, index: nextIndex})
+  }
+}
+
+
 

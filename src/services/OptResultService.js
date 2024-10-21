@@ -4,19 +4,26 @@ import {
   changeMinConstraints,
   changeMaxConstraints,
   getTotalProfit,
+  getBarCharTitles,
+  getOccupancyPercentageByProcess,
+  getWeeksToCompleteOrder,
+  getColors,
   HEADER_FEEDBACK_VALUES,
   PERCENTAGE_CRITERIA,
   MAX_VALUE_PRODUCTION,
   cloneDeep,
 } from "../helpers/OptResultHelper";
+import {BarChartDataBuilder} from "../builders/BarChartDataBuilder";
+import {BarChartOptionsBuilder} from "../builders/BarChartOptionsBuilder";
 
 var _feedbackValues = HEADER_FEEDBACK_VALUES;
 var _modelData = {};
 var _optResult = {};
+var _formData = {};
 
 // Getters & Setters
 export const setGlobalOptResult = (optResult) => {
-  _optResult = optResult;
+  _optResult = cloneDeep(optResult);
 };
 
 export const getGlobalOptResult = (optResult) => {
@@ -24,18 +31,31 @@ export const getGlobalOptResult = (optResult) => {
 };
 
 export const setGlobalModelData = (modelData) => {
-  _modelData = modelData;
+  _modelData = cloneDeep(modelData);
 };
 
 export const getGlobalModelData = (modelData) => {
   return _modelData;
 };
 
+export const setGlobalFormData = (order, production, staff) => {
+  _formData = {
+    order: cloneDeep(order),
+    production: cloneDeep(production),
+    staff: cloneDeep(staff),
+  }
+};
+
+export const getGlobalFormData = () => {
+  return _formData;
+};
+
 // Public Mehtods
-export const getOptResult = (model) => {
+export const getOptResult = ({model, order, production, staff}) => {
   let solution = solver.Solve(model);
-  setGlobalOptResult(cloneDeep(solution));
-  setGlobalModelData(cloneDeep(model));
+  setGlobalOptResult(solution);
+  setGlobalModelData(model);
+  setGlobalFormData(order, production, staff);
 
   const resultType = evaluateOptResult();
 
@@ -46,14 +66,76 @@ export const getOptResult = (model) => {
 
   const totalProfit = getTotalProfit(model, solution);
   const feedback = getFeedback(resultType);
+  const charts = getOptCharts();
 
-  return { ...solution, totalProfit, feedback };
+  return { ...solution, ...charts, totalProfit, feedback };
 };
+
+export const getOptCharts = (prod, staff) => {
+  const processBarChartConfig = getProcessBarChartConfig();
+  const weeksBarChartConfig = getWeeksChartConfig();
+  return { processConfig: processBarChartConfig , weeksConfig: weeksBarChartConfig}
+}
 
 export const getFeedback = (optimizationResult) => {
   const advice = generateAdviceByResult(optimizationResult);
   return { ..._feedbackValues[optimizationResult], advice };
 };
+
+export const getProcessBarChartConfig = () => {
+  const titles = getBarCharTitles('process');
+  const processesPercentage = getOccupancyPercentageByProcess({
+    ..._formData,
+    optResult: _optResult
+  });
+  const colors = getColors('process');
+
+  const data = BarChartDataBuilder.build({
+    placeholder: '%',
+    labels: titles,
+    data: processesPercentage,
+    colors: colors
+  });
+
+  const options = BarChartOptionsBuilder.build({
+    step: 10,
+    yMax: 100,
+    xTitle: 'Procesos',
+    yTitle: 'Porcentaje',
+    colors: colors,
+    titles: titles
+  });
+
+  return {data, options};
+}
+export const getWeeksChartConfig = () => {
+  const titles = getBarCharTitles('process');
+  const prodPeriod = parseInt(_modelData.productionPeriod);
+  const processesPercentage = getWeeksToCompleteOrder({
+    ..._formData,
+    optResult: _optResult,
+    prodPeriod
+  });
+  const colors = getColors('process');
+
+  const data = BarChartDataBuilder.build({
+    placeholder: 'Semanas',
+    labels: titles,
+    data: processesPercentage,
+    colors: colors
+  });
+
+  const options = BarChartOptionsBuilder.build({
+    step: 1,
+    yMax: prodPeriod,
+    xTitle: 'Procesos',
+    yTitle: 'Semanas',
+    colors: colors,
+    titles: titles
+  });
+
+  return {data, options};
+}
 
 export const evaluateOptResult = () => {
   if (!_optResult.feasible) {

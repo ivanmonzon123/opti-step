@@ -67,6 +67,9 @@ export default function FormPage({handlePrintResultComp}) {
     />,
     <OptResultComp
       optFormData$={optFormData$}
+      orderDetFormData$={orderDetFormData$}
+      prodDetFormData$={prodDetFormData$}
+      staffInfoFormData$={staffInfoFormData$}
     />
   ];
 

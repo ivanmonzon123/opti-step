@@ -4,13 +4,19 @@ import { useEffect, useState } from "react";
 import "../styles/components/OptResultComp.css";
 
 import * as optResultService from "../services/OptResultService";
+import {OptResultRequestBuilder} from "../builders/OptResultRequestBuilder";
+import Bar from "../charts/Bar";
+import {CHART_TITLES} from "../helpers/FormPageHelper";
 
-export default function OptResultComp({ optFormData$ }) {
-  const [optResult, setOptResult] = useState({
+export default function OptResultComp({ optFormData$, orderDetFormData$, prodDetFormData$, staffInfoFormData$ }) {
+  const [optResult$, setOptResult$] = useState({
     result: 0,
     customResult: 0,
     feedback: {},
+    processConfig: undefined,
+    weeksConfig: undefined,
   });
+  const chartTitles = CHART_TITLES;
 
   const profit = [
     { title: "Max. Ingresos:", key: "totalProfit" },
@@ -18,18 +24,24 @@ export default function OptResultComp({ optFormData$ }) {
   ];
 
   useEffect(() => {
-    setOptResult(optResultService.getOptResult({ ...optFormData$ }));
+    const optResultRequest = OptResultRequestBuilder.build({
+      model: optFormData$,
+      order: orderDetFormData$,
+      production: prodDetFormData$,
+      staff: staffInfoFormData$
+    })
+    setOptResult$(optResultService.getOptResult(optResultRequest));
     // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
-    console.log(optResult);
-  }, [optResult]);
+    console.log(optResult$);
+  }, [optResult$]);
 
   return (
     <article className="opt-result-container">
       <section className="opt-result-card">
-        <CollapsibleInfoComp feedback={optResult["feedback"]} />
+        <CollapsibleInfoComp feedback={optResult$["feedback"]} />
       </section>
 
       <Card className="opt-result-card">
@@ -42,7 +54,7 @@ export default function OptResultComp({ optFormData$ }) {
 
                   <Form.Control
                     type="number"
-                    value={optResult[shoeModelName] ?? 0}
+                    value={optResult$[shoeModelName] ?? 0}
                     readOnly
                   />
 
@@ -57,7 +69,7 @@ export default function OptResultComp({ optFormData$ }) {
               <InputGroup>
                 <InputGroup.Text>{title}</InputGroup.Text>
 
-                <Form.Control type="number" value={optResult[key]} readOnly />
+                <Form.Control type="number" value={optResult$[key]} readOnly />
 
                 <label className="os-txt-sm ms-1">{"(Bs)"}</label>
               </InputGroup>
@@ -65,6 +77,22 @@ export default function OptResultComp({ optFormData$ }) {
           </section>
         </Card.Body>
       </Card>
+
+      <section>
+        { optResult$.processConfig && optResult$.weeksConfig ?
+          <section className="w-100 dk-opt-result-charts">
+            <Bar
+              title={chartTitles.employees}
+              data={optResult$.processConfig.data}
+              options={optResult$.processConfig.options} />
+            <Bar
+              title={chartTitles.weeks}
+              data={optResult$.weeksConfig.data}
+              options={optResult$.weeksConfig.options} />
+          </section>
+          : <></>
+        }
+      </section>
     </article>
   );
 }

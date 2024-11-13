@@ -141,7 +141,7 @@ export default function DesktopFormPage({ handlePrintResultComp }) {
   };
 
   function isFinalStep() {
-    return formView$ === "end";
+    return formView$ === FormView.RESULT;
   }
 
   function previousView() {

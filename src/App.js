@@ -9,7 +9,7 @@ import DesktopFormPage from "./desktop/pages/DesktopFormPage";
 
 function App() {
   const resultCompRef = useRef();
-  const DESKTOP_SCRREN = 1530;
+  const DESKTOP_SCRREN = 1500;
   const VIEWPORT_WIDTH = window.innerWidth;
 
   const handlePrintResultComp = useReactToPrint({
